@@ -14,5 +14,7 @@ namespace DoAnChuyenNganh.Interface
         /// </summary>
         /// <returns></returns>
         List<Categorize> ListCategorize();
+
+        List<Supplier> ListBrand(string id);
     }
 }
