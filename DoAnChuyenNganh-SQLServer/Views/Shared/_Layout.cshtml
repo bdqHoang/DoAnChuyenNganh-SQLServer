@@ -66,10 +66,27 @@
                                     <div class="side-submenu transition-3">
                                         <nav>
                                             <ul id="menu-categorize">
-                                                            
-                                                
-                                                
-                                                  
+                                            </ul>
+                                        </nav>
+                                    </div>
+                                </div>
+                                <nav>
+                                    <ul>
+                                        <li>
+                                            <a href="product-details.html">Wooden</a>
+                                        </li>
+                                        <li>
+                                            <a href="product-details.html">Chair</a>
+                                        </li>
+                                        <li>
+                                            <a href="product-details.html">Tables</a>
+                                        </li>
+                                        <li>
+                                            <a href="product-details.html">Kitchen</a>
+                                        </li>
+                                        <li>
+                                            <a href="product-details.html">Others</a>
+                                        </li>
                                     </ul>
                                 </nav>
                             </div>
@@ -540,11 +557,11 @@
                     var str = "";
                     for (var i = 0; i < data.length; i++) {
                         str += `<li class="has-dropdown" id="Keyboard">
-                                    <a href="~/home/shop">
-                                        <i class="fal fa-headphones"></i>
-                                        ${data[i].DisplayName}
-                                    </a>
-                                </li>`;
+                                        <a href="~/home/shop">
+                                            <i class="fal fa-headphones"></i>
+                                            ${data[i].DisplayName}
+                                        </a>
+                                    </li>`;
                     }
                     $("#menu-categorize").html(str);
                 },
