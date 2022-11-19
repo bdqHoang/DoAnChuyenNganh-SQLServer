@@ -1,0 +1,103 @@
+﻿
+@{
+    ViewBag.Title = "UserManagement";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
+    <div class="container-fluid py-1 px-3">
+        <nav aria-label="breadcrumb">
+            <h5 class="font-weight-bolder mb-0">Quản lý khách hàng</h5>
+            <a class="btn btn-primary" href="@Url.Action("Create", "UserManagement")">Thêm khách hàng</a>
+        </nav>
+        <div class="col-md-2">
+            <div class="input-group input-group-outline my-3">
+                <label class="form-label">Tên khách hàng</label>
+                <input type="text" id="search" class="form-control" />
+            </div>
+        </div>
+    </div>
+</nav>
+<div class="table-responsive">
+    <table class="table table-bordered" style=" text-align:center">
+        <thead>
+            <tr>
+                <th>STT</th>
+                <th>Mã KH</th>
+                <th>Tên KH</th>
+                <th>Tên TK</th>
+                <th>SĐT</th>
+                <th>Email</th>
+                <th>Trạng thái</th>
+                <th></th>
+                <th>Ngày tạo</th>
+            </tr>
+        </thead>
+        <tbody id="CusTbody">
+@*            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.CustomerID)</td>
+                    <td>@Html.DisplayFor(modelItem => item.DisplayName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.UserName)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Phone)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                    <td>@item.CreatedAt.Value.ToString("dd/MM/yyyy hh:mm:ss tt")</td>
+                    <td>
+                        @if (item.Status == true)
+                        {<label class="btn btn-success">Đang hoạt động</label>}
+                        else
+                        {
+                            <label class="btn btn-dark">Đã bị khóa</label>
+                        }
+                    </td>
+                    <td style="width:300px">
+                        <i></i>
+                        @Html.ActionLink("Sửa", "Edit", new { id = item.CustomerID }, new { @class = "btn btn-warning" })
+                        @if (item.Status == true)
+                        {
+                            @Html.ActionLink("Vô hiệu hóa TK", "ActiveUser", new { id = item.CustomerID }, new { @class = "btn btn-danger" })
+                        }
+                        else
+                        {
+                            @Html.ActionLink("Kích hoạt TK", "ActiveUser", new { id = item.CustomerID }, new { @class = "btn btn-info" })
+                        }
+                    </td>
+                </tr>
+            }
+*@        </tbody>
+    </table>
+</div>
+
+<script>
+    var tables = document.getElementsByTagName('table');
+    var table = tables[tables.length - 1];
+    var rows = table.rows;
+    for (var i = 1, td; i < rows.length; i++) {
+        td = document.createElement('td');
+        td.appendChild(document.createTextNode(i));
+        rows[i].insertBefore(td, rows[i].firstChild);
+    }
+</script>
+
+<script>
+    $("#search").on("keyup", function () {
+        var value = $(this).val();
+
+        $("table tr").each(function (index) {
+            if (index !== 0) {
+
+                $row = $(this);
+
+                var id = $row.find("td").eq(2).text();
+
+                if (id.indexOf(value) === -1) {
+                    $row.hide();
+                }
+                else {
+                    $row.show();
+                }
+            }
+        });
+    });
+</script>

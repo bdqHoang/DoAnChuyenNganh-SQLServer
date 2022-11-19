@@ -1,0 +1,78 @@
+﻿
+@{
+    ViewBag.Title = "WareHouseManagement";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
+    <div class="container-fluid py-1 px-3">
+        <nav aria-label="breadcrumb">
+            <h5 class="font-weight-bolder mb-0">Quản lý kho hàng</h5>
+            <a class="btn btn-primary" href="@Url.Action("Create", "WareHouseManagement")">Thêm sản phẩm</a>
+        </nav>
+        <div class="col-md-2">
+            <div class="input-group input-group-outline my-3">
+                <label class="form-label">Mã sản phẩm</label>
+                <input type="text" id="search" class="form-control" />
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+<table class="table" style=" text-align: center">
+    <tr>
+        <th>STT</th>
+        <th>Mã sản phẩm</th>
+        <th>Mã màu</th>
+        <th>Mã switch</th>
+        <th>Số lượng tồn</th>
+    </tr>
+@*    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.ProductID)</td>
+            <td>@Html.DisplayFor(modelItem => item.CollorID)</td>
+            <td>@Html.DisplayFor(modelItem => item.SwitchID)</td>
+            <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
+
+            <td style="width: 280px">
+                <i></i>
+                @Html.ActionLink("Sửa", "Edit", new { id = item.ProductID }, new { @class = "btn btn-warning" })
+                <i></i>
+            </td>
+
+        </tr>
+    }
+*@</table>
+<script>
+    var tables = document.getElementsByTagName('table');
+    var table = tables[tables.length - 1];
+    var rows = table.rows;
+    for (var i = 1, td; i < rows.length; i++) {
+        td = document.createElement('td');
+        td.appendChild(document.createTextNode(i));
+        rows[i].insertBefore(td, rows[i].firstChild);
+    }
+</script>
+<script>
+    $("#search").on("keyup", function () {
+        var value = $(this).val();
+
+        $("table tr").each(function (index) {
+            if (index !== 0) {
+
+                $row = $(this);
+
+                var id = $row.find("td").eq(1).text();
+
+                if (id.indexOf(value) === -1) {
+                    $row.hide();
+                }
+                else {
+                    $row.show();
+                }
+            }
+        });
+    });
+</script>

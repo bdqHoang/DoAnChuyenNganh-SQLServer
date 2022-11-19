@@ -1,0 +1,98 @@
+﻿
+@{
+    ViewBag.Title = "InvoiceManagement";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
+    <div class="container-fluid py-1 px-3">
+        <nav aria-label="breadcrumb">
+            <h5 class="font-weight-bolder mb-0">Quản lý hóa đơn</h5>
+        </nav>
+        <div class="col-md-2">
+            <div class="input-group input-group-outline my-3">
+                <label class="form-label">Mã hóa đơn</label>
+                <input type="text" id="search" class="form-control" />
+            </div>
+        </div>
+    </div>
+</nav>
+
+<table class="table" style=" text-align: center">
+    <tr>
+        <th>STT</th>
+        <th>Mã hóa đơn</th>
+        <th>Tên khách hàng</th>
+        <th>Ngày tạo</th>
+        <th>Người chỉnh sửa</th>
+        <th>Ngày chỉnh sửa</th>
+        <th>Trạng thái</th>
+        <th></th>
+        <th></th>
+    </tr>
+@*    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.InvoiceID)</td>
+            <td>@Html.DisplayFor(modelItem => item.CreateBy)</td>
+            <td>@Html.DisplayFor(modelItem => item.CreatedAt)</td>
+            <td>@Html.DisplayFor(modelItem => item.UpdateBy)</td>
+            <td>@Html.DisplayFor(modelItem => item.UpdatedAt)</td>
+            <td>
+                @if (item.Status == true)
+                {<label class="btn btn-success">Đã xuất</label>}
+                else
+                {
+                    <label class="btn btn-dark">Đã hủy</label>
+                }
+            </td>
+            <td style="width: 280px">
+                @if (item.Status == true)
+                {
+                    @Html.ActionLink("Hủy hóa đơn", "UpdateInvoice", new { id = item.InvoiceID }, new { @class = "btn btn-danger" })
+                }
+                else
+                {
+                    @Html.ActionLink("Xuất hóa đơn", "UpdateInvoice", new { id = item.InvoiceID }, new { @class = "btn btn-info" })
+                }
+            </td>
+            <td style="width: 280px">
+                @if (item.Status == true)
+                {
+                    @Html.ActionLink("Chi tiết hóa đơn", "DetailInvoice", new { id = item.InvoiceID }, new { @class = "btn btn-danger" })
+                }
+            </td>
+        </tr>
+    }
+*@</table>
+<script>
+    var tables = document.getElementsByTagName('table');
+    var table = tables[tables.length - 1];
+    var rows = table.rows;
+    for (var i = 1, td; i < rows.length; i++) {
+        td = document.createElement('td');
+        td.appendChild(document.createTextNode(i));
+        rows[i].insertBefore(td, rows[i].firstChild);
+    }
+</script>
+<script>
+    $("#search").on("keyup", function () {
+        var value = $(this).val();
+
+        $("table tr").each(function (index) {
+            if (index !== 0) {
+
+                $row = $(this);
+
+                var id = $row.find("td").eq(1).text();
+
+                if (id.indexOf(value) === -1) {
+                    $row.hide();
+                }
+                else {
+                    $row.show();
+                }
+            }
+        });
+    });
+</script>

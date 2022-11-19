@@ -1,0 +1,48 @@
+﻿
+@{
+    ViewBag.Title = "ProductImage";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
+    <div class="container-fluid py-1 px-3">
+        <nav aria-label="breadcrumb">
+            <h5 class="font-weight-bolder mb-0">Quản lý hình ảnh</h5>
+            <a class="btn btn-primary" href="@Url.Action("Create", "ImageProduct")">Thêm hình ảnh</a>
+        </nav>
+    </div>
+</nav>
+
+<table class="table" style=" text-align: center">
+    <tr>
+        <th>STT</th>
+        <th>Mã sản phẩm</th>
+        <th>Tên sản phẩm</th>
+        <th>Hình ảnh</th>
+        <th>Chỉnh sửa</th>
+    </tr>
+@*    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.ProductID)</td>
+            <td>@Html.DisplayFor(modelItem => item.DisplayName)</td>
+            <td><img src="data:image/jpeg;base64,@item.Image" alt="" style="width:150px; height:120px"></td>
+            <td style="width: 280px">
+                <i></i>
+                @Html.ActionLink("Sửa", "Edit", new { @id = item.ImageID }, new { @class = "btn btn-warning" })
+                <i></i>
+                @Html.ActionLink("Xóa", "DeleteImg", new { @id = item.ImageID }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+    }
+*@</table>
+<script>
+    var tables = document.getElementsByTagName('table');
+    var table = tables[tables.length - 1];
+    var rows = table.rows;
+    for (var i = 1, td; i < rows.length; i++) {
+        td = document.createElement('td');
+        td.appendChild(document.createTextNode(i));
+        rows[i].insertBefore(td, rows[i].firstChild);
+    }
+</script>
