@@ -2123,7 +2123,7 @@ namespace DoAnChuyenNganh_SQLServer.Models
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private char _EmployeeID;
+		private string _EmployeeID;
 		
 		private string _PositionID;
 		
@@ -2161,7 +2161,7 @@ namespace DoAnChuyenNganh_SQLServer.Models
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnEmployeeIDChanging(char value);
+    partial void OnEmployeeIDChanging(string value);
     partial void OnEmployeeIDChanged();
     partial void OnPositionIDChanging(string value);
     partial void OnPositionIDChanged();
@@ -2200,8 +2200,8 @@ namespace DoAnChuyenNganh_SQLServer.Models
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmployeeID", DbType="Char(1) NOT NULL", IsPrimaryKey=true)]
-		public char EmployeeID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmployeeID", DbType="VarChar(11) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string EmployeeID
 		{
 			get
 			{
@@ -2844,6 +2844,8 @@ namespace DoAnChuyenNganh_SQLServer.Models
 		
 		private string _UpdateBy;
 		
+		private System.Nullable<int> _Ordinal;
+		
 		private EntityRef<Product> _Product;
 		
     #region Extensibility Method Definitions
@@ -2864,6 +2866,8 @@ namespace DoAnChuyenNganh_SQLServer.Models
     partial void OnUpdateAtChanged();
     partial void OnUpdateByChanging(string value);
     partial void OnUpdateByChanged();
+    partial void OnOrdinalChanging(System.Nullable<int> value);
+    partial void OnOrdinalChanged();
     #endregion
 		
 		public Image()
@@ -3016,6 +3020,26 @@ namespace DoAnChuyenNganh_SQLServer.Models
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Ordinal", DbType="Int")]
+		public System.Nullable<int> Ordinal
+		{
+			get
+			{
+				return this._Ordinal;
+			}
+			set
+			{
+				if ((this._Ordinal != value))
+				{
+					this.OnOrdinalChanging(value);
+					this.SendPropertyChanging();
+					this._Ordinal = value;
+					this.SendPropertyChanged("Ordinal");
+					this.OnOrdinalChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Product_Image", Storage="_Product", ThisKey="ProductID", OtherKey="ProductID", IsForeignKey=true)]
 		public Product Product
 		{
@@ -3079,7 +3103,7 @@ namespace DoAnChuyenNganh_SQLServer.Models
 		
 		private string _InvoiceID;
 		
-		private char _EmployeeID;
+		private string _EmployeeID;
 		
 		private string _OrderID;
 		
@@ -3109,7 +3133,7 @@ namespace DoAnChuyenNganh_SQLServer.Models
     partial void OnCreated();
     partial void OnInvoiceIDChanging(string value);
     partial void OnInvoiceIDChanged();
-    partial void OnEmployeeIDChanging(char value);
+    partial void OnEmployeeIDChanging(string value);
     partial void OnEmployeeIDChanged();
     partial void OnOrderIDChanging(string value);
     partial void OnOrderIDChanged();
@@ -3158,8 +3182,8 @@ namespace DoAnChuyenNganh_SQLServer.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmployeeID", DbType="Char(1) NOT NULL")]
-		public char EmployeeID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmployeeID", DbType="VarChar(11) NOT NULL", CanBeNull=false)]
+		public string EmployeeID
 		{
 			get
 			{
@@ -3182,7 +3206,7 @@ namespace DoAnChuyenNganh_SQLServer.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderID", DbType="VarChar(1) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderID", DbType="VarChar(11) NOT NULL", CanBeNull=false)]
 		public string OrderID
 		{
 			get
@@ -3393,7 +3417,7 @@ namespace DoAnChuyenNganh_SQLServer.Models
 					}
 					else
 					{
-						this._EmployeeID = default(char);
+						this._EmployeeID = default(string);
 					}
 					this.SendPropertyChanged("Employee");
 				}
@@ -3742,7 +3766,7 @@ namespace DoAnChuyenNganh_SQLServer.Models
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderID", DbType="VarChar(1) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderID", DbType="VarChar(11) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
 		public string OrderID
 		{
 			get
@@ -3762,7 +3786,7 @@ namespace DoAnChuyenNganh_SQLServer.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DiscountID", DbType="VarChar(11) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_DiscountID", DbType="VarChar(11)")]
 		public string DiscountID
 		{
 			get
@@ -4056,7 +4080,7 @@ namespace DoAnChuyenNganh_SQLServer.Models
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderID", DbType="VarChar(1) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderID", DbType="VarChar(11) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
 		public string OrderID
 		{
 			get
@@ -4686,7 +4710,7 @@ namespace DoAnChuyenNganh_SQLServer.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ProductDiscountID", DbType="VarChar(11) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ProductDiscountID", DbType="VarChar(11)")]
 		public string ProductDiscountID
 		{
 			get

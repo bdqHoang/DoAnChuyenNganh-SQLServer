@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 using DoAnChuyenNganh.Interface;
 using DoAnChuyenNganh.Service;
-using DoAnChuyenNganh_SQLServer.Models;
+using Newtonsoft.Json;
 
 namespace DoAnChuyenNganh.Controllers
 {
@@ -28,6 +25,50 @@ namespace DoAnChuyenNganh.Controllers
             var data = _homeService.ListCategorize();
             return Json(data, JsonRequestBehavior.AllowGet);
         }
+        /// <summary>
+        /// show supplier for categorize
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("~/home/getsupplier")]
+        public JsonResult GetSupplier(string id)
+        {
+            var data = _homeService.ListBrand(id);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        [Route("~/home/topcategories")]
+        public JsonResult TopCategories()
+        {
+            var data = _homeService.ListTopCategories();
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        [Route("~/home/listsaleproduct")]
+        public JsonResult ListSaleProduct()
+        {
+            var data = _homeService.ListSaleProduct();
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        [Route("~/home/topproductbestsaler")]
+        public JsonResult TopProductBestSaler() {
+            var data = _homeService.ProductBestSaler();
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        [Route("~/home/producttredding")]
+        public JsonResult ProductTredding() 
+        {
+            var data = _homeService.TrenddingItem();
+            return Json(data,JsonRequestBehavior.AllowGet);
+        }
+        
 
         public ActionResult Shop()
         {
@@ -39,6 +80,9 @@ namespace DoAnChuyenNganh.Controllers
             return View();
         }
 
-
+        public ActionResult WishList() 
+        {
+            return View();
+        }
     }
 }

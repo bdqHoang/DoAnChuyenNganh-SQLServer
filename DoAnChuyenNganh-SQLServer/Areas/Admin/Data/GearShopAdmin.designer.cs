@@ -57,9 +57,6 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
     partial void InsertFeedBack(FeedBack instance);
     partial void UpdateFeedBack(FeedBack instance);
     partial void DeleteFeedBack(FeedBack instance);
-    partial void InsertImage(Image instance);
-    partial void UpdateImage(Image instance);
-    partial void DeleteImage(Image instance);
     partial void InsertInvoice(Invoice instance);
     partial void UpdateInvoice(Invoice instance);
     partial void DeleteInvoice(Invoice instance);
@@ -84,6 +81,9 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
     partial void InsertSupplier(Supplier instance);
     partial void UpdateSupplier(Supplier instance);
     partial void DeleteSupplier(Supplier instance);
+    partial void InsertImage(Image instance);
+    partial void UpdateImage(Image instance);
+    partial void DeleteImage(Image instance);
     #endregion
 		
 		public GearShopAdminDataContext() : 
@@ -188,14 +188,6 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 			}
 		}
 		
-		public System.Data.Linq.Table<Image> Images
-		{
-			get
-			{
-				return this.GetTable<Image>();
-			}
-		}
-		
 		public System.Data.Linq.Table<Invoice> Invoices
 		{
 			get
@@ -257,6 +249,14 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 			get
 			{
 				return this.GetTable<Supplier>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Image> Images
+		{
+			get
+			{
+				return this.GetTable<Image>();
 			}
 		}
 	}
@@ -2123,7 +2123,7 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private char _EmployeeID;
+		private string _EmployeeID;
 		
 		private string _PositionID;
 		
@@ -2161,7 +2161,7 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnEmployeeIDChanging(char value);
+    partial void OnEmployeeIDChanging(string value);
     partial void OnEmployeeIDChanged();
     partial void OnPositionIDChanging(string value);
     partial void OnPositionIDChanged();
@@ -2200,8 +2200,8 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmployeeID", DbType="Char(1) NOT NULL", IsPrimaryKey=true)]
-		public char EmployeeID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmployeeID", DbType="VarChar(11) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string EmployeeID
 		{
 			get
 			{
@@ -2824,253 +2824,6 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Image")]
-	public partial class Image : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private string _ImageID;
-		
-		private string _ProductID;
-		
-		private System.Data.Linq.Binary _Image1;
-		
-		private System.Nullable<System.DateTime> _CreatedAt;
-		
-		private string _CreatedBy;
-		
-		private System.Nullable<System.DateTime> _UpdateAt;
-		
-		private string _UpdateBy;
-		
-		private EntityRef<Product> _Product;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnImageIDChanging(string value);
-    partial void OnImageIDChanged();
-    partial void OnProductIDChanging(string value);
-    partial void OnProductIDChanged();
-    partial void OnImage1Changing(System.Data.Linq.Binary value);
-    partial void OnImage1Changed();
-    partial void OnCreatedAtChanging(System.Nullable<System.DateTime> value);
-    partial void OnCreatedAtChanged();
-    partial void OnCreatedByChanging(string value);
-    partial void OnCreatedByChanged();
-    partial void OnUpdateAtChanging(System.Nullable<System.DateTime> value);
-    partial void OnUpdateAtChanged();
-    partial void OnUpdateByChanging(string value);
-    partial void OnUpdateByChanged();
-    #endregion
-		
-		public Image()
-		{
-			this._Product = default(EntityRef<Product>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ImageID", DbType="VarChar(11) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string ImageID
-		{
-			get
-			{
-				return this._ImageID;
-			}
-			set
-			{
-				if ((this._ImageID != value))
-				{
-					this.OnImageIDChanging(value);
-					this.SendPropertyChanging();
-					this._ImageID = value;
-					this.SendPropertyChanged("ImageID");
-					this.OnImageIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ProductID", DbType="VarChar(11) NOT NULL", CanBeNull=false)]
-		public string ProductID
-		{
-			get
-			{
-				return this._ProductID;
-			}
-			set
-			{
-				if ((this._ProductID != value))
-				{
-					if (this._Product.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnProductIDChanging(value);
-					this.SendPropertyChanging();
-					this._ProductID = value;
-					this.SendPropertyChanged("ProductID");
-					this.OnProductIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="Image", Storage="_Image1", DbType="Image", UpdateCheck=UpdateCheck.Never)]
-		public System.Data.Linq.Binary Image1
-		{
-			get
-			{
-				return this._Image1;
-			}
-			set
-			{
-				if ((this._Image1 != value))
-				{
-					this.OnImage1Changing(value);
-					this.SendPropertyChanging();
-					this._Image1 = value;
-					this.SendPropertyChanged("Image1");
-					this.OnImage1Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedAt", DbType="DateTime")]
-		public System.Nullable<System.DateTime> CreatedAt
-		{
-			get
-			{
-				return this._CreatedAt;
-			}
-			set
-			{
-				if ((this._CreatedAt != value))
-				{
-					this.OnCreatedAtChanging(value);
-					this.SendPropertyChanging();
-					this._CreatedAt = value;
-					this.SendPropertyChanged("CreatedAt");
-					this.OnCreatedAtChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedBy", DbType="NVarChar(50)")]
-		public string CreatedBy
-		{
-			get
-			{
-				return this._CreatedBy;
-			}
-			set
-			{
-				if ((this._CreatedBy != value))
-				{
-					this.OnCreatedByChanging(value);
-					this.SendPropertyChanging();
-					this._CreatedBy = value;
-					this.SendPropertyChanged("CreatedBy");
-					this.OnCreatedByChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdateAt", DbType="DateTime")]
-		public System.Nullable<System.DateTime> UpdateAt
-		{
-			get
-			{
-				return this._UpdateAt;
-			}
-			set
-			{
-				if ((this._UpdateAt != value))
-				{
-					this.OnUpdateAtChanging(value);
-					this.SendPropertyChanging();
-					this._UpdateAt = value;
-					this.SendPropertyChanged("UpdateAt");
-					this.OnUpdateAtChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdateBy", DbType="NVarChar(50)")]
-		public string UpdateBy
-		{
-			get
-			{
-				return this._UpdateBy;
-			}
-			set
-			{
-				if ((this._UpdateBy != value))
-				{
-					this.OnUpdateByChanging(value);
-					this.SendPropertyChanging();
-					this._UpdateBy = value;
-					this.SendPropertyChanged("UpdateBy");
-					this.OnUpdateByChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Product_Image", Storage="_Product", ThisKey="ProductID", OtherKey="ProductID", IsForeignKey=true)]
-		public Product Product
-		{
-			get
-			{
-				return this._Product.Entity;
-			}
-			set
-			{
-				Product previousValue = this._Product.Entity;
-				if (((previousValue != value) 
-							|| (this._Product.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Product.Entity = null;
-						previousValue.Images.Remove(this);
-					}
-					this._Product.Entity = value;
-					if ((value != null))
-					{
-						value.Images.Add(this);
-						this._ProductID = value.ProductID;
-					}
-					else
-					{
-						this._ProductID = default(string);
-					}
-					this.SendPropertyChanged("Product");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Invoice")]
 	public partial class Invoice : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -3079,7 +2832,7 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 		
 		private string _InvoiceID;
 		
-		private char _EmployeeID;
+		private string _EmployeeID;
 		
 		private string _OrderID;
 		
@@ -3109,7 +2862,7 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
     partial void OnCreated();
     partial void OnInvoiceIDChanging(string value);
     partial void OnInvoiceIDChanged();
-    partial void OnEmployeeIDChanging(char value);
+    partial void OnEmployeeIDChanging(string value);
     partial void OnEmployeeIDChanged();
     partial void OnOrderIDChanging(string value);
     partial void OnOrderIDChanged();
@@ -3158,8 +2911,8 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmployeeID", DbType="Char(1) NOT NULL")]
-		public char EmployeeID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmployeeID", DbType="VarChar(11) NOT NULL", CanBeNull=false)]
+		public string EmployeeID
 		{
 			get
 			{
@@ -3182,7 +2935,7 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderID", DbType="VarChar(1) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderID", DbType="VarChar(11) NOT NULL", CanBeNull=false)]
 		public string OrderID
 		{
 			get
@@ -3393,7 +3146,7 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 					}
 					else
 					{
-						this._EmployeeID = default(char);
+						this._EmployeeID = default(string);
 					}
 					this.SendPropertyChanged("Employee");
 				}
@@ -3742,7 +3495,7 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderID", DbType="VarChar(1) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderID", DbType="VarChar(11) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
 		public string OrderID
 		{
 			get
@@ -4056,7 +3809,7 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderID", DbType="VarChar(1) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderID", DbType="VarChar(11) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
 		public string OrderID
 		{
 			get
@@ -4686,7 +4439,7 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ProductDiscountID", DbType="VarChar(11) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ProductDiscountID", DbType="VarChar(11)")]
 		public string ProductDiscountID
 		{
 			get
@@ -5925,6 +5678,277 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 		{
 			this.SendPropertyChanging();
 			entity.Supplier = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Image")]
+	public partial class Image : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _ImageID;
+		
+		private string _ProductID;
+		
+		private System.Data.Linq.Binary _Image1;
+		
+		private System.Nullable<System.DateTime> _CreatedAt;
+		
+		private string _CreatedBy;
+		
+		private System.Nullable<System.DateTime> _UpdateAt;
+		
+		private string _UpdateBy;
+		
+		private System.Nullable<int> _Ordinal;
+		
+		private EntityRef<Product> _Product;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnImageIDChanging(string value);
+    partial void OnImageIDChanged();
+    partial void OnProductIDChanging(string value);
+    partial void OnProductIDChanged();
+    partial void OnImage1Changing(System.Data.Linq.Binary value);
+    partial void OnImage1Changed();
+    partial void OnCreatedAtChanging(System.Nullable<System.DateTime> value);
+    partial void OnCreatedAtChanged();
+    partial void OnCreatedByChanging(string value);
+    partial void OnCreatedByChanged();
+    partial void OnUpdateAtChanging(System.Nullable<System.DateTime> value);
+    partial void OnUpdateAtChanged();
+    partial void OnUpdateByChanging(string value);
+    partial void OnUpdateByChanged();
+    partial void OnOrdinalChanging(System.Nullable<int> value);
+    partial void OnOrdinalChanged();
+    #endregion
+		
+		public Image()
+		{
+			this._Product = default(EntityRef<Product>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ImageID", DbType="VarChar(11) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string ImageID
+		{
+			get
+			{
+				return this._ImageID;
+			}
+			set
+			{
+				if ((this._ImageID != value))
+				{
+					this.OnImageIDChanging(value);
+					this.SendPropertyChanging();
+					this._ImageID = value;
+					this.SendPropertyChanged("ImageID");
+					this.OnImageIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ProductID", DbType="VarChar(11) NOT NULL", CanBeNull=false)]
+		public string ProductID
+		{
+			get
+			{
+				return this._ProductID;
+			}
+			set
+			{
+				if ((this._ProductID != value))
+				{
+					if (this._Product.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnProductIDChanging(value);
+					this.SendPropertyChanging();
+					this._ProductID = value;
+					this.SendPropertyChanged("ProductID");
+					this.OnProductIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="Image", Storage="_Image1", DbType="Image", UpdateCheck=UpdateCheck.Never)]
+		public System.Data.Linq.Binary Image1
+		{
+			get
+			{
+				return this._Image1;
+			}
+			set
+			{
+				if ((this._Image1 != value))
+				{
+					this.OnImage1Changing(value);
+					this.SendPropertyChanging();
+					this._Image1 = value;
+					this.SendPropertyChanged("Image1");
+					this.OnImage1Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedAt", DbType="DateTime")]
+		public System.Nullable<System.DateTime> CreatedAt
+		{
+			get
+			{
+				return this._CreatedAt;
+			}
+			set
+			{
+				if ((this._CreatedAt != value))
+				{
+					this.OnCreatedAtChanging(value);
+					this.SendPropertyChanging();
+					this._CreatedAt = value;
+					this.SendPropertyChanged("CreatedAt");
+					this.OnCreatedAtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CreatedBy", DbType="NVarChar(50)")]
+		public string CreatedBy
+		{
+			get
+			{
+				return this._CreatedBy;
+			}
+			set
+			{
+				if ((this._CreatedBy != value))
+				{
+					this.OnCreatedByChanging(value);
+					this.SendPropertyChanging();
+					this._CreatedBy = value;
+					this.SendPropertyChanged("CreatedBy");
+					this.OnCreatedByChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdateAt", DbType="DateTime")]
+		public System.Nullable<System.DateTime> UpdateAt
+		{
+			get
+			{
+				return this._UpdateAt;
+			}
+			set
+			{
+				if ((this._UpdateAt != value))
+				{
+					this.OnUpdateAtChanging(value);
+					this.SendPropertyChanging();
+					this._UpdateAt = value;
+					this.SendPropertyChanged("UpdateAt");
+					this.OnUpdateAtChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdateBy", DbType="NVarChar(50)")]
+		public string UpdateBy
+		{
+			get
+			{
+				return this._UpdateBy;
+			}
+			set
+			{
+				if ((this._UpdateBy != value))
+				{
+					this.OnUpdateByChanging(value);
+					this.SendPropertyChanging();
+					this._UpdateBy = value;
+					this.SendPropertyChanged("UpdateBy");
+					this.OnUpdateByChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Ordinal", DbType="Int")]
+		public System.Nullable<int> Ordinal
+		{
+			get
+			{
+				return this._Ordinal;
+			}
+			set
+			{
+				if ((this._Ordinal != value))
+				{
+					this.OnOrdinalChanging(value);
+					this.SendPropertyChanging();
+					this._Ordinal = value;
+					this.SendPropertyChanged("Ordinal");
+					this.OnOrdinalChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Product_Image", Storage="_Product", ThisKey="ProductID", OtherKey="ProductID", IsForeignKey=true)]
+		public Product Product
+		{
+			get
+			{
+				return this._Product.Entity;
+			}
+			set
+			{
+				Product previousValue = this._Product.Entity;
+				if (((previousValue != value) 
+							|| (this._Product.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Product.Entity = null;
+						previousValue.Images.Remove(this);
+					}
+					this._Product.Entity = value;
+					if ((value != null))
+					{
+						value.Images.Add(this);
+						this._ProductID = value.ProductID;
+					}
+					else
+					{
+						this._ProductID = default(string);
+					}
+					this.SendPropertyChanged("Product");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }

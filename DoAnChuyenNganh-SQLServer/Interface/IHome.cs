@@ -13,8 +13,32 @@ namespace DoAnChuyenNganh.Interface
         /// Show all list categorize
         /// </summary>
         /// <returns></returns>
-        List<Categorize> ListCategorize();
-
-        List<Supplier> ListBrand(string id);
+        object ListCategorize();
+        /// <summary>
+        /// Show list supplier have product
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        object ListBrand(string id);
+        /// <summary>
+        /// show top categorize
+        /// </summary>
+        /// <returns></returns>
+        object ListTopCategories();
+        /// <summary>
+        /// show sale product
+        /// </summary>
+        /// <returns></returns>
+        object ListSaleProduct();
+        /// <summary>
+        /// product best saler
+        /// </summary>
+        /// <returns></returns>
+        object ProductBestSaler();
+        /// <summary>
+        /// show item trendding
+        /// </summary>
+        /// <returns></returns>
+        object TrenddingItem();
     }
 }
