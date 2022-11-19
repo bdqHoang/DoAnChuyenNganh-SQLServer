@@ -1,0 +1,95 @@
+﻿
+@{
+    ViewBag.Title = "CategorizeManagement";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
+    <div class="container-fluid py-1 px-3">
+        <nav aria-label="breadcrumb">
+            <h5 class="font-weight-bolder mb-0">Quản lý loại sản phẩm</h5>
+            <a class="btn btn-primary" href="@Url.Action("Create", "CategorizeManagement")">Thêm loại sản phẩm</a>
+        </nav>
+        <div class="col-md-2">
+            <div class="input-group input-group-outline my-3">
+                <label class="form-label">Tên Loại</label>
+                <input type="text" id="search" class="form-control" />
+            </div>
+        </div>
+    </div>
+</nav>
+
+<table class="table" style=" text-align: center">
+    <tr>
+        <th>STT</th>
+        <th>Mã loại</th>
+        <th>Tên loại</th>
+        <th>Trạng thái</th>
+        <th></th>
+        <th>Ngày tạo</th>
+        <th>Ngày chỉnh sửa</th>
+        <th>Người chỉnh sửa</th>
+    </tr>
+@*    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.CategorizeID)</td>
+            <td>@Html.DisplayFor(modelItem => item.DisplayName)</td>
+            <td>
+                @if (item.Status == true)
+                {<label class="btn btn-success">Đang hoạt động</label>}
+                else
+                {
+                    <label class="btn btn-dark">Đã bị khóa</label>
+                }
+            </td>
+            <td style="width: 280px">
+                <i></i>
+                @Html.ActionLink("Sửa", "Edit", new { id = item.CategorizeID }, new { @class = "btn btn-warning" })
+                <i></i>
+                @if (item.Status == true)
+                {
+                    @Html.ActionLink("Vô hiệu hóa loại", "ActiveCategorize", new { id = item.CategorizeID }, new { @class = "btn btn-danger" })
+                }
+                else
+                {
+                    @Html.ActionLink("Kích hoạt loại", "ActiveCategorize", new { id = item.CategorizeID }, new { @class = "btn btn-info" })
+                }
+            </td>
+            <td>@item.CreatedAt.Value.ToString("dd/MM/yyyy hh:mm:ss tt")</td>
+            <td>@Html.DisplayFor(modelItem => item.UpdatedAt)</td>
+            <td>@Html.DisplayFor(modelItem => item.UpdateBy)</td>
+        </tr>
+    }*@
+</table>
+<script>
+    var tables = document.getElementsByTagName('table');
+    var table = tables[tables.length - 1];
+    var rows = table.rows;
+    for (var i = 1, td; i < rows.length; i++) {
+        td = document.createElement('td');
+        td.appendChild(document.createTextNode(i));
+        rows[i].insertBefore(td, rows[i].firstChild);
+    }
+</script>
+<script>
+    $("#search").on("keyup", function () {
+        var value = $(this).val();
+
+        $("table tr").each(function (index) {
+            if (index !== 0) {
+
+                $row = $(this);
+
+                var id = $row.find("td").eq(2).text();
+
+                if (id.indexOf(value) === -1) {
+                    $row.hide();
+                }
+                else {
+                    $row.show();
+                }
+            }
+        });
+    });
+</script>

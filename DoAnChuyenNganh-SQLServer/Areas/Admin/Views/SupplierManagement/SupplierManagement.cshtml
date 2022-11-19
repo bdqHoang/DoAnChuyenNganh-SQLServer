@@ -1,0 +1,88 @@
+﻿
+@{
+    ViewBag.Title = "SupplierManagement";
+    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
+    <div class="container-fluid py-1 px-3">
+        <nav aria-label="breadcrumb">
+            <h5 class="font-weight-bolder mb-0">Quản lý nhà cung cấp</h5>
+            <a class="btn btn-primary" href="@Url.Action("Create", "SupplierManagement")">Thêm nhà cung cấp</a>
+        </nav>
+    </div>
+</nav>
+<table class="table" style="text-align: center">
+    <tr>
+        <th>STT</th>
+        <th>Mã nhà cung cấp</th>
+        <th>Tên nhà cung cấp</th>
+        <th>Email</th>
+        <th>Địa chỉ</th>
+        <th>Ngày ký hợp đồng</th>
+        <th>Trạng thái</th>
+        <th></th>
+        <th>Ngày tạo</th>
+        <th>Tạo bởi</th>
+        <th>Chỉnh sửa bởi</th>
+    </tr>
+
+@*    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.SupplierID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DisplayName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Address)
+            </td>
+            <td>@item.ContractDate.Value.ToString("dd/MM/yyyy hh:mm:ss tt")</td>
+
+            <td>
+                @if (item.Status == true)
+                {<label class="btn btn-success">Đang hoạt động</label>}
+                else
+                {
+                    <label class="btn btn-dark">Đã bị khóa</label>
+                }
+            </td>
+            <td style="width: 280px">
+                <i></i>
+                @Html.ActionLink("Sửa", "Edit", new { id = item.SupplierID }, new { @class = "btn btn-warning" })
+                <i></i>
+                @if (item.Status == true)
+                {
+                    @Html.ActionLink("Vô hiệu hóa nhà cung cấp", "ActiveSupplier", new { id = item.SupplierID }, new { @class = "btn btn-danger" })
+                }
+                else
+                {
+                    @Html.ActionLink("Kích hoạt nhà cung cấp", "ActiveSupplier", new { id = item.SupplierID }, new { @class = "btn btn-info" })
+                }
+            </td>
+            <td>@item.CreatedAt.Value.ToString("dd/MM/yyyy hh:mm:ss tt")</td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreateBy)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UpdateBy)
+            </td>
+        </tr>
+    }*@
+
+</table>
+<script>
+    var tables = document.getElementsByTagName('table');
+    var table = tables[tables.length - 1];
+    var rows = table.rows;
+    for (var i = 1, td; i < rows.length; i++) {
+        td = document.createElement('td');
+        td.appendChild(document.createTextNode(i));
+        rows[i].insertBefore(td, rows[i].firstChild);
+    }
+</script>
