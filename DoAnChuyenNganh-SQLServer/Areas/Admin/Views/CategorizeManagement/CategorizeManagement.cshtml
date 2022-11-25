@@ -1,19 +1,18 @@
-﻿
+﻿@model IEnumerable<DoAnChuyenNganh_SQLServer.Areas.Admin.Data.Categorize>
 @{
     ViewBag.Title = "CategorizeManagement";
-    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    Layout = "~/Areas/Admin/Views/AjaxLayout/_LayoutAjaxCRUD.cshtml";
 }
 
 <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
     <div class="container-fluid py-1 px-3">
         <nav aria-label="breadcrumb">
             <h5 class="font-weight-bolder mb-0">Quản lý loại sản phẩm</h5>
-            <a class="btn btn-primary" href="@Url.Action("Create", "CategorizeManagement")">Thêm loại sản phẩm</a>
+            <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#CreateModalID_Admin">Thêm loại sản phẩm</a>
         </nav>
         <div class="col-md-2">
-            <div class="input-group input-group-outline my-3">
-                <label class="form-label">Tên Loại</label>
-                <input type="text" id="search" class="form-control" />
+            <div class="input-group input-group-outline my-3">   
+                <input placeholder="Tên Loại" type="text" id="search" class="form-control" />
             </div>
         </div>
     </div>
@@ -30,9 +29,10 @@
         <th>Ngày chỉnh sửa</th>
         <th>Người chỉnh sửa</th>
     </tr>
-@*    @foreach (var item in Model)
+    @foreach (var item in Model)
     {
         <tr>
+            @{var updateAt = item.UpdateAt == null ? null : item.UpdateAt.Value.ToString("dd/MM/yyyy hh:mm:ss tt");}
             <td>@Html.DisplayFor(modelItem => item.CategorizeID)</td>
             <td>@Html.DisplayFor(modelItem => item.DisplayName)</td>
             <td>
@@ -45,7 +45,7 @@
             </td>
             <td style="width: 280px">
                 <i></i>
-                @Html.ActionLink("Sửa", "Edit", new { id = item.CategorizeID }, new { @class = "btn btn-warning" })
+                <a class="btn btn-warning" onclick="GetDetails('@item.CategorizeID')">Sửa</a>
                 <i></i>
                 @if (item.Status == true)
                 {
@@ -56,40 +56,152 @@
                     @Html.ActionLink("Kích hoạt loại", "ActiveCategorize", new { id = item.CategorizeID }, new { @class = "btn btn-info" })
                 }
             </td>
-            <td>@item.CreatedAt.Value.ToString("dd/MM/yyyy hh:mm:ss tt")</td>
-            <td>@Html.DisplayFor(modelItem => item.UpdatedAt)</td>
+            @{var date = item.CreatedAt == null ? null : item.CreatedAt.Value.ToString("dd/MM/yyyy hh:mm:ss tt");}
+            <td>@date</td>
+            <td>@updateAt</td>
             <td>@Html.DisplayFor(modelItem => item.UpdateBy)</td>
         </tr>
-    }*@
-</table>
-<script>
-    var tables = document.getElementsByTagName('table');
-    var table = tables[tables.length - 1];
-    var rows = table.rows;
-    for (var i = 1, td; i < rows.length; i++) {
-        td = document.createElement('td');
-        td.appendChild(document.createTextNode(i));
-        rows[i].insertBefore(td, rows[i].firstChild);
     }
-</script>
-<script>
-    $("#search").on("keyup", function () {
-        var value = $(this).val();
+</table>
+<!--Create modal start -->
+<div class="modal fade" id="CreateModalID_Admin" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        @using (Html.BeginForm("Create", "CategorizeManagement", FormMethod.Post))
+        {
+            <div class="modal-content">
 
-        $("table tr").each(function (index) {
-            if (index !== 0) {
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thêm loại sản phẩm</h5>
+                </div>
 
-                $row = $(this);
+                <div class="modal-body">
+                    <div class="font-robo">
+                        <div class="wrapper wrapper--w680">
+                            <div>
+                                <div>
+                                    <div class="input-group">
+                                        <input class="input--style-1" type="text" placeholder="Mã loại" name="CategorizeID">
+                                    </div>
+                                    <div class="input-group">
+                                        <input class="input--style-1" type="text" placeholder="Tên loại" name="DisplayName">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary">Thêm</button>
+                </div>
 
-                var id = $row.find("td").eq(2).text();
+            </div>
+        }
+    </div>
+</div>
+<!--end-->
+<!--Edit modal start -->
+<div class="modal fade" id="EditModalID_Admin" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @using (Html.BeginForm(null, null, FormMethod.Post, new {id = "Edit_form"}))
+            {
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Sửa loại sản phẩm</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="font-robo">
+                        <div class="wrapper wrapper--w680">
+                            <div>
+                                <div>
+                                    <div>
+                                        <div class="input-group">
+                                            <input class="input--style-1" id="txtID" type="text" placeholder="Mã loại" name="CategorizeID" readonly="readonly">
+                                        </div>
+                                        <div class="input-group">
+                                            <input class="input--style-1" id="txtDisplayName" type="text" placeholder="Tên loại" name="DisplayName">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<!--end-->
 
-                if (id.indexOf(value) === -1) {
-                    $row.hide();
+    <script>
+        function GetDetails(id) {
+            $.ajax({
+                url: "/CategorizeManagement/Edit",
+                typr: "GET",
+                contentType: "application/json;charset=UTF-8",
+                dataType: "json",
+                data: { id: id},
+                success: function (response) {
+                    console.log(response);
+                    $('#txtID').val(response.CategorizeID);
+                    $('#txtDisplayName').val(response.DisplayName);
+                    $('#EditModalID_Admin').modal('show');
+                    $('#Edit_form').attr('action','/Admin/CategorizeManagement/Form_Edit/' + id)
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                    
                 }
-                else {
-                    $row.show();
-                }
+            });
+            return false;
+        }
+    </script>
+    <script>
+        $('input').on('keypress', function (event) {
+            var regex = new RegExp("^[a-zA-Z0-9]+$");
+            var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+            if (!regex.test(key)) {
+                event.preventDefault();
+                return false;
             }
         });
-    });
-</script>
+    </script>
+    <script>
+        var tables = document.getElementsByTagName('table');
+        var table = tables[tables.length - 1];
+        var rows = table.rows;
+        for (var i = 1, td; i < rows.length; i++) {
+            td = document.createElement('td');
+            td.appendChild(document.createTextNode(i));
+            rows[i].insertBefore(td, rows[i].firstChild);
+        }
+    </script>
+    <script>
+        $("#search").on("keyup", function () {
+            var value = $(this).val();
+
+            $("table tr").each(function (index) {
+                if (index !== 0) {
+
+                    $row = $(this);
+
+                    var id = $row.find("td").eq(2).text();
+
+                    if (id.indexOf(value) === -1) {
+                        $row.hide();
+                    }
+                    else {
+                        $row.show();
+                    }
+                }
+            });
+        });
+    </script>
+    
+
+

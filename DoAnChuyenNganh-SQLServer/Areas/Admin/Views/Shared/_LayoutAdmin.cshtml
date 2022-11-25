@@ -19,40 +19,26 @@
     <link id="pagestyle" href="~/Areas/assets/css/material-dashboard.css?v=3.0.2" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
-
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     @RenderSection("Header", required: false)
+
+
+    
 </head>
 
 <body class="g-sidenav-show  bg-gray-200">
 
-    @*@using DoAnCoSo.Areas.Admin.Data;*@
+    @using DoAnChuyenNganh_SQLServer.Areas.Admin.Data;
     <!--Top right conner-->
     <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
-        <div class="container-fluid py-1 px-3">
-            <nav aria-label="breadcrumb">
-                <h6 class="font-weight-bolder mb-0">Trang chủ</h6>
-            </nav>
+        <div class="container-fluid py-1" style="padding-left:1300px">
             <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
 
-                <ul class="navbar-nav justify-content-end">
+                <ul class="navbar-nav justify-content-end" style="text-align:right">
                     <li class="nav-item d-flex align-items-center">
                         <a href="#" class="nav-link text-body font-weight-bold px-0">
                             <i class="fa fa-user me-sm-1"></i>
-                            <span class="d-sm-inline d-none">Xin chào @*@((Session["AdminAccount"] as Employee).DisplayName)*@</span>
-                        </a>
-                    </li>
-                    <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
-                        <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
-                            <div class="sidenav-toggler-inner">
-                                <i class="sidenav-toggler-line"></i>
-                                <i class="sidenav-toggler-line"></i>
-                                <i class="sidenav-toggler-line"></i>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="nav-item px-3 d-flex align-items-center">
-                        <a href="javascript:;" class="nav-link text-body p-0">
-                            <i class="fa fa-cog fixed-plugin-button-nav cursor-pointer"></i>
+                            <span class="d-sm-inline d-none">Xin chào @((Session["AdminAccount"] as Employee).DisplayName)</span>
                         </a>
                     </li>
 
@@ -61,13 +47,13 @@
         </div>
     </nav>
     <!--End of top right conner-->
-    <!--Leftside navbar-->
+    <!--Leftside navbar-->  
     <aside class="sidenav navbar navbar-vertical navbar-expand-xs border-0 border-radius-xl my-3 fixed-start ms-3   bg-gradient-dark" id="sidenav-main">
         <div class="sidenav-header">
             <i class="fas fa-times p-3 cursor-pointer text-white opacity-5 position-absolute end-0 top-0 d-none d-xl-none" aria-hidden="true" id="iconSidenav"></i>
             <a class="navbar-brand m-0">
-                <img src="~/Assets/img/logo/storelogo.png" class="navbar-brand-img h-100" alt="main_logo">
-                <span class="ms-1 font-weight-bold text-white">2TL Store</span>
+                <img src="/Assets/img/logo/storelogo.png" class="navbar-brand-img h-100" alt="main_logo">
+                <span class="ms-1 font-weight-bold text-white">3TL-Gear</span>
             </a>
         </div>
         <hr class="horizontal light mt-0 mb-2">
@@ -130,6 +116,14 @@
                             <i class="material-icons opacity-10">inventory_2</i>
                         </div>
                         <span class="nav-link-text ms-1">Quản lý sản phẩm</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white " href="@Url.Action("OptionManagement","OptionManagement")">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">inventory_2</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Quản lý Option</span>
                     </a>
                 </li>
                 <li class="nav-item">
@@ -566,7 +560,17 @@
         <script src="~/Areas/assets/js/core/jquery.min.js"></script>
         <script src="~/Areas/assets/js/core/popper.min.js"></script>
         <script src="~/Areas/assets/js/core/bootstrap.min.js"></script>
-        @RenderSection("Footer",required: false)
+        <!-- Jquery JS-->
+        <script src="~/Areas/assets/form/vendor/jquery/jquery.min.js"></script>
+        <!-- Vendor JS-->
+        <script src="~/Areas/assets/form/vendor/select2/select2.min.js"></script>
+        <script src="~/Areas/assets/form/vendor/datepicker/moment.min.js"></script>
+        <script src="~/Areas/assets/form/vendor/datepicker/daterangepicker.js"></script>
+
+        <!-- Main JS-->
+        <script src="~/Areas/assets/form/js/global.js"></script>
+
+        @RenderSection("Footer", required: false)
         <!-- Github buttons -->
         <script async defer src="https://buttons.github.io/buttons.js"></script>
         <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->

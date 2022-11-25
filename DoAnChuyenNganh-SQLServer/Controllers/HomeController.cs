@@ -33,12 +33,5 @@ namespace DoAnChuyenNganh.Controllers
         {
             return View();
         }
-
-        public ActionResult DetailProduct(string id)
-        {
-            return View();
-        }
-
-
     }
 }
