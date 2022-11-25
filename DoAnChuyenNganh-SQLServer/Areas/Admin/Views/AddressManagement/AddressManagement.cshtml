@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<DoAnChuyenNganh_SQLServer.Areas.Admin.Data.CustomerAddress>
 @{
     ViewBag.Title = "AddressManagement";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
@@ -25,14 +25,15 @@
         <th>Mã khách hàng</th>
         <th>Địa chỉ</th>
     </tr>
-@*    @foreach (var item in Model)
+    @foreach (var item in Model)
     {
         <tr>
             <td>@Html.DisplayFor(modelItem => item.AddressID)</td>
             <td>@Html.DisplayFor(modelItem => item.CustomerID)</td>
-            <td>@Html.DisplayFor(modelItem => item.Address1)</td>
+            <td>@Html.DisplayFor(modelItem => item.AddressDetail)</td>
+
         </tr>
-    }*@
+    }
 </table>
 <script>
     var tables = document.getElementsByTagName('table');
@@ -65,3 +66,4 @@
         });
     });
 </script>
+

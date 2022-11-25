@@ -71,21 +71,9 @@
                                     </div>
                                 </div>
                                 <nav>
-                                    <ul>
+                                    <ul id="getSupplier">
                                         <li>
-                                            <a href="product-details.html">Wooden</a>
-                                        </li>
-                                        <li>
-                                            <a href="product-details.html">Chair</a>
-                                        </li>
-                                        <li>
-                                            <a href="product-details.html">Tables</a>
-                                        </li>
-                                        <li>
-                                            <a href="product-details.html">Kitchen</a>
-                                        </li>
-                                        <li>
-                                            <a href="product-details.html">Others</a>
+                                            @*<a href="/home/shop">@item.DisplayName</a>*@
                                         </li>
                                     </ul>
                                 </nav>
@@ -479,7 +467,7 @@
     <script src="~/Assets/js/ajax-form.js"></script>
     <script src="~/Assets/js/main.js"></script>
     @RenderSection("Footer", required: false)
-    <script>
+<script>
         $(document).ready(function () {
             $.ajax({
                 type: "Get",
@@ -488,16 +476,16 @@
                 contentType: "application/json",
                 success: function (data) {
                     var str = "";
-                    for (var i = 0; i < data.length; i++) {
-                        str += `<li class="has-dropdown" id="${data[i].CategorizeID}">
+                    for (var i = 0; i < data.data.length; i++) {
+                        str += `<li class="has-dropdown" id="${data.data[i].CategorizeID}">
                                         <a href="/home/shop">
                                             <i class="fal fa-headphones"></i>
-                                                ${data[i].DisplayName}
+                                                ${data.data[i].DisplayName}
                                         </a>
                                         <ul class="mega-menu">
                                             <li><a href="shop.html">Trademark</a>
                                                 <ul class="mega-item">
-                                                    ${GetSupplier(data[i].CategorizeID)}
+                                                    ${GetSupplier(data.data[i].CategorizeID)}
                                                 </ul>
                                             </li>
                                             <li><a href="shop.html">Sell Price</a>
@@ -519,6 +507,11 @@
                                     </li>`;
                     }
                     $("#menu-categorize").html(str);
+                    str = ``;
+                    for (var i = 0; i < data.suplier.length; i++) {
+                        str += `<li><a href="/home/shop">${data.suplier[i].DisplayName}</a></li>`
+                    }
+                    $("#getSupplier").html(str);
                 }
             });
             TopCategorize();
@@ -543,6 +536,6 @@
             });
             return str;
         }
-    </script>
+</script>
 </body>
 </html>

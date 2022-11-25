@@ -9,6 +9,7 @@ namespace DoAnChuyenNganh.Interface
 {
     public interface IHome
     {
+        object ListSuppliers();
         /// <summary>
         /// Show all list categorize
         /// </summary>
@@ -40,5 +41,24 @@ namespace DoAnChuyenNganh.Interface
         /// </summary>
         /// <returns></returns>
         object TrenddingItem();
+        /// <summary>
+        /// show new product
+        /// </summary>
+        /// <returns></returns>
+        object NewArrival();
+        /// <summary>
+        /// show detail product
+        /// </summary>
+        /// <returns></returns>
+        object DetailProduct(string id);
+        /// <summary>
+        /// get information product
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Product GetProduct(string id);
+        int Quantity(string productid, string colorID = null, string optioID = null);
+
+        object RecommentProduct(string customerID);
     }
 }

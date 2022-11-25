@@ -5,7 +5,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Web.Helpers;
 using DoAnChuyenNganh.Interface;
+using DoAnChuyenNganh_SQLServer.Interface;
 using DoAnChuyenNganh_SQLServer.Models;
+using DoAnChuyenNganh_SQLServer.Service;
 using Microsoft.Ajax.Utilities;
 using Microsoft.EntityFrameworkCore;
 
@@ -101,12 +103,126 @@ namespace DoAnChuyenNganh.Service
                     SalePrice=s.SellPrice *(decimal)(100-s.ProductDiscount.DiscountPercent)/100, image = CheckExitImage(s.ProductID)});
             return (data);
         }
+        /// <summary>
+        /// show new product
+        /// </summary>
+        /// <returns></returns>
+        public object NewArrival()
+        {
+            var data = _context.Products.Include(s => s.Images).Include(s => s.Categorize).Include(s => s.ProductDiscount).Include(s => s.Supplier)
+                .Where(s => s.Status != false).OrderBy(s=>s.CreatedAt)
+                .Select(s => new
+                {
+                    s.ProductID,
+                    s.DisplayName,
+                    Categorize = s.Categorize.DisplayName,
+                    s.SellPrice,
+                    s.ProductDiscount.DiscountPercent,
+                    SalePrice = s.SellPrice * (decimal)(100 - s.ProductDiscount.DiscountPercent) / 100,
+                    image = CheckExitImage(s.ProductID)
+                });
+            return data;
+        }
+        /// <summary>
+        /// show detail product
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public object DetailProduct(string id)
+        {
+            var data = _context.Products
+                .Where(s => s.Status != false && s.ProductID == id)
+                .Select(s => new { s.ProductID, s.DisplayName, Categorize = s.Categorize.DisplayName, s.CategorizeID,
+                    Supplier = s.Supplier.DisplayName, s.ProductDiscount.DiscountPercent, s.SellPrice,
+                    SalePrice = s.SellPrice * (decimal)(100 - s.ProductDiscount.DiscountPercent) / 100, s.Rating, Comment = s.FeedBacks.Select(v => new {v.Customer.DisplayName, v.Rating, v.Content}),
+                    Color = s.WareHouses.GroupBy(v=>v.ColorID).Select(v => v.Select(m=>new { m.Color.DisplayName, m.Color.ColorID }).Distinct()),
+                    Option = s.WareHouses.GroupBy(v => v.OptionID).Select(v => v.Select(m =>new { m.Option.DisplayName, m.Option.OptionID }).Distinct()),
+                    s.Description,
+                    image = s.Images.OrderByDescending(v=>v.Ordinal).Select(v=>Convert.ToBase64String(v.Image1.ToArray())).Take(4),
+                    Quantity = s.WareHouses.GroupBy(v=>v.ProductID).Select(v=>v.Sum(m=>m.quantity)).FirstOrDefault(),
+                }).FirstOrDefault();
+            return data;
+                
+        }
+        /// <summary>
+        /// getdate product
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns></returns>
+        public Product GetProduct(string id)
+        {
+            return _context.Products.FirstOrDefault(s => s.ProductID == id);
+        }
+        /// <summary>
+        /// get quantity product in warehouse
+        /// </summary>
+        /// <param name="productid"></param>
+        /// <param name="colorID"></param>
+        /// <param name="optioID"></param>
+        /// <returns></returns>
+        public int Quantity(string productid, string colorID = null, string optioID = null)
+        {
+            int quantity=0;
+            if (String.IsNullOrEmpty(colorID))
+            {
+                return quantity =(int)_context.WareHouses.Where(s => s.ProductID == productid && s.OptionID == optioID).GroupBy(s => s.ProductID).Sum(s => s.Select(v => v.quantity).FirstOrDefault());
+            }
+            if (String.IsNullOrEmpty(optioID))
+            {
+                return quantity = (int)_context.WareHouses.Where(s => s.ProductID == productid && s.ColorID == colorID).GroupBy(s => s.ProductID).Sum(s => s.Select(v => v.quantity).FirstOrDefault());
+            }
+            var data = _context.WareHouses.Where(s => s.ProductID == productid && s.ColorID == colorID && s.OptionID == optioID).FirstOrDefault();
+            if(data == null)
+            {
+                return -1;
+            }
+            return (int)data.quantity;
+        }
 
-
-
-
-
-
+        /// <summary>
+        /// recommend product
+        /// </summary>
+        /// <param name="customerID"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public object RecommentProduct(string customerID)
+        {
+           if(customerID == null)
+            {
+                var data = _context.Products.Where(s => s.Status != false).OrderBy(s => s.CreatedAt)
+                    .Select(s => new
+                    {
+                        s.ProductID,
+                        s.DisplayName,
+                        s.SellPrice,
+                        s.ProductDiscount.DiscountPercent,
+                        Categorize = s.Categorize.DisplayName,
+                        SalePrice = s.SellPrice * (decimal)(100 - s.ProductDiscount.DiscountPercent) / 100,
+                        image = CheckExitImage(s.ProductID)
+                    });
+                return data;
+            }
+            else
+            {
+                INBCF guess = new NBCFService();
+                var recomment = guess.RecommentForYou(customerID);
+                List<object> dataRecomment = new List<object>();
+                foreach(var item in recomment)
+                {
+                    dataRecomment.Add(GetInforProduct(item));
+                }
+                return dataRecomment;
+            }
+        }
+        /// <summary>
+        /// show supplier
+        /// </summary>
+        /// <returns></returns>
+        public object ListSuppliers()
+        {
+            var data = _context.Suppliers.Where(s => s.Status != false).Select(s => new {s.SupplierID,s.DisplayName}).Take(4).ToList();
+            return data;
+        }
 
 
 
@@ -125,6 +241,22 @@ namespace DoAnChuyenNganh.Service
             }
             var result = Convert.ToBase64String(data.OrderBy(s => s.Ordinal).Select(s => s.Image1).First().ToArray());
             return result;
+        }
+
+        private object GetInforProduct(string id)
+        {
+            var data = _context.Products.Where(s => s.Status != false && s.ProductID == id)
+                    .Select(s => new
+                    {
+                        s.ProductID,
+                        s.DisplayName,
+                        s.SellPrice,
+                        s.ProductDiscount.DiscountPercent,
+                        Categorize = s.Categorize.DisplayName,
+                        SalePrice = s.SellPrice * (decimal)(100 - s.ProductDiscount.DiscountPercent) / 100,
+                        image = CheckExitImage(s.ProductID)
+                    }).FirstOrDefault();
+            return data;
         }
     }
 }

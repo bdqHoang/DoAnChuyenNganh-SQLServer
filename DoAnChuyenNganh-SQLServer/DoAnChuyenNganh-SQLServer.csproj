@@ -214,7 +214,9 @@
     <Compile Include="Areas\Admin\Controllers\DiscountManagementController.cs" />
     <Compile Include="Areas\Admin\Controllers\DiscountProductController.cs" />
     <Compile Include="Areas\Admin\Controllers\EmployeeManagementController.cs" />
+    <Compile Include="Areas\Admin\Controllers\FormController.cs" />
     <Compile Include="Areas\Admin\Controllers\InvoiceManagementController.cs" />
+    <Compile Include="Areas\Admin\Controllers\OptionManagementController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductImageController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductManagementController.cs" />
     <Compile Include="Areas\Admin\Controllers\Service\RepositoryService.cs" />
@@ -235,6 +237,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Interface\IHome.cs" />
+    <Compile Include="Interface\INBCF.cs" />
     <Compile Include="Interface\IRepository.cs" />
     <Compile Include="Models\GearShop.designer.cs">
       <AutoGen>True</AutoGen>
@@ -252,6 +255,24 @@
     <Content Include="Areas\assets\css\nucleo-icons.css" />
     <Content Include="Areas\assets\css\nucleo-svg.css" />
     <Content Include="Areas\assets\fonts\nucleo-icons.svg" />
+    <Content Include="Areas\assets\form\css\main.css" />
+    <Content Include="Areas\assets\form\images\bg-head-01.jpg" />
+    <Content Include="Areas\assets\form\images\bg-head-02.jpg" />
+    <Content Include="Areas\assets\form\js\global.js" />
+    <Content Include="Areas\assets\form\vendor\datepicker\daterangepicker.css" />
+    <Content Include="Areas\assets\form\vendor\datepicker\daterangepicker.js" />
+    <Content Include="Areas\assets\form\vendor\datepicker\moment.min.js" />
+    <Content Include="Areas\assets\form\vendor\font-awesome-4.7\css\font-awesome.css" />
+    <Content Include="Areas\assets\form\vendor\font-awesome-4.7\css\font-awesome.min.css" />
+    <Content Include="Areas\assets\form\vendor\font-awesome-4.7\fonts\fontawesome-webfont.svg" />
+    <Content Include="Areas\assets\form\vendor\font-awesome-4.7\HELP-US-OUT.txt" />
+    <Content Include="Areas\assets\form\vendor\jquery\jquery.js" />
+    <Content Include="Areas\assets\form\vendor\jquery\jquery.min.js" />
+    <Content Include="Areas\assets\form\vendor\mdi-font\css\material-design-iconic-font.css" />
+    <Content Include="Areas\assets\form\vendor\mdi-font\css\material-design-iconic-font.min.css" />
+    <Content Include="Areas\assets\form\vendor\mdi-font\fonts\Material-Design-Iconic-Font.svg" />
+    <Content Include="Areas\assets\form\vendor\select2\select2.min.css" />
+    <Content Include="Areas\assets\form\vendor\select2\select2.min.js" />
     <Content Include="Areas\assets\img\apple-icon.png" />
     <Content Include="Areas\assets\img\bg-pricing.jpg" />
     <Content Include="Areas\assets\img\bg-smart-home-1.jpg" />
@@ -356,11 +377,13 @@
     <Content Include="Assets\css\default.css" />
     <Content Include="Assets\css\flaticon.css" />
     <Content Include="Assets\css\font-awesome-pro.css" />
+    <Content Include="Assets\css\font-awesome.min.css" />
     <Content Include="Assets\css\magnific-popup.css" />
     <Content Include="Assets\css\meanmenu.css" />
     <Content Include="Assets\css\nice-select.css" />
     <Content Include="Assets\css\owl-carousel.css" />
     <Content Include="Assets\css\preloader.css" />
+    <Content Include="Assets\css\ratting.css" />
     <Content Include="Assets\css\style.css" />
     <Content Include="Assets\css\StyleProfile.css" />
     <Content Include="Assets\css\swiper-bundle.css" />
@@ -816,7 +839,6 @@
     <Content Include="Areas\Admin\Views\SupplierManagement\SupplierManagement.cshtml" />
     <Content Include="Areas\Admin\Views\UserManagement\UserManagement.cshtml" />
     <Content Include="Areas\Admin\Views\WareHouseManagement\WareHouseManagement.cshtml" />
-    <Content Include="Areas\Admin\Views\AddressManagement\AddressManagement.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\Index.cshtml" />
     <Content Include="Areas\Admin\Views\CategorizeManagement\CategorizeManagement.cshtml" />
     <Content Include="Areas\Admin\Views\DiscountManagement\DiscountManagement.cshtml" />
@@ -825,11 +847,9 @@
     <Content Include="Areas\Admin\Views\InvoiceManagement\InvoiceManagement.cshtml" />
     <Content Include="Areas\Admin\Views\ProductImage\ProductImage.cshtml" />
     <Content Include="Areas\Admin\Views\ProductManagement\ProductManagement.cshtml" />
-    <Content Include="Models\GearShop.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>GearShop.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </Content>
+    <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Admin\Views\Admin\Login.cshtml" />
     <Content Include="Areas\Admin\Data\GearShopAdmin.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>GearShopAdmin.designer.cs</LastGenOutput>
@@ -838,6 +858,23 @@
     <None Include="Areas\Admin\Data\GearShopAdmin.dbml.layout">
       <DependentUpon>GearShopAdmin.dbml</DependentUpon>
     </None>
+    <Content Include="Areas\Admin\Views\OptionManagement\OptionManagement.cshtml" />
+    <Content Include="Areas\Admin\Views\AddressManagement\AddressManagement.cshtml" />
+    <Content Include="Areas\Admin\Views\Form\Create.cshtml" />
+    <Content Include="Areas\assets\form\vendor\font-awesome-4.7\fonts\fontawesome-webfont.eot" />
+    <Content Include="Areas\assets\form\vendor\font-awesome-4.7\fonts\fontawesome-webfont.ttf" />
+    <Content Include="Areas\assets\form\vendor\font-awesome-4.7\fonts\fontawesome-webfont.woff" />
+    <Content Include="Areas\assets\form\vendor\font-awesome-4.7\fonts\fontawesome-webfont.woff2" />
+    <Content Include="Areas\assets\form\vendor\font-awesome-4.7\fonts\FontAwesome.otf" />
+    <Content Include="Areas\assets\form\vendor\mdi-font\fonts\Material-Design-Iconic-Font.eot" />
+    <Content Include="Areas\assets\form\vendor\mdi-font\fonts\Material-Design-Iconic-Font.ttf" />
+    <Content Include="Areas\assets\form\vendor\mdi-font\fonts\Material-Design-Iconic-Font.woff" />
+    <Content Include="Areas\assets\form\vendor\mdi-font\fonts\Material-Design-Iconic-Font.woff2" />
+    <Content Include="Models\GearShop.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>GearShop.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
     <None Include="Models\GearShop.dbml.layout">
       <DependentUpon>GearShop.dbml</DependentUpon>
     </None>

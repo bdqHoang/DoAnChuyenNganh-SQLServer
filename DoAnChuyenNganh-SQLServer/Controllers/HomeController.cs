@@ -1,8 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.UI.WebControls;
 using DoAnChuyenNganh.Interface;
 using DoAnChuyenNganh.Service;
+using DoAnChuyenNganh_SQLServer.Service;
 using Newtonsoft.Json;
 
 namespace DoAnChuyenNganh.Controllers
@@ -23,7 +25,8 @@ namespace DoAnChuyenNganh.Controllers
         public JsonResult ShowCategorize()
         {
             var data = _homeService.ListCategorize();
-            return Json(data, JsonRequestBehavior.AllowGet);
+            var suplier = _homeService.ListSuppliers();
+            return Json(new {data = data, suplier = suplier}, JsonRequestBehavior.AllowGet);
         }
         /// <summary>
         /// show supplier for categorize
@@ -68,7 +71,29 @@ namespace DoAnChuyenNganh.Controllers
             var data = _homeService.TrenddingItem();
             return Json(data,JsonRequestBehavior.AllowGet);
         }
-        
+
+        [HttpGet]
+        [Route("~/home/newarrival")]
+        public JsonResult NewArrival() 
+        { 
+            var data = _homeService.NewArrival();
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        [Route("~/home/getinformation")]
+        public JsonResult GetInformation(string id) {
+            var data = _homeService.DetailProduct(id);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        [Route("~/home/recommendforyou")]
+        public JsonResult RecommendForYou(string UserID)
+        {
+            var data = _homeService.RecommentProduct(UserID);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
 
         public ActionResult Shop()
         {
@@ -77,7 +102,20 @@ namespace DoAnChuyenNganh.Controllers
 
         public ActionResult DetailProduct(string id)
         {
-            return View();
+            var data = _homeService.GetProduct(id);
+            return View(data);
+        }
+
+        [HttpGet]
+        [Route("~/home/getquantity")]
+        public JsonResult GetQuantity(string productid, string colorID = null, string optioID = null)
+        {
+            var data = _homeService.Quantity(productid, colorID, optioID);
+            if(data == -1)
+            {
+                return Json("Product will update soon", JsonRequestBehavior.AllowGet);
+            }
+            return Json(data, JsonRequestBehavior.AllowGet);
         }
 
         public ActionResult WishList() 
