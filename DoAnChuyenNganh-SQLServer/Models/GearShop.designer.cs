@@ -525,7 +525,7 @@ namespace DoAnChuyenNganh_SQLServer.Models
 		
 		private string _OptionID;
 		
-		private System.Nullable<char> _quantity;
+		private System.Nullable<int> _quantity;
 		
 		private EntitySet<Cart> _Carts;
 		
@@ -547,7 +547,7 @@ namespace DoAnChuyenNganh_SQLServer.Models
     partial void OnColorIDChanged();
     partial void OnOptionIDChanging(string value);
     partial void OnOptionIDChanged();
-    partial void OnquantityChanging(System.Nullable<char> value);
+    partial void OnquantityChanging(System.Nullable<int> value);
     partial void OnquantityChanged();
     #endregion
 		
@@ -633,8 +633,8 @@ namespace DoAnChuyenNganh_SQLServer.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_quantity", DbType="Char(1)")]
-		public System.Nullable<char> quantity
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_quantity", DbType="Int")]
+		public System.Nullable<int> quantity
 		{
 			get
 			{
@@ -1835,7 +1835,7 @@ namespace DoAnChuyenNganh_SQLServer.Models
 		
 		private System.Nullable<System.DateTime> _UpdateAt;
 		
-		private System.Nullable<bool> _UpdateBy;
+		private string _UpdateBy;
 		
 		private EntitySet<Order> _Orders;
 		
@@ -1861,7 +1861,7 @@ namespace DoAnChuyenNganh_SQLServer.Models
     partial void OnCreatedByChanged();
     partial void OnUpdateAtChanging(System.Nullable<System.DateTime> value);
     partial void OnUpdateAtChanged();
-    partial void OnUpdateByChanging(System.Nullable<bool> value);
+    partial void OnUpdateByChanging(string value);
     partial void OnUpdateByChanged();
     #endregion
 		
@@ -2051,8 +2051,8 @@ namespace DoAnChuyenNganh_SQLServer.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdateBy", DbType="Bit")]
-		public System.Nullable<bool> UpdateBy
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdateBy", DbType="NVarChar(50)")]
+		public string UpdateBy
 		{
 			get
 			{

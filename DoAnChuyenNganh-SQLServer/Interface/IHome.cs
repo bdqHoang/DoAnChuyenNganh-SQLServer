@@ -40,5 +40,21 @@ namespace DoAnChuyenNganh.Interface
         /// </summary>
         /// <returns></returns>
         object TrenddingItem();
+        /// <summary>
+        /// show new product
+        /// </summary>
+        /// <returns></returns>
+        object NewArrival();
+        /// <summary>
+        /// show detail product
+        /// </summary>
+        /// <returns></returns>
+        object DetailProduct(string id);
+        /// <summary>
+        /// get information product
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Product GetProduct(string id);
     }
 }

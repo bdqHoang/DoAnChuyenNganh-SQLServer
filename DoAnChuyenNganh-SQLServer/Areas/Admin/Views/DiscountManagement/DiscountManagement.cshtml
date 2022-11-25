@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<DoAnChuyenNganh_SQLServer.Areas.Admin.Data.Discount>
 @{
     ViewBag.Title = "DiscountManagement";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
@@ -30,23 +30,60 @@
         <th></th>
 
     </tr>
-@*    @foreach (var item in Model)
-    {
-        <tr>
-            <td>@Html.DisplayFor(modelItem => item.DiscountID)</td>
-            <td>@Html.DisplayFor(modelItem => item.NumberOfUse)</td>
-            <td>@Html.DisplayFor(modelItem => item.DiscountPercent)</td>
-            <td>@item.StartDate.Value.ToString("dd/MM/yyyy hh:mm:ss tt")</td>
-            <td>@item.EndDate.Value.ToString("dd/MM/yyyy hh:mm:ss tt")</td>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.DiscountID)</td>
+                <td>@Html.DisplayFor(modelItem => item.NumberOfUse)</td>
+                <td>@Html.DisplayFor(modelItem => item.DiscountPersent)</td>
+                <td>@item.StartDate.Value.ToString("dd/MM/yyyy hh:mm:ss tt")</td>
+                <td>@item.EndDate.Value.ToString("dd/MM/yyyy hh:mm:ss tt")</td>
 
-            <td style="width: 280px">
-                <i></i>
-                @Html.ActionLink("Sửa", "Edit", new { id = item.DiscountID }, new { @class = "btn btn-warning" })
-                <i></i>
-            </td>
-        </tr>
-    }*@
+                <td style="width: 280px">
+                    <i></i>
+                    @Html.ActionLink("Sửa", "Edit", new { id = item.DiscountID }, new { @class = "btn btn-warning" })
+                    <i></i>
+                </td>
+            </tr>
+        }
 </table>
+<!--Create modal start -->
+<div class="modal fade" id="CreateModalID_Admin" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        @using (Html.BeginForm("Create", "CategorizeManagement", FormMethod.Post))
+        {
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thêm loại sản phẩm</h5>
+                </div>
+
+                <div class="modal-body">
+                    <div class="font-robo">
+                        <div class="wrapper wrapper--w680">
+                            <div>
+                                <div>
+                                    <div class="input-group">
+                                        <input class="input--style-1" type="text" placeholder="Mã loại" name="CategorizeID">
+                                    </div>
+                                    <div class="input-group">
+                                        <input class="input--style-1" type="text" placeholder="Tên loại" name="DisplayName">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary">Thêm</button>
+                </div>
+
+            </div>
+        }
+    </div>
+</div>
+<!--end-->
 <script>
     var tables = document.getElementsByTagName('table');
     var table = tables[tables.length - 1];

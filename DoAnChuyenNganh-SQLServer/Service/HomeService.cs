@@ -101,9 +101,56 @@ namespace DoAnChuyenNganh.Service
                     SalePrice=s.SellPrice *(decimal)(100-s.ProductDiscount.DiscountPercent)/100, image = CheckExitImage(s.ProductID)});
             return (data);
         }
+        /// <summary>
+        /// show new product
+        /// </summary>
+        /// <returns></returns>
+        public object NewArrival()
+        {
+            var data = _context.Products.Include(s => s.Images).Include(s => s.Categorize).Include(s => s.ProductDiscount).Include(s => s.Supplier)
+                .Where(s => s.Status != false).OrderBy(s=>s.CreatedAt)
+                .Select(s => new
+                {
+                    s.ProductID,
+                    s.DisplayName,
+                    Categorize = s.Categorize.DisplayName,
+                    s.SellPrice,
+                    s.ProductDiscount.DiscountPercent,
+                    SalePrice = s.SellPrice * (decimal)(100 - s.ProductDiscount.DiscountPercent) / 100,
+                    image = CheckExitImage(s.ProductID)
+                });
+            return data;
+        }
+        /// <summary>
+        /// show detail product
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public object DetailProduct(string id)
+        {
+            var data = _context.Products
+                .Where(s => s.Status != false && s.ProductID == id)
+                .Select(s => new { s.ProductID, s.DisplayName, Categorize = s.Categorize.DisplayName, s.CategorizeID,
+                    Supplier = s.Supplier.DisplayName, s.ProductDiscount.DiscountPercent, s.SellPrice,
+                    SalePrice = s.SellPrice * (decimal)(100 - s.ProductDiscount.DiscountPercent) / 100, s.Rating, Comment = s.FeedBacks.Select(v => v.Content),
+                    Color = s.WareHouses.Select(v => v.Color.DisplayName),
+                    Option = s.WareHouses.Select(v => v.Option.DisplayName),
+                    image = s.Images.OrderByDescending(v=>v.Ordinal).Select(v=>Convert.ToBase64String(v.Image1.ToArray())).Take(4),
+                    Quantity = s.WareHouses.GroupBy(v=>v.ProductID).Select(v=>v.Sum(m=>m.quantity)),
+                }).FirstOrDefault();
+            return data;
+                
+        }
 
-
-
+        /// <summary>
+        /// getdate product
+        /// </summary>
+        /// <param name="product"></param>
+        /// <returns></returns>
+        public Product GetProduct(string id)
+        {
+            return _context.Products.FirstOrDefault(s => s.ProductID == id);
+        }
 
 
 
@@ -126,5 +173,6 @@ namespace DoAnChuyenNganh.Service
             var result = Convert.ToBase64String(data.OrderBy(s => s.Ordinal).Select(s => s.Image1).First().ToArray());
             return result;
         }
+
     }
 }

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="GearShop" Class="GearShopDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=BuiHoang;Initial Catalog=GearShop;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="GearShopConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=DESKTOP-4MIVRNE\SQLEXPRESS;Initial Catalog=GearShop;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="GearShopConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Cart" Member="Carts">
     <Type Name="Cart">
       <Column Name="CustomerID" Type="System.String" DbType="VarChar(11) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -16,7 +16,7 @@
       <Column Name="ProductID" Type="System.String" DbType="VarChar(11) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="ColorID" Type="System.String" DbType="VarChar(11) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="OptionID" Type="System.String" DbType="VarChar(11) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="quantity" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
+      <Column Name="quantity" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Association Name="WareHouse_Cart" Member="Carts" ThisKey="ProductID,ColorID,OptionID" OtherKey="ProductID,ColorID,OptionID" Type="Cart" />
       <Association Name="WareHouse_OrderDetail" Member="OrderDetails" ThisKey="ProductID,ColorID,OptionID" OtherKey="ProductID,ColorID,OptionID" Type="OrderDetail" />
       <Association Name="Color_WareHouse" Member="Color" ThisKey="ColorID" OtherKey="ColorID" Type="Color" IsForeignKey="true" />
@@ -84,7 +84,7 @@
       <Column Name="CreatedAt" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
       <Column Name="CreatedBy" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="UpdateAt" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
-      <Column Name="UpdateBy" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="UpdateBy" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Association Name="Discount_Order" Member="Orders" ThisKey="DiscountID" OtherKey="DiscountID" Type="Order" />
     </Type>
   </Table>

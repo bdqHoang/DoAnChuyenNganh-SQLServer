@@ -68,7 +68,21 @@ namespace DoAnChuyenNganh.Controllers
             var data = _homeService.TrenddingItem();
             return Json(data,JsonRequestBehavior.AllowGet);
         }
-        
+
+        [HttpGet]
+        [Route("~/home/newarrival")]
+        public JsonResult NewArrival() 
+        { 
+            var data = _homeService.NewArrival();
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        [Route("~/home/getinformation")]
+        public JsonResult GetInformation(string id) {
+            var data = _homeService.DetailProduct(id);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
 
         public ActionResult Shop()
         {
@@ -77,7 +91,8 @@ namespace DoAnChuyenNganh.Controllers
 
         public ActionResult DetailProduct(string id)
         {
-            return View();
+            var data = _homeService.GetProduct(id);
+            return View(data);
         }
 
         public ActionResult WishList() 

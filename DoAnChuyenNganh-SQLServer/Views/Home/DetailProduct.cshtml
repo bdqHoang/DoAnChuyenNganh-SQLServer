@@ -1,30 +1,12 @@
-﻿
+﻿@model DoAnChuyenNganh_SQLServer.Models.Product
 @{
     ViewBag.Title = "DetailProduct";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@section Header{
+    <link href="~/Assets/css/ratting.css" rel="stylesheet" />
+}
 <main>
-    <!-- page__title-start -->
-    <section class="page__title p-relative d-flex align-items-center" data-background="~/Assets/img/bg/page-title-1.jpg" style="background-image: url(&quot;~/Assets/img/page-title/page-title-1.jpg&quot;);">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="page__title-inner text-center">
-                        <h1>Product Details</h1>
-                        <div class="page__title-breadcrumb">
-                            <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb justify-content-center">
-                                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Product Details</li>
-                                </ol>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- page__title-end -->
     <!-- product-details-start -->
     <section class="product-details pt-90 pb-50">
         <div class="container">
@@ -33,22 +15,8 @@
                     <div class="product__modal-box d-flex">
                         <div class="product__modal-nav mr-20">
                             <nav>
-                                <div class="nav nav-tabs" id="product-details" role="tablist">
-                                    <a class="nav-item nav-link active" id="pro-one-tab" data-bs-toggle="tab" href="#pro-one" role="tab" aria-controls="pro-one" aria-selected="true">
-                                        <div class="product__nav-img w-img">
-                                            <img src="~/Assets/img/products/quick-view/nav/quick-nav-02-1.jpg" alt="">
-                                        </div>
-                                    </a>
-                                    <a class="nav-item nav-link" id="pro-two-tab" data-bs-toggle="tab" href="#pro-two" role="tab" aria-controls="pro-two" aria-selected="false">
-                                        <div class="product__nav-img w-img">
-                                            <img src="~/Assets/img/products/quick-view/nav/quick-nav-02-2.jpg" alt="">
-                                        </div>
-                                    </a>
-                                    <a class="nav-item nav-link" id="pro-three-tab" data-bs-toggle="tab" href="#pro-three" role="tab" aria-controls="pro-three" aria-selected="false">
-                                        <div class="product__nav-img w-img">
-                                            <img src="~/Assets/img/products/quick-view/nav/quick-nav-02-3.jpg" alt="">
-                                        </div>
-                                    </a>
+                                <div class="nav nav-tabs" id="img-product-details" role="tablist">
+
                                 </div>
                             </nav>
                         </div>
@@ -86,18 +54,10 @@
                 <div class="col-xl-6 col-lg-6">
                     <div class="product__modal-content-2">
                         <h4><a href="product-details.html">Wooden container Bowl</a></h4>
-                        <div class="rating rating-shop mb-15">
-                            <ul>
-                                <li><span><i class="fas fa-star"></i></span></li>
-                                <li><span><i class="fas fa-star"></i></span></li>
-                                <li><span><i class="fas fa-star"></i></span></li>
-                                <li><span><i class="fas fa-star"></i></span></li>
-                                <li><span><i class="fal fa-star"></i></span></li>
-                            </ul>
-                            <span class="rating-no ml-10 rating-left">
-                                3 rating(s)
+                        <div class="rating-shop mb-15">
+                            <span class="product__details-color d-sm-flex align-items-center mb-25">
+                                Average number of stars: 3 (<i class="fas fa-star" style="color: #ff8429"></i>)
                             </span>
-                            <span class="review rating-left"><a href="#">Add your Review</a></span>
                         </div>
                         <div class="product__price mb-25">
                             <span>$96.00</span>
@@ -151,21 +111,14 @@
                             </div>
                         </div>
                         <div class="product__tag mb-25">
+                            Quantity in warehouse: <span> 50</span>
+                        </div>
+                        <div class="product__tag mb-25">
                             <span class="ct mr-20">Category:</span>
                             <span><a href="#">Accessories,</a></span>
                             <span><a href="#">Gaming,</a></span>
                             <span><a href="#">PC Computers,</a></span>
                             <span><a href="#">Ultrabooks</a></span>
-                        </div>
-                        <div class="product__share">
-                            <span>Share :</span>
-                            <ul>
-                                <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-                                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-                                <li><a href="#"><i class="fab fa-behance"></i></a></li>
-                                <li><a href="#"><i class="fab fa-linkedin-in"></i></a></li>
-                                <li><a href="#"><i class="fab fa-youtube"></i></a></li>
-                            </ul>
                         </div>
                     </div>
                 </div>
@@ -270,55 +223,6 @@
                                                                 </ul>
                                                             </div>
                                                             <p>Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for <span>“lorem ipsum”</span> will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose.</p>
-                                                            <a class="reply-2" href="#">Leave Reply</a>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li class="children">
-                                                    <div class="comments-box">
-                                                        <div class="comments-avatar">
-                                                            <img src="~/Assets/img/author/avater-2.png" alt="">
-                                                        </div>
-                                                        <div class="comments-text">
-                                                            <div class="avatar-name">
-                                                                <h5>Julias Roy</h5>
-                                                                <span> - 6 months ago </span>
-                                                            </div>
-                                                            <div class="user-rating">
-                                                                <ul>
-                                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                                    <li><a href="#"><i class="fal fa-star"></i></a></li>
-                                                                </ul>
-                                                            </div>
-                                                            <p>Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for <span>“lorem ipsum”</span> will uncover many web sites still in their infancy. </p>
-                                                            <a class="reply-2" href="#">Leave Reply</a>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <li>
-                                                    <div class="comments-box">
-                                                        <div class="comments-avatar">
-                                                            <img src="~/Assets/img/author/avater-3.png" alt="">
-                                                        </div>
-                                                        <div class="comments-text">
-                                                            <div class="avatar-name">
-                                                                <h5>Arista Williamson</h5>
-                                                                <span> - 6 months ago </span>
-                                                            </div>
-                                                            <div class="user-rating">
-                                                                <ul>
-                                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                                    <li><a href="#"><i class="fas fa-star"></i></a></li>
-                                                                    <li><a href="#"><i class="fal fa-star"></i></a></li>
-                                                                </ul>
-                                                            </div>
-                                                            <p>Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for <span>“lorem ipsum”</span> will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose.</p>
-                                                            <a class="reply-2" href="#">Leave Reply</a>
                                                         </div>
                                                     </div>
                                                 </li>
@@ -330,52 +234,17 @@
                                             <h3>Your Review</h3>
                                             <div class="post-rating">
                                                 <span>Your Rating :</span>
-                                                <ul class="ml-5">
-                                                    <li>
-                                                        <a href="#">
-                                                            <i class="fal fa-star"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">
-                                                            <i class="fal fa-star"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">
-                                                            <i class="fal fa-star"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">
-                                                            <i class="fal fa-star"></i>
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a href="#">
-                                                            <i class="fal fa-star"></i>
-                                                        </a>
-                                                    </li>
-                                                </ul>
+                                                <div class="rating" id="post-ratting">
+                                                    <input type="radio" name="rating" value="5" id="5"><label for="5">☆</label>
+                                                    <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label>
+                                                    <input type="radio" name="rating" value="3" id="3"><label for="3">☆</label>
+                                                    <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label>
+                                                    <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label>
+                                                </div>
                                             </div>
                                         </div>
                                         <form id="contacts-form" class="conatct-post-form" action="#">
                                             <div class="row">
-                                                <div class="col-xl-6 col-lg-6 col-md-6">
-                                                    <div class="contact-icon p-relative contacts-name">
-                                                        <input type="text" placeholder="Name">
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-6 col-lg-6 col-md-6">
-                                                    <div class="contact-icon p-relative contacts-name">
-                                                        <input type="email" placeholder="Email">
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-12">
-                                                    <div class="contact-icon p-relative contacts-email">
-                                                        <input type="text" placeholder="Subject">
-                                                    </div>
-                                                </div>
                                                 <div class="col-xl-12">
                                                     <div class="contact-icon p-relative contacts-message">
                                                         <textarea name="comments" id="comments" cols="30" rows="10" placeholder="Comments"></textarea>
@@ -744,7 +613,7 @@
                                     <div class="product__modal-review d-sm-flex">
                                         <div class="rating mb-15 mr-35">
                                             <ul>
-                                                <li><a href="#"><i class="fal fa-star"></i></a></li>
+                                                <li><a href="#">c</a></li>
                                                 <li><a href="#"><i class="fal fa-star"></i></a></li>
                                                 <li><a href="#"><i class="fal fa-star"></i></a></li>
                                                 <li><a href="#"><i class="fal fa-star"></i></a></li>
@@ -790,3 +659,77 @@
     <!-- shop modal end -->
 
 </main>
+@section Footer{
+    <script>
+            $(document).ready(function () {
+                GetInformation();
+            });
+        function GetInformation() {
+                    $.ajax({
+                        url: "/home/getinformation",
+                        type: "Get",
+                        data: { id: "@Model.ProductID" },
+                        success: function (data) {
+                            console.log(data);
+                            //fillhinh
+                            var dataimgcontent = ``
+                            var dataimgtap = ``
+                            //fill tab contend
+                            if (data.image.length != 0) {
+                                for (var i = 0; i < data.image.length; i++) {
+                                    if (i == 0) {
+                                        dataimgcontent += `<a class="nav-item nav-link active" id="pro-one-tab" data-bs-toggle="tab" href="#pro-one" role="tab" aria-controls="pro-one" aria-selected="true">
+                                        <div class="product__nav-img w-img">
+                                        <img src="data:image/gif;base64,${data.image[i]}" style="width: 90px;height: 115px; alt="">
+                                        </div>
+                                    </a>`;
+                                        dataimgtap += `<li class="nav-item" role="presentation">
+                                            <button class="nav-link active" id="nav1-tab" data-bs-toggle="tab" data-bs-target="#nav1" type="button" role="tab" aria-controls="nav1" aria-selected="true">
+                                                <img src="data:image/gif;base64,${data.image[i]}" style="width: 85px;height: 85px;" alt="">
+                                            </button>
+                                        </li>`
+                                    } else {
+                                        dataimgcontent += `<div class="tab-pane fade" id="nav${i + 1}" role="tabpanel" aria-labelledby="nav${i + 1}-tab">
+                                            <div class="product__modal-img w-img">
+                                                <img src="data:image/gif;base64,${data.image[i]}" alt="">
+                                            </div>
+                                        </div>`;
+                                        dataimgtap += `<li class="nav-item" role="presentation">
+                                            <button class="nav-link" id="nav${i + 1}-tab" data-bs-toggle="tab" data-bs-target="#nav${i + 1}" type="button" role="tab" aria-controls="nav${i + 1}" aria-selected="false">
+                                                <img src="data:image/gif;base64,${data.image[i]}" style="width: 85px;height: 85px;" alt="">
+                                            </button>
+                                        </li>`
+                                    }
+                                }
+                            } else {
+                                dataimgcontent += `<div class="tab-pane fade show active" id="nav1" role="tabpanel" aria-labelledby="nav1-tab">
+                                            <div class="product__modal-img w-img">
+                                                <img src="/Assets/img/EmptyBox/Empty.png" style = "width: 90px;height: 115px;" alt="">
+                                            </div>
+                                        </div>`;
+                                dataimgtap += `<li class="nav-item" role="presentation">
+                                            <button class="nav-link active" id="nav1-tab" data-bs-toggle="tab" data-bs-target="#nav1" type="button" role="tab" aria-controls="nav1" aria-selected="true">
+                                                <img src="/Assets/img/EmptyBox/Empty.png" style="width: 85px;height: 85px;" alt="">
+                                            </button>
+                                        </li>`
+                            }
+                            $("#img-product-details").html(dataimgcontent);
+
+                        }
+
+                    });
+
+        }
+
+        /////////////////////////////////////////////////////funtion///////////////////////////////////////
+        function ShowImg(data, style) {
+            var img = ``;
+            img = `<img src="data:image/gif;base64,${data.image}" ${style} alt="">`;
+            if (data.image == null) {
+                img = `<img src="/Assets/img/EmptyBox/Empty.png" ${style} alt="">`;
+            }
+            return img;
+        }
+    </script>
+}
+
