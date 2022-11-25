@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<DoAnChuyenNganh_SQLServer.Areas.Admin.Data.WareHouse>
 @{
     ViewBag.Title = "WareHouseManagement";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
@@ -25,16 +25,16 @@
         <th>STT</th>
         <th>Mã sản phẩm</th>
         <th>Mã màu</th>
-        <th>Mã switch</th>
+        <th>Mã chọn</th>
         <th>Số lượng tồn</th>
     </tr>
-@*    @foreach (var item in Model)
+    @foreach (var item in Model)
     {
         <tr>
             <td>@Html.DisplayFor(modelItem => item.ProductID)</td>
-            <td>@Html.DisplayFor(modelItem => item.CollorID)</td>
-            <td>@Html.DisplayFor(modelItem => item.SwitchID)</td>
-            <td>@Html.DisplayFor(modelItem => item.Quantity)</td>
+            <td>@Html.DisplayFor(modelItem => item.ColorID)</td>
+            <td>@Html.DisplayFor(modelItem => item.OptionID)</td>
+            <td>@Html.DisplayFor(modelItem => item.quantity)</td>
 
             <td style="width: 280px">
                 <i></i>
@@ -44,7 +44,7 @@
 
         </tr>
     }
-*@</table>
+</table>
 <script>
     var tables = document.getElementsByTagName('table');
     var table = tables[tables.length - 1];

@@ -13,11 +13,6 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 {
 	using System.Data.Linq;
 	using System.Data.Linq.Mapping;
-	using System.Data;
-	using System.Collections.Generic;
-	using System.Reflection;
-	using System.Linq;
-	using System.Linq.Expressions;
 	using System.ComponentModel;
 	using System;
 	
@@ -33,9 +28,6 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
     partial void InsertCart(Cart instance);
     partial void UpdateCart(Cart instance);
     partial void DeleteCart(Cart instance);
-    partial void InsertWareHouse(WareHouse instance);
-    partial void UpdateWareHouse(WareHouse instance);
-    partial void DeleteWareHouse(WareHouse instance);
     partial void InsertCategorize(Categorize instance);
     partial void UpdateCategorize(Categorize instance);
     partial void DeleteCategorize(Categorize instance);
@@ -84,10 +76,13 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
     partial void InsertSupplier(Supplier instance);
     partial void UpdateSupplier(Supplier instance);
     partial void DeleteSupplier(Supplier instance);
+    partial void InsertWareHouse(WareHouse instance);
+    partial void UpdateWareHouse(WareHouse instance);
+    partial void DeleteWareHouse(WareHouse instance);
     #endregion
 		
 		public GearShopAdminDataContext() : 
-				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["GearShopConnectionString"].ConnectionString, mappingSource)
+				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["GearShopConnectionString1"].ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -121,14 +116,6 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 			get
 			{
 				return this.GetTable<Cart>();
-			}
-		}
-		
-		public System.Data.Linq.Table<WareHouse> WareHouses
-		{
-			get
-			{
-				return this.GetTable<WareHouse>();
 			}
 		}
 		
@@ -259,6 +246,14 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 				return this.GetTable<Supplier>();
 			}
 		}
+		
+		public System.Data.Linq.Table<WareHouse> WareHouses
+		{
+			get
+			{
+				return this.GetTable<WareHouse>();
+			}
+		}
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Cart")]
@@ -277,9 +272,9 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 		
 		private System.Nullable<int> _Quantity;
 		
-		private EntityRef<WareHouse> _WareHouse;
-		
 		private EntityRef<Customer> _Customer;
+		
+		private EntityRef<WareHouse> _WareHouse;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -299,8 +294,8 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 		
 		public Cart()
 		{
-			this._WareHouse = default(EntityRef<WareHouse>);
 			this._Customer = default(EntityRef<Customer>);
+			this._WareHouse = default(EntityRef<WareHouse>);
 			OnCreated();
 		}
 		
@@ -420,6 +415,40 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Customer_Cart", Storage="_Customer", ThisKey="CustomerID", OtherKey="CustomerID", IsForeignKey=true)]
+		public Customer Customer
+		{
+			get
+			{
+				return this._Customer.Entity;
+			}
+			set
+			{
+				Customer previousValue = this._Customer.Entity;
+				if (((previousValue != value) 
+							|| (this._Customer.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Customer.Entity = null;
+						previousValue.Carts.Remove(this);
+					}
+					this._Customer.Entity = value;
+					if ((value != null))
+					{
+						value.Carts.Add(this);
+						this._CustomerID = value.CustomerID;
+					}
+					else
+					{
+						this._CustomerID = default(string);
+					}
+					this.SendPropertyChanged("Customer");
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WareHouse_Cart", Storage="_WareHouse", ThisKey="ProductID,ColorID,OptionID", OtherKey="ProductID,ColorID,OptionID", IsForeignKey=true)]
 		public WareHouse WareHouse
 		{
@@ -458,40 +487,6 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Customer_Cart", Storage="_Customer", ThisKey="CustomerID", OtherKey="CustomerID", IsForeignKey=true)]
-		public Customer Customer
-		{
-			get
-			{
-				return this._Customer.Entity;
-			}
-			set
-			{
-				Customer previousValue = this._Customer.Entity;
-				if (((previousValue != value) 
-							|| (this._Customer.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Customer.Entity = null;
-						previousValue.Carts.Remove(this);
-					}
-					this._Customer.Entity = value;
-					if ((value != null))
-					{
-						value.Carts.Add(this);
-						this._CustomerID = value.CustomerID;
-					}
-					else
-					{
-						this._CustomerID = default(string);
-					}
-					this.SendPropertyChanged("Customer");
-				}
-			}
-		}
-		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -510,319 +505,6 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.WareHouse")]
-	public partial class WareHouse : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private string _ProductID;
-		
-		private string _ColorID;
-		
-		private string _OptionID;
-		
-		private System.Nullable<char> _quantity;
-		
-		private EntitySet<Cart> _Carts;
-		
-		private EntitySet<OrderDetail> _OrderDetails;
-		
-		private EntityRef<Color> _Color;
-		
-		private EntityRef<Option> _Option;
-		
-		private EntityRef<Product> _Product;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnProductIDChanging(string value);
-    partial void OnProductIDChanged();
-    partial void OnColorIDChanging(string value);
-    partial void OnColorIDChanged();
-    partial void OnOptionIDChanging(string value);
-    partial void OnOptionIDChanged();
-    partial void OnquantityChanging(System.Nullable<char> value);
-    partial void OnquantityChanged();
-    #endregion
-		
-		public WareHouse()
-		{
-			this._Carts = new EntitySet<Cart>(new Action<Cart>(this.attach_Carts), new Action<Cart>(this.detach_Carts));
-			this._OrderDetails = new EntitySet<OrderDetail>(new Action<OrderDetail>(this.attach_OrderDetails), new Action<OrderDetail>(this.detach_OrderDetails));
-			this._Color = default(EntityRef<Color>);
-			this._Option = default(EntityRef<Option>);
-			this._Product = default(EntityRef<Product>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ProductID", DbType="VarChar(11) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string ProductID
-		{
-			get
-			{
-				return this._ProductID;
-			}
-			set
-			{
-				if ((this._ProductID != value))
-				{
-					if (this._Product.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnProductIDChanging(value);
-					this.SendPropertyChanging();
-					this._ProductID = value;
-					this.SendPropertyChanged("ProductID");
-					this.OnProductIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ColorID", DbType="VarChar(11) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string ColorID
-		{
-			get
-			{
-				return this._ColorID;
-			}
-			set
-			{
-				if ((this._ColorID != value))
-				{
-					if (this._Color.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnColorIDChanging(value);
-					this.SendPropertyChanging();
-					this._ColorID = value;
-					this.SendPropertyChanged("ColorID");
-					this.OnColorIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OptionID", DbType="VarChar(11) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string OptionID
-		{
-			get
-			{
-				return this._OptionID;
-			}
-			set
-			{
-				if ((this._OptionID != value))
-				{
-					if (this._Option.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnOptionIDChanging(value);
-					this.SendPropertyChanging();
-					this._OptionID = value;
-					this.SendPropertyChanged("OptionID");
-					this.OnOptionIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_quantity", DbType="Char(1)")]
-		public System.Nullable<char> quantity
-		{
-			get
-			{
-				return this._quantity;
-			}
-			set
-			{
-				if ((this._quantity != value))
-				{
-					this.OnquantityChanging(value);
-					this.SendPropertyChanging();
-					this._quantity = value;
-					this.SendPropertyChanged("quantity");
-					this.OnquantityChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WareHouse_Cart", Storage="_Carts", ThisKey="ProductID,ColorID,OptionID", OtherKey="ProductID,ColorID,OptionID")]
-		public EntitySet<Cart> Carts
-		{
-			get
-			{
-				return this._Carts;
-			}
-			set
-			{
-				this._Carts.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WareHouse_OrderDetail", Storage="_OrderDetails", ThisKey="ProductID,ColorID,OptionID", OtherKey="ProductID,ColorID,OptionID")]
-		public EntitySet<OrderDetail> OrderDetails
-		{
-			get
-			{
-				return this._OrderDetails;
-			}
-			set
-			{
-				this._OrderDetails.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Color_WareHouse", Storage="_Color", ThisKey="ColorID", OtherKey="ColorID", IsForeignKey=true)]
-		public Color Color
-		{
-			get
-			{
-				return this._Color.Entity;
-			}
-			set
-			{
-				Color previousValue = this._Color.Entity;
-				if (((previousValue != value) 
-							|| (this._Color.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Color.Entity = null;
-						previousValue.WareHouses.Remove(this);
-					}
-					this._Color.Entity = value;
-					if ((value != null))
-					{
-						value.WareHouses.Add(this);
-						this._ColorID = value.ColorID;
-					}
-					else
-					{
-						this._ColorID = default(string);
-					}
-					this.SendPropertyChanged("Color");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Option_WareHouse", Storage="_Option", ThisKey="OptionID", OtherKey="OptionID", IsForeignKey=true)]
-		public Option Option
-		{
-			get
-			{
-				return this._Option.Entity;
-			}
-			set
-			{
-				Option previousValue = this._Option.Entity;
-				if (((previousValue != value) 
-							|| (this._Option.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Option.Entity = null;
-						previousValue.WareHouses.Remove(this);
-					}
-					this._Option.Entity = value;
-					if ((value != null))
-					{
-						value.WareHouses.Add(this);
-						this._OptionID = value.OptionID;
-					}
-					else
-					{
-						this._OptionID = default(string);
-					}
-					this.SendPropertyChanged("Option");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Product_WareHouse", Storage="_Product", ThisKey="ProductID", OtherKey="ProductID", IsForeignKey=true)]
-		public Product Product
-		{
-			get
-			{
-				return this._Product.Entity;
-			}
-			set
-			{
-				Product previousValue = this._Product.Entity;
-				if (((previousValue != value) 
-							|| (this._Product.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Product.Entity = null;
-						previousValue.WareHouses.Remove(this);
-					}
-					this._Product.Entity = value;
-					if ((value != null))
-					{
-						value.WareHouses.Add(this);
-						this._ProductID = value.ProductID;
-					}
-					else
-					{
-						this._ProductID = default(string);
-					}
-					this.SendPropertyChanged("Product");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_Carts(Cart entity)
-		{
-			this.SendPropertyChanging();
-			entity.WareHouse = this;
-		}
-		
-		private void detach_Carts(Cart entity)
-		{
-			this.SendPropertyChanging();
-			entity.WareHouse = null;
-		}
-		
-		private void attach_OrderDetails(OrderDetail entity)
-		{
-			this.SendPropertyChanging();
-			entity.WareHouse = this;
-		}
-		
-		private void detach_OrderDetails(OrderDetail entity)
-		{
-			this.SendPropertyChanging();
-			entity.WareHouse = null;
 		}
 	}
 	
@@ -1835,7 +1517,7 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 		
 		private System.Nullable<System.DateTime> _UpdateAt;
 		
-		private System.Nullable<bool> _UpdateBy;
+		private string _UpdateBy;
 		
 		private EntitySet<Order> _Orders;
 		
@@ -1861,7 +1543,7 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
     partial void OnCreatedByChanged();
     partial void OnUpdateAtChanging(System.Nullable<System.DateTime> value);
     partial void OnUpdateAtChanged();
-    partial void OnUpdateByChanging(System.Nullable<bool> value);
+    partial void OnUpdateByChanging(string value);
     partial void OnUpdateByChanged();
     #endregion
 		
@@ -2051,8 +1733,8 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdateBy", DbType="Bit")]
-		public System.Nullable<bool> UpdateBy
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_UpdateBy", DbType="NVarChar(50)")]
+		public string UpdateBy
 		{
 			get
 			{
@@ -2123,7 +1805,7 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
 		
-		private char _EmployeeID;
+		private string _EmployeeID;
 		
 		private string _PositionID;
 		
@@ -2161,7 +1843,7 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
     partial void OnCreated();
-    partial void OnEmployeeIDChanging(char value);
+    partial void OnEmployeeIDChanging(string value);
     partial void OnEmployeeIDChanged();
     partial void OnPositionIDChanging(string value);
     partial void OnPositionIDChanged();
@@ -2200,8 +1882,8 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmployeeID", DbType="Char(1) NOT NULL", IsPrimaryKey=true)]
-		public char EmployeeID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmployeeID", DbType="VarChar(11) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string EmployeeID
 		{
 			get
 			{
@@ -2844,6 +2526,8 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 		
 		private string _UpdateBy;
 		
+		private System.Nullable<int> _Ordinal;
+		
 		private EntityRef<Product> _Product;
 		
     #region Extensibility Method Definitions
@@ -2864,6 +2548,8 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
     partial void OnUpdateAtChanged();
     partial void OnUpdateByChanging(string value);
     partial void OnUpdateByChanged();
+    partial void OnOrdinalChanging(System.Nullable<int> value);
+    partial void OnOrdinalChanged();
     #endregion
 		
 		public Image()
@@ -3016,6 +2702,26 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Ordinal", DbType="Int")]
+		public System.Nullable<int> Ordinal
+		{
+			get
+			{
+				return this._Ordinal;
+			}
+			set
+			{
+				if ((this._Ordinal != value))
+				{
+					this.OnOrdinalChanging(value);
+					this.SendPropertyChanging();
+					this._Ordinal = value;
+					this.SendPropertyChanged("Ordinal");
+					this.OnOrdinalChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Product_Image", Storage="_Product", ThisKey="ProductID", OtherKey="ProductID", IsForeignKey=true)]
 		public Product Product
 		{
@@ -3079,7 +2785,7 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 		
 		private string _InvoiceID;
 		
-		private char _EmployeeID;
+		private string _EmployeeID;
 		
 		private string _OrderID;
 		
@@ -3109,7 +2815,7 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
     partial void OnCreated();
     partial void OnInvoiceIDChanging(string value);
     partial void OnInvoiceIDChanged();
-    partial void OnEmployeeIDChanging(char value);
+    partial void OnEmployeeIDChanging(string value);
     partial void OnEmployeeIDChanged();
     partial void OnOrderIDChanging(string value);
     partial void OnOrderIDChanged();
@@ -3158,8 +2864,8 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmployeeID", DbType="Char(1) NOT NULL")]
-		public char EmployeeID
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_EmployeeID", DbType="VarChar(11) NOT NULL", CanBeNull=false)]
+		public string EmployeeID
 		{
 			get
 			{
@@ -3182,7 +2888,7 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderID", DbType="VarChar(1) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderID", DbType="VarChar(11) NOT NULL", CanBeNull=false)]
 		public string OrderID
 		{
 			get
@@ -3393,7 +3099,7 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 					}
 					else
 					{
-						this._EmployeeID = default(char);
+						this._EmployeeID = default(string);
 					}
 					this.SendPropertyChanged("Employee");
 				}
@@ -3742,7 +3448,7 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderID", DbType="VarChar(1) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderID", DbType="VarChar(11) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
 		public string OrderID
 		{
 			get
@@ -4056,7 +3762,7 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 			OnCreated();
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderID", DbType="VarChar(1) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OrderID", DbType="VarChar(11) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
 		public string OrderID
 		{
 			get
@@ -4569,11 +4275,11 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 		
 		private System.Nullable<bool> _Status;
 		
-		private EntitySet<WareHouse> _WareHouses;
-		
 		private EntitySet<FeedBack> _FeedBacks;
 		
 		private EntitySet<Image> _Images;
+		
+		private EntitySet<WareHouse> _WareHouses;
 		
 		private EntityRef<Categorize> _Categorize;
 		
@@ -4633,9 +4339,9 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 		
 		public Product()
 		{
-			this._WareHouses = new EntitySet<WareHouse>(new Action<WareHouse>(this.attach_WareHouses), new Action<WareHouse>(this.detach_WareHouses));
 			this._FeedBacks = new EntitySet<FeedBack>(new Action<FeedBack>(this.attach_FeedBacks), new Action<FeedBack>(this.detach_FeedBacks));
 			this._Images = new EntitySet<Image>(new Action<Image>(this.attach_Images), new Action<Image>(this.detach_Images));
+			this._WareHouses = new EntitySet<WareHouse>(new Action<WareHouse>(this.attach_WareHouses), new Action<WareHouse>(this.detach_WareHouses));
 			this._Categorize = default(EntityRef<Categorize>);
 			this._ProductDiscount = default(EntityRef<ProductDiscount>);
 			this._Supplier = default(EntityRef<Supplier>);
@@ -4686,7 +4392,7 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ProductDiscountID", DbType="VarChar(11) NOT NULL", CanBeNull=false)]
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ProductDiscountID", DbType="VarChar(11)")]
 		public string ProductDiscountID
 		{
 			get
@@ -5094,19 +4800,6 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Product_WareHouse", Storage="_WareHouses", ThisKey="ProductID", OtherKey="ProductID")]
-		public EntitySet<WareHouse> WareHouses
-		{
-			get
-			{
-				return this._WareHouses;
-			}
-			set
-			{
-				this._WareHouses.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Product_FeedBack", Storage="_FeedBacks", ThisKey="ProductID", OtherKey="ProductID")]
 		public EntitySet<FeedBack> FeedBacks
 		{
@@ -5130,6 +4823,19 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 			set
 			{
 				this._Images.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Product_WareHouse", Storage="_WareHouses", ThisKey="ProductID", OtherKey="ProductID")]
+		public EntitySet<WareHouse> WareHouses
+		{
+			get
+			{
+				return this._WareHouses;
+			}
+			set
+			{
+				this._WareHouses.Assign(value);
 			}
 		}
 		
@@ -5255,18 +4961,6 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 			}
 		}
 		
-		private void attach_WareHouses(WareHouse entity)
-		{
-			this.SendPropertyChanging();
-			entity.Product = this;
-		}
-		
-		private void detach_WareHouses(WareHouse entity)
-		{
-			this.SendPropertyChanging();
-			entity.Product = null;
-		}
-		
 		private void attach_FeedBacks(FeedBack entity)
 		{
 			this.SendPropertyChanging();
@@ -5286,6 +4980,18 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 		}
 		
 		private void detach_Images(Image entity)
+		{
+			this.SendPropertyChanging();
+			entity.Product = null;
+		}
+		
+		private void attach_WareHouses(WareHouse entity)
+		{
+			this.SendPropertyChanging();
+			entity.Product = this;
+		}
+		
+		private void detach_WareHouses(WareHouse entity)
 		{
 			this.SendPropertyChanging();
 			entity.Product = null;
@@ -5925,6 +5631,319 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
 		{
 			this.SendPropertyChanging();
 			entity.Supplier = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.WareHouse")]
+	public partial class WareHouse : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _ProductID;
+		
+		private string _ColorID;
+		
+		private string _OptionID;
+		
+		private System.Nullable<int> _quantity;
+		
+		private EntitySet<Cart> _Carts;
+		
+		private EntitySet<OrderDetail> _OrderDetails;
+		
+		private EntityRef<Color> _Color;
+		
+		private EntityRef<Option> _Option;
+		
+		private EntityRef<Product> _Product;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnProductIDChanging(string value);
+    partial void OnProductIDChanged();
+    partial void OnColorIDChanging(string value);
+    partial void OnColorIDChanged();
+    partial void OnOptionIDChanging(string value);
+    partial void OnOptionIDChanged();
+    partial void OnquantityChanging(System.Nullable<int> value);
+    partial void OnquantityChanged();
+    #endregion
+		
+		public WareHouse()
+		{
+			this._Carts = new EntitySet<Cart>(new Action<Cart>(this.attach_Carts), new Action<Cart>(this.detach_Carts));
+			this._OrderDetails = new EntitySet<OrderDetail>(new Action<OrderDetail>(this.attach_OrderDetails), new Action<OrderDetail>(this.detach_OrderDetails));
+			this._Color = default(EntityRef<Color>);
+			this._Option = default(EntityRef<Option>);
+			this._Product = default(EntityRef<Product>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ProductID", DbType="VarChar(11) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string ProductID
+		{
+			get
+			{
+				return this._ProductID;
+			}
+			set
+			{
+				if ((this._ProductID != value))
+				{
+					if (this._Product.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnProductIDChanging(value);
+					this.SendPropertyChanging();
+					this._ProductID = value;
+					this.SendPropertyChanged("ProductID");
+					this.OnProductIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_ColorID", DbType="VarChar(11) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string ColorID
+		{
+			get
+			{
+				return this._ColorID;
+			}
+			set
+			{
+				if ((this._ColorID != value))
+				{
+					if (this._Color.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnColorIDChanging(value);
+					this.SendPropertyChanging();
+					this._ColorID = value;
+					this.SendPropertyChanged("ColorID");
+					this.OnColorIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_OptionID", DbType="VarChar(11) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string OptionID
+		{
+			get
+			{
+				return this._OptionID;
+			}
+			set
+			{
+				if ((this._OptionID != value))
+				{
+					if (this._Option.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnOptionIDChanging(value);
+					this.SendPropertyChanging();
+					this._OptionID = value;
+					this.SendPropertyChanged("OptionID");
+					this.OnOptionIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_quantity", DbType="Int")]
+		public System.Nullable<int> quantity
+		{
+			get
+			{
+				return this._quantity;
+			}
+			set
+			{
+				if ((this._quantity != value))
+				{
+					this.OnquantityChanging(value);
+					this.SendPropertyChanging();
+					this._quantity = value;
+					this.SendPropertyChanged("quantity");
+					this.OnquantityChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WareHouse_Cart", Storage="_Carts", ThisKey="ProductID,ColorID,OptionID", OtherKey="ProductID,ColorID,OptionID")]
+		public EntitySet<Cart> Carts
+		{
+			get
+			{
+				return this._Carts;
+			}
+			set
+			{
+				this._Carts.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="WareHouse_OrderDetail", Storage="_OrderDetails", ThisKey="ProductID,ColorID,OptionID", OtherKey="ProductID,ColorID,OptionID")]
+		public EntitySet<OrderDetail> OrderDetails
+		{
+			get
+			{
+				return this._OrderDetails;
+			}
+			set
+			{
+				this._OrderDetails.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Color_WareHouse", Storage="_Color", ThisKey="ColorID", OtherKey="ColorID", IsForeignKey=true)]
+		public Color Color
+		{
+			get
+			{
+				return this._Color.Entity;
+			}
+			set
+			{
+				Color previousValue = this._Color.Entity;
+				if (((previousValue != value) 
+							|| (this._Color.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Color.Entity = null;
+						previousValue.WareHouses.Remove(this);
+					}
+					this._Color.Entity = value;
+					if ((value != null))
+					{
+						value.WareHouses.Add(this);
+						this._ColorID = value.ColorID;
+					}
+					else
+					{
+						this._ColorID = default(string);
+					}
+					this.SendPropertyChanged("Color");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Option_WareHouse", Storage="_Option", ThisKey="OptionID", OtherKey="OptionID", IsForeignKey=true)]
+		public Option Option
+		{
+			get
+			{
+				return this._Option.Entity;
+			}
+			set
+			{
+				Option previousValue = this._Option.Entity;
+				if (((previousValue != value) 
+							|| (this._Option.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Option.Entity = null;
+						previousValue.WareHouses.Remove(this);
+					}
+					this._Option.Entity = value;
+					if ((value != null))
+					{
+						value.WareHouses.Add(this);
+						this._OptionID = value.OptionID;
+					}
+					else
+					{
+						this._OptionID = default(string);
+					}
+					this.SendPropertyChanged("Option");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Product_WareHouse", Storage="_Product", ThisKey="ProductID", OtherKey="ProductID", IsForeignKey=true)]
+		public Product Product
+		{
+			get
+			{
+				return this._Product.Entity;
+			}
+			set
+			{
+				Product previousValue = this._Product.Entity;
+				if (((previousValue != value) 
+							|| (this._Product.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Product.Entity = null;
+						previousValue.WareHouses.Remove(this);
+					}
+					this._Product.Entity = value;
+					if ((value != null))
+					{
+						value.WareHouses.Add(this);
+						this._ProductID = value.ProductID;
+					}
+					else
+					{
+						this._ProductID = default(string);
+					}
+					this.SendPropertyChanged("Product");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_Carts(Cart entity)
+		{
+			this.SendPropertyChanging();
+			entity.WareHouse = this;
+		}
+		
+		private void detach_Carts(Cart entity)
+		{
+			this.SendPropertyChanging();
+			entity.WareHouse = null;
+		}
+		
+		private void attach_OrderDetails(OrderDetail entity)
+		{
+			this.SendPropertyChanging();
+			entity.WareHouse = this;
+		}
+		
+		private void detach_OrderDetails(OrderDetail entity)
+		{
+			this.SendPropertyChanging();
+			entity.WareHouse = null;
 		}
 	}
 }
