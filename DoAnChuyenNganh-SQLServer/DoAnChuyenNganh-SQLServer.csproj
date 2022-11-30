@@ -228,6 +228,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>GearShopAdmin.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Admin\Data\InvoiceInfo.cs" />
     <Compile Include="Areas\Admin\Interface\IRepository.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -875,6 +876,7 @@
       <LastGenOutput>GearShop.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="Areas\Admin\Views\AjaxLayout\_LayoutAjaxCRUD.cshtml" />
     <None Include="Models\GearShop.dbml.layout">
       <DependentUpon>GearShop.dbml</DependentUpon>
     </None>

@@ -37,12 +37,11 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Controllers
             ViewBag.IDError = CheckID(collection["CategorizeID"]);
             if (string.IsNullOrEmpty(CategorizeID) || string.IsNullOrEmpty(DisplayName))
             {
-                ModelState.AddModelError(string.Empty, "X Vui lòng nhập đầy đủ thông tin!");
-                return RedirectToAction("Create");
+                return Json(new { Message = "X Vui lòng nhập đầy đủ thông tin!" });
             }
             if (ViewBag.IDError != null)
             {
-                return RedirectToAction("Create");
+                return Json(new { Message = "X Mã đã tồn tại !" });
             }
             a.CategorizeID = CategorizeID;
             a.DisplayName = DisplayName;

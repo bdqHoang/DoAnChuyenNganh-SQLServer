@@ -1,7 +1,7 @@
-﻿
+﻿@model IEnumerable<DoAnChuyenNganh_SQLServer.Areas.Admin.Data.Supplier>
 @{
     ViewBag.Title = "SupplierManagement";
-    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    Layout = "~/Areas/Admin/Views/AjaxLayout/_LayoutAjaxCRUD.cshtml";
 }
 
 <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
@@ -27,53 +27,56 @@
         <th>Chỉnh sửa bởi</th>
     </tr>
 
-@*    @foreach (var item in Model)
-    {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.SupplierID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DisplayName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Address)
-            </td>
-            <td>@item.ContractDate.Value.ToString("dd/MM/yyyy hh:mm:ss tt")</td>
+        @foreach (var item in Model)
+        {
+            <tr>
+                @{var createAt = item.CreatedAt == null ? null : item.CreatedAt.Value.ToString("dd/MM/yyyy hh:mm:ss tt");}
+                @{var updateAt = item.UpdateAt == null ? null : item.UpdateAt.Value.ToString("dd/MM/yyyy hh:mm:ss tt");}
+                <td>
+                    @Html.DisplayFor(modelItem => item.SupplierID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DisplayName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>@item.ContractDate.Value.ToString("dd/MM/yyyy hh:mm:ss tt")</td>
 
-            <td>
-                @if (item.Status == true)
-                {<label class="btn btn-success">Đang hoạt động</label>}
-                else
-                {
-                    <label class="btn btn-dark">Đã bị khóa</label>
-                }
-            </td>
-            <td style="width: 280px">
-                <i></i>
-                @Html.ActionLink("Sửa", "Edit", new { id = item.SupplierID }, new { @class = "btn btn-warning" })
-                <i></i>
-                @if (item.Status == true)
-                {
-                    @Html.ActionLink("Vô hiệu hóa nhà cung cấp", "ActiveSupplier", new { id = item.SupplierID }, new { @class = "btn btn-danger" })
-                }
-                else
-                {
-                    @Html.ActionLink("Kích hoạt nhà cung cấp", "ActiveSupplier", new { id = item.SupplierID }, new { @class = "btn btn-info" })
-                }
-            </td>
-            <td>@item.CreatedAt.Value.ToString("dd/MM/yyyy hh:mm:ss tt")</td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CreateBy)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.UpdateBy)
-            </td>
-        </tr>
-    }*@
+                <td>
+                    @if (item.Status == true)
+                    {<label class="btn btn-success">Đang hoạt động</label>}
+                    else
+                    {
+                        <label class="btn btn-dark">Đã bị khóa</label>
+                    }
+                </td>
+                <td style="width: 280px">
+                    <i></i>
+                    @Html.ActionLink("Sửa", "Edit", new { id = item.SupplierID }, new { @class = "btn btn-warning" })
+                    <i></i>
+                    @if (item.Status == true)
+                    {
+                        @Html.ActionLink("Vô hiệu hóa nhà cung cấp", "ActiveSupplier", new { id = item.SupplierID }, new { @class = "btn btn-danger" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Kích hoạt nhà cung cấp", "ActiveSupplier", new { id = item.SupplierID }, new { @class = "btn btn-info" })
+                    }
+                </td>
+                <td>@createAt</td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CreatedBy)
+                </td>
+                <td>@updateAt</td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.UpdateBy)
+                </td>
+            </tr>
+        }
 
 </table>
 <script>

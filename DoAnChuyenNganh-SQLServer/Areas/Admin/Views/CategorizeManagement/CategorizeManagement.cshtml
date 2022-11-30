@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<DoAnChuyenNganh_SQLServer.Areas.Admin.Data.Categorize>
 @{
     ViewBag.Title = "CategorizeManagement";
-    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    Layout = "~/Areas/Admin/Views/AjaxLayout/_LayoutAjaxCRUD.cshtml";
 }
 @section Header{
     <link href="~/Areas/assets/form/css/main.css" rel="stylesheet" />
@@ -17,9 +17,8 @@
             <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#CreateModalID_Admin">Thêm loại sản phẩm</a>
         </nav>
         <div class="col-md-2">
-            <div class="input-group input-group-outline my-3">
-                <label class="form-label">Tên Loại</label>
-                <input type="text" id="search" class="form-control" />
+            <div class="input-group input-group-outline my-3">   
+                <input placeholder="Tên Loại" type="text" id="search" class="form-control" />
             </div>
         </div>
     </div>
@@ -39,6 +38,7 @@
     @foreach (var item in Model)
     {
         <tr>
+            @{var updateAt = item.UpdateAt == null ? null : item.UpdateAt.Value.ToString("dd/MM/yyyy hh:mm:ss tt");}
             <td>@Html.DisplayFor(modelItem => item.CategorizeID)</td>
             <td>@Html.DisplayFor(modelItem => item.DisplayName)</td>
             <td>
@@ -51,7 +51,6 @@
             </td>
             <td style="width: 280px">
                 <i></i>
-                @*<a class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#EditModalID_Admin">Sửa</a>*@
                 <a class="btn btn-warning" onclick="GetDetails('@item.CategorizeID')">Sửa</a>
                 <i></i>
                 @if (item.Status == true)
@@ -63,8 +62,9 @@
                     @Html.ActionLink("Kích hoạt loại", "ActiveCategorize", new { id = item.CategorizeID }, new { @class = "btn btn-info" })
                 }
             </td>
-            <td>@item.CreatedAt.Value.ToString("dd/MM/yyyy hh:mm:ss tt")</td>
-            <td>@Html.DisplayFor(modelItem => item.UpdateAt)</td>
+            @{var date = item.CreatedAt == null ? null : item.CreatedAt.Value.ToString("dd/MM/yyyy hh:mm:ss tt");}
+            <td>@date</td>
+            <td>@updateAt</td>
             <td>@Html.DisplayFor(modelItem => item.UpdateBy)</td>
         </tr>
     }
@@ -143,11 +143,7 @@
     </div>
 </div>
 <!--end-->
-@section Footer{
-    <script src="~/Areas/assets/form/vendor/datepicker/moment.min.js"></script>
-    <script src="~/Areas/assets/form/vendor/datepicker/daterangepicker.js"></script>
-    <script src="~/Areas/assets/form/vendor/select2/select2.min.js"></script>
-    <script src="~/Areas/assets/form/js/global.js"></script>
+
     <script>
         function GetDetails(id) {
             $.ajax({
@@ -213,5 +209,5 @@
         });
     </script>
     
-}
+
 

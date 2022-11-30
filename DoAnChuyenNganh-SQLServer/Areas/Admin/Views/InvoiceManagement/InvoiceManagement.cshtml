@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<DoAnChuyenNganh_SQLServer.Areas.Admin.Data.Invoice>
 @{
     ViewBag.Title = "InvoiceManagement";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
@@ -30,41 +30,42 @@
         <th></th>
         <th></th>
     </tr>
-@*    @foreach (var item in Model)
-    {
-        <tr>
-            <td>@Html.DisplayFor(modelItem => item.InvoiceID)</td>
-            <td>@Html.DisplayFor(modelItem => item.CreateBy)</td>
-            <td>@Html.DisplayFor(modelItem => item.CreatedAt)</td>
-            <td>@Html.DisplayFor(modelItem => item.UpdateBy)</td>
-            <td>@Html.DisplayFor(modelItem => item.UpdatedAt)</td>
-            <td>
-                @if (item.Status == true)
-                {<label class="btn btn-success">Đã xuất</label>}
-                else
-                {
-                    <label class="btn btn-dark">Đã hủy</label>
-                }
-            </td>
-            <td style="width: 280px">
-                @if (item.Status == true)
-                {
-                    @Html.ActionLink("Hủy hóa đơn", "UpdateInvoice", new { id = item.InvoiceID }, new { @class = "btn btn-danger" })
-                }
-                else
-                {
-                    @Html.ActionLink("Xuất hóa đơn", "UpdateInvoice", new { id = item.InvoiceID }, new { @class = "btn btn-info" })
-                }
-            </td>
-            <td style="width: 280px">
-                @if (item.Status == true)
-                {
-                    @Html.ActionLink("Chi tiết hóa đơn", "DetailInvoice", new { id = item.InvoiceID }, new { @class = "btn btn-danger" })
-                }
-            </td>
-        </tr>
-    }
-*@</table>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.InvoiceID)</td>
+                <td>@Html.DisplayFor(modelItem => item.CreatedBy)</td>
+                <td>@Html.DisplayFor(modelItem => item.CreatedAt)</td>
+                <td>@Html.DisplayFor(modelItem => item.UpdateBy)</td>
+                <td>@Html.DisplayFor(modelItem => item.UpdateAt)</td>
+                <td>
+                    @if (item.Status == true)
+                    {<label class="btn btn-success">Đã xuất</label>}
+                    else
+                    {
+                        <label class="btn btn-dark">Đã hủy</label>
+                    }
+                </td>
+                <td style="width: 280px">
+                    @if (item.Status == true)
+                    {
+                        @Html.ActionLink("Hủy hóa đơn", "UpdateInvoice", new { id = item.InvoiceID }, new { @class = "btn btn-danger" })
+                    }
+                    else
+                    {
+                        @Html.ActionLink("Xuất hóa đơn", "UpdateInvoice", new { id = item.InvoiceID }, new { @class = "btn btn-info" })
+                    }
+                </td>
+                <td style="width: 280px">
+                    @if (item.Status == true)
+                    {
+                        @Html.ActionLink("Chi tiết hóa đơn", "DetailInvoice", new { id = item.InvoiceID }, new { @class = "btn btn-danger" })
+                    }
+                </td>
+            </tr>
+        }
+    
+</table>
 <script>
     var tables = document.getElementsByTagName('table');
     var table = tables[tables.length - 1];

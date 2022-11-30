@@ -1,6 +1,5 @@
 ﻿using DoAnChuyenNganh_SQLServer.Areas.Admin.Data;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
@@ -45,8 +44,7 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Controllers
             var Position = string.IsNullOrEmpty(collection["PositionID"]) ? "2" : collection["PositionID"];
             if (string.IsNullOrEmpty(UserName) || string.IsNullOrEmpty(DisplayName) || string.IsNullOrEmpty(Password))
             {
-                ModelState.AddModelError(string.Empty, "X Vui lòng nhập đầy đủ thông tin!");
-                return View();
+                return Json(new { Message = "X Vui lòng nhập đầy đủ thông tin!" });
             }
             a.EmployeeID = CreateEmployeeID(11);
             a.PositionID = Position;
@@ -73,10 +71,16 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Controllers
             }
             var e = data.Employees.Where(t => t.EmployeeID == id).FirstOrDefault();
             ViewBag.Position = new SelectList(data.Positions, "PositionID", "DisplayName");
-            return View(e);
+            return Json(new { DisplayName = e.DisplayName, 
+                              UserName = e.UserName,
+                              Password = e.Password,
+                              Email = e.Email,
+                              Phone = e.Phone,
+                              Address = e.Address
+                            }, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
-        public ActionResult Edit(FormCollection collection, string id)
+        public ActionResult Form_Edit(FormCollection collection, string id)
         {
             var u = data.Employees.Where(t => t.EmployeeID == id).FirstOrDefault();
             var DisplayName = collection["DisplayName"];
@@ -89,8 +93,7 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Controllers
             ViewBag.Position = new SelectList(data.Positions, "PositionID", "DisplayName");
             if (string.IsNullOrEmpty(DisplayName) || string.IsNullOrEmpty(Username))
             {
-                ModelState.AddModelError(string.Empty, "× Vui lòng nhập đầy đủ thông tin!");
-                return View(u);
+                return Json(new { Message = "X Vui lòng nhập đầy đủ thông tin!" });
             }
             u.DisplayName = DisplayName;
             u.PositionID = Position;

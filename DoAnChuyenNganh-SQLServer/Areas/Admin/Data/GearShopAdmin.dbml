@@ -47,17 +47,9 @@
       <Column Name="UpdateBy" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="Status" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Association Name="Customer_Cart" Member="Carts" ThisKey="CustomerID" OtherKey="CustomerID" Type="Cart" />
-      <Association Name="Customer_CustomerAddress" Member="CustomerAddresses" ThisKey="CustomerID" OtherKey="CustomerID" Type="CustomerAddress" />
       <Association Name="Customer_FeedBack" Member="FeedBacks" ThisKey="CustomerID" OtherKey="CustomerID" Type="FeedBack" />
       <Association Name="Customer_Order" Member="Orders" ThisKey="CustomerID" OtherKey="CustomerID" Type="Order" />
-    </Type>
-  </Table>
-  <Table Name="dbo.CustomerAddress" Member="CustomerAddresses">
-    <Type Name="CustomerAddress">
-      <Column Name="AddressID" Type="System.String" DbType="VarChar(11) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="CustomerID" Type="System.String" DbType="VarChar(11) NOT NULL" CanBeNull="false" />
-      <Column Name="AddressDetail" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
-      <Association Name="Customer_CustomerAddress" Member="Customer" ThisKey="CustomerID" OtherKey="CustomerID" Type="Customer" IsForeignKey="true" />
+      <Association Name="Customer_CustomerAddress" Member="CustomerAddresses" ThisKey="CustomerID" OtherKey="CustomerID" Type="CustomerAddress" />
     </Type>
   </Table>
   <Table Name="dbo.Discount" Member="Discounts">
@@ -261,6 +253,14 @@
       <Association Name="Color_WareHouse" Member="Color" ThisKey="ColorID" OtherKey="ColorID" Type="Color" IsForeignKey="true" />
       <Association Name="Option_WareHouse" Member="Option" ThisKey="OptionID" OtherKey="OptionID" Type="Option" IsForeignKey="true" />
       <Association Name="Product_WareHouse" Member="Product" ThisKey="ProductID" OtherKey="ProductID" Type="Product" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CustomerAddress" Member="CustomerAddresses">
+    <Type Name="CustomerAddress">
+      <Column Name="AddressID" Type="System.String" DbType="VarChar(11) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CustomerID" Type="System.String" DbType="VarChar(11) NOT NULL" CanBeNull="false" />
+      <Column Name="AddressDetail" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Association Name="Customer_CustomerAddress" Member="Customer" ThisKey="CustomerID" OtherKey="CustomerID" Type="Customer" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>
