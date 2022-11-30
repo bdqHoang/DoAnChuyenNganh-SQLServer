@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="GearShop" Class="GearShopDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=DESKTOP-4MIVRNE\SQLEXPRESS;Initial Catalog=GearShop;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="GearShopConnectionString1" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=BuiHoang;Initial Catalog=GearShop;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="GearShopConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Cart" Member="Carts">
     <Type Name="Cart">
       <Column Name="CustomerID" Type="System.String" DbType="VarChar(11) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -60,17 +60,9 @@
       <Column Name="UpdateBy" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="Status" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Association Name="Customer_Cart" Member="Carts" ThisKey="CustomerID" OtherKey="CustomerID" Type="Cart" />
-      <Association Name="Customer_CustomerAddress" Member="CustomerAddresses" ThisKey="CustomerID" OtherKey="CustomerID" Type="CustomerAddress" />
       <Association Name="Customer_FeedBack" Member="FeedBacks" ThisKey="CustomerID" OtherKey="CustomerID" Type="FeedBack" />
       <Association Name="Customer_Order" Member="Orders" ThisKey="CustomerID" OtherKey="CustomerID" Type="Order" />
-    </Type>
-  </Table>
-  <Table Name="dbo.CustomerAddress" Member="CustomerAddresses">
-    <Type Name="CustomerAddress">
-      <Column Name="AddressID" Type="System.String" DbType="VarChar(11) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="CustomerID" Type="System.String" DbType="VarChar(11) NOT NULL" CanBeNull="false" />
-      <Column Name="AddressDetail" Type="System.Char" DbType="Char(1)" CanBeNull="true" />
-      <Association Name="Customer_CustomerAddress" Member="Customer" ThisKey="CustomerID" OtherKey="CustomerID" Type="Customer" IsForeignKey="true" />
+      <Association Name="Customer_CustomerAddress" Member="CustomerAddresses" ThisKey="CustomerID" OtherKey="CustomerID" Type="CustomerAddress" />
     </Type>
   </Table>
   <Table Name="dbo.Discount" Member="Discounts">
@@ -261,6 +253,14 @@
       <Column Name="UpdateBy" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
       <Column Name="Status" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Association Name="Supplier_Product" Member="Products" ThisKey="SupplierID" OtherKey="SupplierID" Type="Product" />
+    </Type>
+  </Table>
+  <Table Name="dbo.CustomerAddress" Member="CustomerAddresses">
+    <Type Name="CustomerAddress">
+      <Column Name="AddressID" Type="System.String" DbType="VarChar(11) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CustomerID" Type="System.String" DbType="VarChar(11) NOT NULL" CanBeNull="false" />
+      <Column Name="AddressDetail" Type="System.String" DbType="NVarChar(200)" CanBeNull="true" />
+      <Association Name="Customer_CustomerAddress" Member="Customer" ThisKey="CustomerID" OtherKey="CustomerID" Type="Customer" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

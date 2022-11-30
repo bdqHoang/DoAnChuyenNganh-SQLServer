@@ -138,7 +138,7 @@ namespace DoAnChuyenNganh.Service
                     Color = s.WareHouses.GroupBy(v=>v.ColorID).Select(v => v.Select(m=>new { m.Color.DisplayName, m.Color.ColorID }).Distinct()),
                     Option = s.WareHouses.GroupBy(v => v.OptionID).Select(v => v.Select(m =>new { m.Option.DisplayName, m.Option.OptionID }).Distinct()),
                     s.Description,
-                    image = s.Images.OrderByDescending(v=>v.Ordinal).Select(v=>Convert.ToBase64String(v.Image1.ToArray())).Take(4),
+                    image = s.Images.Where(v=>v.Image1 != null).OrderByDescending(v=>v.Ordinal).Select(v=>Convert.ToBase64String(v.Image1.ToArray())).Take(4),
                     Quantity = s.WareHouses.GroupBy(v=>v.ProductID).Select(v=>v.Sum(m=>m.quantity)).FirstOrDefault(),
                 }).FirstOrDefault();
             return data;
@@ -235,11 +235,11 @@ namespace DoAnChuyenNganh.Service
         {
             var data = _context.Images.Where(n => n.ProductID == product);
             
-            if (data.Count() ==0)
+            if (data.Where(s=>s.Image1 != null).OrderBy(s=>s.Ordinal).Count() == 0)
             {
                 return null;
             }
-            var result = Convert.ToBase64String(data.OrderBy(s => s.Ordinal).Select(s => s.Image1).First().ToArray());
+            var result = Convert.ToBase64String(data.Where(s=>s.Image1!=null).OrderBy(s => s.Ordinal).Select(s => s.Image1).First().ToArray());
             return result;
         }
 

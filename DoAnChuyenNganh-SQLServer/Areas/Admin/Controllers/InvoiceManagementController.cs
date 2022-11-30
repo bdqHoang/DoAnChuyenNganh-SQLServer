@@ -29,7 +29,7 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Controllers
             invoice.UpdateBy = (Session["AdminAccount"] as Employee).DisplayName;
             UpdateModel(invoice);
             data.SubmitChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("InvoiceManagement/InvoiceManagement");
         }
 
         public ActionResult InvoiceDetail(string id)

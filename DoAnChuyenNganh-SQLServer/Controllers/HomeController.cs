@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using System.Web.UI.WebControls;
 using DoAnChuyenNganh.Interface;
 using DoAnChuyenNganh.Service;
+using DoAnChuyenNganh_SQLServer.Models;
 using DoAnChuyenNganh_SQLServer.Service;
 using Newtonsoft.Json;
 
@@ -89,8 +90,13 @@ namespace DoAnChuyenNganh.Controllers
 
         [HttpGet]
         [Route("~/home/recommendforyou")]
-        public JsonResult RecommendForYou(string UserID)
+        public JsonResult RecommendForYou()
         {
+            string UserID = null;
+            if ( Session["Customer"] != null)
+            {
+                UserID = (Session["Customer"] as Customer).CustomerID;
+            }
             var data = _homeService.RecommentProduct(UserID);
             return Json(data, JsonRequestBehavior.AllowGet);
         }
@@ -117,6 +123,8 @@ namespace DoAnChuyenNganh.Controllers
             }
             return Json(data, JsonRequestBehavior.AllowGet);
         }
+
+        
 
         public ActionResult WishList() 
         {

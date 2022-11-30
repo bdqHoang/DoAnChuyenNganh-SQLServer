@@ -5,27 +5,6 @@
 }
 
 <main>
-    <!-- page__title-start -->
-    <section class="page__title p-relative d-flex align-items-center" data-background="~/Assets/img/bg/page-title-1.jpg">
-        <div class="container">
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="page__title-inner text-center">
-                        <h1>Your Cart</h1>
-                        <div class="page__title-breadcrumb">
-                            <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb justify-content-center">
-                                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page">Cart</li>
-                                </ol>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- page__title-end -->
     <!-- cart-area start -->
     <section class="cart-area pt-120 pb-120">
         <div class="container">
@@ -38,46 +17,23 @@
                                     <tr>
                                         <th class="product-thumbnail">Images</th>
                                         <th class="cart-product-name">Product</th>
+                                        <th class="product-subtotal">Color</th>
+                                        <th class="product-subtotal">Option</th>
                                         <th class="product-price">Unit Price</th>
                                         <th class="product-quantity">Quantity</th>
                                         <th class="product-subtotal">Total</th>
                                         <th class="product-remove">Remove</th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="product-thumbnail"><a href="product-details.html"><img src="~/Assets/img/cart/cart-1.jpg" alt=""></a></td>
-                                        <td class="product-name"><a href="product-details.html">Jacket light</a></td>
-                                        <td class="product-price"><span class="amount">$130.00</span></td>
-                                        <td class="product-quantity">
-                                            <div class="cart-plus-minus"><input type="text" value="1"><div class="dec qtybutton">-</div><div class="inc qtybutton">+</div><div class="dec qtybutton">-</div><div class="inc qtybutton">+</div></div>
-                                        </td>
-                                        <td class="product-subtotal"><span class="amount">$130.00</span></td>
-                                        <td class="product-remove"><a href="#"><i class="fa fa-times"></i></a></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="product-thumbnail"><a href="product-details.html"><img src="~/Assets/img/cart/cart-2.jpg" alt=""></a></td>
-                                        <td class="product-name"><a href="product-details.html">Jacket Pink</a></td>
-                                        <td class="product-price"><span class="amount">$120.50</span></td>
-                                        <td class="product-quantity">
-                                            <div class="cart-plus-minus"><input type="text" value="1"><div class="dec qtybutton">-</div><div class="inc qtybutton">+</div><div class="dec qtybutton">-</div><div class="inc qtybutton">+</div></div>
-                                        </td>
-                                        <td class="product-subtotal"><span class="amount">$120.50</span></td>
-                                        <td class="product-remove"><a href="#"><i class="fa fa-times"></i></a></td>
-                                    </tr>
+                                <tbody id="tableItemCart">
+                                    
                                 </tbody>
                             </table>
                         </div>
                         <div class="row">
                             <div class="col-12">
                                 <div class="coupon-all">
-                                    <div class="coupon">
-                                        <input id="coupon_code" class="input-text" name="coupon_code" value="" placeholder="Coupon code" type="text">
-                                        <button class="btn-tp-2" name="apply_coupon" type="submit">Apply coupon</button>
-                                    </div>
-                                    <div class="coupon2">
-                                        <button class="btn-tp-2" name="update_cart" type="submit">Update cart</button>
-                                    </div>
+                                    
                                 </div>
                             </div>
                         </div>
@@ -86,10 +42,10 @@
                                 <div class="cart-page-total">
                                     <h2>Cart totals</h2>
                                     <ul class="mb-20">
-                                        <li>Subtotal <span>$250.00</span></li>
-                                        <li>Total <span>$250.00</span></li>
+                                        <li>Subtotal <span id="testtotal">$250.00</span></li>
+                                        <li>Total <span id="totalPayment">$250.00</span></li>
                                     </ul>
-                                    <a class="btn-tp-2" href="checkout.html">Proceed to checkout</a>
+                                    <a class="btn-tp-2" href="~/cart/checkout">Proceed to checkout</a>
                                 </div>
                             </div>
                         </div>
@@ -101,4 +57,107 @@
     <!-- cart-area end -->
 
 </main>
+@section Footer{
+    <script>
+        $(document).ready(function () {
+            TableCart();
+        })
+        function TableCart() {
+            $.ajax({
+                url: "/cart/getyourcart",
+                type: "Get",
+                success: function (data) {
+                    if (data.total != 0) {
+                        var str = ``;
+                        for (var i = 0; i < data.data.length; i++) {
+                            var sellprice = data.data[i].SalePrice == null ? data.data[i].sellprice : data.data[i].SalePrice;
+                            str += `<tr>
+                                        <td class="product-thumbnail"><a href="/home/DetailProduct/?id=${data.data[i].ProductID}"> ${ShowImg(data.data[i])}</a></td>
+                                        <td class="product-name"><a href="/home/DetailProduct/?id=${data.data[i].ProductID}">${data.data[i].DisplayName}</a></td>
+                                        <td class="product-name">${data.data[i].Color}</td>
+                                        <td class="product-name">${data.data[i].Option}</td>
+                                        <td class="product-price"><span class="amount">${sellprice}VND</span></td>
+                                        <td class="product-quantity">
+                                            <div class="cart-plus-minus"><input type="number" min="1" id="product${data.data[i].ProductID}${data.data[i].ColorID}${data.data[i].OptionID}" value="${data.data[i].Quantity}"></div>
+                                        </td>
+                                        <td class="product-subtotal"><span class="amount" id="GetTotal${data.data[i].ProductID}${data.data[i].ColorID}${data.data[i].OptionID}">${data.data[i].Quantity * sellprice}VND</span></td>
+                                        <td class="product-remove"><a onclick="DeleteItemCart('${data.data[i].ProductID}','${data.data[i].ColorID}','${data.data[i].OptionID}')"><i class="fa fa-times"></i></a></td>
+                                    </tr>`
+                        }
+                        $("#tableItemCart").html(str);
+                        for (var i = 0; i < data.data.length; i++) {
+                            $(`#product${data.data[i].ProductID}${data.data[i].ColorID}${data.data[i].OptionID}`).change(function () {
+                                if ($(this).val() < 1) {
+                                    alert("Quantity more than 1");
+                                    $(this).val(1);
 
+                                } else {
+                                    for (var j = 0; j < data.data.length; j++) {
+                                        var sellprice = data.data[j].SalePrice == null ? data.data[j].sellprice : data.data[j].SalePrice;
+                                        if (("product" + data.data[j].ProductID + data.data[j].ColorID + data.data[j].OptionID) == $(this).attr('id')) {
+                                            $(`#GetTotal${data.data[j].ProductID}${data.data[j].ColorID}${data.data[j].OptionID}`).text($(this).val() * sellprice + "VND");
+                                            if ($(this).val > data.data[j].Quantity) {
+                                                alert("The product not enought!");
+                                                $(this).val(data.data[j].Quantity);
+                                            } else {
+                                                data.data[j].Quantity = $(this).val();
+                                            }
+                                        }
+                                    }
+                                }
+                            })
+                        }
+                        $("#update_cart").click(function (e) {
+                            $.ajax({
+                                url: "/cart/updatecart",
+                                type: "Put",
+                                data: { item: data.data },
+                                success: function (data) {
+                                    console.log(data);
+                                }
+                            })
+                            e.preventDefault();
+                        })
+
+                        
+                    }
+                }
+            })
+        }
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+
+        function minusCart() {
+            $(".cart-plus-minus").append('<div class="dec qtybutton">-</div><div class="inc qtybutton">+</div>');
+            $(".qtybutton").on("click", function () {
+                var $button = $(this);
+                var oldValue = $button.parent().find("input").val();
+                if ($button.text() == "+") {
+                    var newVal = parseFloat(oldValue) + 1;
+                } else {
+                    // Don't allow decrementing below zero
+                    if (oldValue > 0) {
+                        var newVal = parseFloat(oldValue) - 1;
+                    } else {
+                        newVal = 0;
+                    }
+                }
+                $button.parent().find("input").val(newVal);
+            });
+        }
+
+    </script>
+
+    }

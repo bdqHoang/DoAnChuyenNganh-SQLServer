@@ -41,16 +41,6 @@
                         </div>
 
                         <div class="product__details-color d-sm-flex align-items-center mb-25" id="productColor">
-                            <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
-                                <input type="radio" class="btn-check" name="btnradio" id="btnradio1" autocomplete="off" checked>
-                                <label class="btn btn-outline-primary" for="btnradio1">Radio 1</label>
-
-                                <input type="radio" class="btn-check" name="btnradio" id="btnradio2" autocomplete="off">
-                                <label class="btn btn-outline-primary" for="btnradio2">Radio 2</label>
-
-                                <input type="radio" class="btn-check" name="btnradio" id="btnradio3" autocomplete="off">
-                                <label class="btn btn-outline-primary" for="btnradio3">Radio 3</label>
-                            </div>
                         </div>
                         <div class="product__details-size d-sm-flex align-items-center mb-30" id="productOption">
                         </div>
@@ -59,10 +49,10 @@
                                 <label>Quantity</label>
                             </div>
                             <div class="product-quantity mr-20 mb-20">
-                                <div class="cart-plus-minus"><input type="text" value="1"><div class="dec qtybutton">-</div><div class="inc qtybutton">+</div></div>
+                                <div class="cart-plus-minus"><input id="quantityToCart" type="text" value="1" min="1"><div class="dec qtybutton">-</div><div class="inc qtybutton">+</div></div>
                             </div>
                             <div class="pro-cart-btn">
-                                <a href="cart.html" class="add-cart-btn mb-20">+ Add to Cart</a>
+                                <button class="add-cart-btn mb-20"  id="btn_addtocart">+ Add to Cart</button>
                             </div>
                         </div>
                         <div class="product__tag mb-25">
@@ -143,33 +133,37 @@
                                             </ul>
                                         </div>
                                     </div>
-                                    <div class="post-comments-form">
-                                        <div class="post-comments-title mb-30">
-                                            <h3>Your Review</h3>
-                                            <div class="post-rating">
-                                                <span>Your Rating :</span>
-                                                <div class="rating" id="post-ratting">
-                                                    <input type="radio" name="rating" value="5" id="5"><label for="5">☆</label>
-                                                    <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label>
-                                                    <input type="radio" name="rating" value="3" id="3"><label for="3">☆</label>
-                                                    <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label>
-                                                    <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <form id="contacts-form" class="conatct-post-form" action="#">
-                                            <div class="row">
-                                                <div class="col-xl-12">
-                                                    <div class="contact-icon p-relative contacts-message">
-                                                        <textarea name="comments" id="comments" cols="30" rows="10" placeholder="Comments"></textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="col-xl-12">
-                                                    <button class="add-cart-btn" type="submit">Post comment</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
+                                    @if (Session["Customer"]!= null)
+            {
+                <div class="post-comments-form">
+                    <div class="post-comments-title mb-30">
+                        <h3>Your Review</h3>
+                        <div class="post-rating">
+                            <span>Your Rating :</span>
+                            <div class="rating" id="post-ratting">
+                                <input type="radio" name="rating" value="5" id="5"><label for="5">☆</label>
+                                <input type="radio" name="rating" value="4" id="4"><label for="4">☆</label>
+                                <input type="radio" name="rating" value="3" id="3"><label for="3">☆</label>
+                                <input type="radio" name="rating" value="2" id="2"><label for="2">☆</label>
+                                <input type="radio" name="rating" value="1" id="1"><label for="1">☆</label>
+                            </div>
+                        </div>
+                    </div>
+                    <form id="contacts-form" class="conatct-post-form" action="#">
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="contact-icon p-relative contacts-message">
+                                    <textarea name="comments" id="comments" cols="30" rows="10" placeholder="Comments"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-xl-12">
+                                <button class="add-cart-btn" type="submit" id="btn_postComment">Post comment</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            }
+                                    
                                 </div>
                             </div>
                         </div>
@@ -276,7 +270,7 @@
                                                     <div class="cart-plus-minus p-relative"><input type="text" value="1" /></div>
                                                 </div>
                                                 <div class="pro-cart-btn mb-25">
-                                                    <a href="cart.html" class="add-to-cart-btn">Add to cart</a>
+                                                    <button class="add-to-cart-btn">Add to cart</button>
                                                 </div>
                                             </div>
                                         </form>
@@ -297,6 +291,7 @@
             </div>
         </div>
     </div>
+    
     <!-- shop modal end -->
 
 </main>
@@ -304,6 +299,8 @@
     <script>
             $(document).ready(function () {
                 GetInformation();
+                AddTocart();
+                GetFeedBack();
             });
         function GetInformation() {
                     $.ajax({
@@ -311,7 +308,6 @@
                         type: "Get",
                         data: { id: "@Model.ProductID" },
                         success: function (data) {
-                            console.log(data);
                             //fillhinh
                             var dataimgcontent = ``
                             var dataimgtap = ``
@@ -392,7 +388,7 @@
                                 informationOption += data.Option[i][0].DisplayName + `, `
                             }
                             option += `</div>`;
-                            
+
                             $("#productOption").html(option);
                             $("#informationOption").text(informationOption.slice(0, -2));
                             // fill quantity
@@ -440,6 +436,7 @@
         //get quantity in warehouse
         var color1 = null;
         var option1 = null;
+        var quantity = null;
         function GetColor(id, color) {
             color1 = color;
             $.ajax({
@@ -447,6 +444,7 @@
                 type: "Get",
                 data: { productid: id, colorID: color1, optioID : option1 },
                 success: function (data) {
+                    quantity = data;
                     $("#quanity").text(data);
                 }
             })
@@ -458,24 +456,66 @@
                 type: "Get",
                 data: { productid: id, colorID: color1, optioID: option1 },
                 success: function (data) {
+                    quantity = data;
                     $("#quanity").text(data);
                 }
             })
         }
 
+        //add to card
 
+
+        function AddTocart() {
+            $("#btn_addtocart").click(function () {
+                console.log($("#quantityToCart").val());
+                var message = color1 == null ? "Color not null" : option1 == null ? "Option not null" : $("#quantityToCart").val() > quantity ? "Quantity in warehouse not enought!" : typeof (quantity) == "string" ? "Not ready!" : null;
+                if (message != null) {
+                    alert(message);
+                } else {
+                    $.ajax({
+                        url: "/cart/addtocart",
+                        type: "Post",
+                        data: {
+                            OptionID: option1,
+                            ColorID: color1,
+                            ProductID: '@Model.ProductID',
+                            Quantity: $("#quantityToCart").val()
+                        },
+                        success: function (item) {
+                            if (item.url != null) {
+                                window.location.href = item.url;
+                            } else {
+                                alert(item.message);
+                                GetCart();
+                            }
+                        }
+                    })
+                }
+            })
+        }
+
+
+        function GetFeedBack() {
+            $("#btn_postComment").click(function (e) {
+                $.ajax({
+                    url: "/user/uploadfeedback",
+                    type: "Post",
+                    data: {
+                        ProductID: '@Model.ProductID',
+                        Content: $("#comments").val(),
+                        Rating: $('input[name="rating"]:checked').val()
+                    },
+                    success: function (data) {
+                        console.log(data);
+                    }
+                })
+                e.preventDefault();
+            })
+        }
 
 
 
         /////////////////////////////////////////////////////funtion///////////////////////////////////////
-        function ShowImg(data, style) {
-            var img = ``;
-            img = `<img src="data:image/gif;base64,${data.image}" ${style} alt="">`;
-            if (data.image == null) {
-                img = `<img src="/Assets/img/EmptyBox/Empty.png" ${style} alt="">`;
-            }
-            return img;
-        }
 
         function CheckPrice(data) {
             var price1 = `<div class="product__price">

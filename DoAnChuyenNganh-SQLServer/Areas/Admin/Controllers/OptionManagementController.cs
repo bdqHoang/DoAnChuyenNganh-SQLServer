@@ -60,16 +60,16 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Controllers
             {
                 return RedirectToAction("Login", "Admin");
             }
-            var option = data.Options.SingleOrDefault(n => n.OptionID == id);
-            return View(option);
+            var option = data.Options.Where(n => n.OptionID == id).Select(s => new { s.OptionID, s.DisplayName}).FirstOrDefault();
+            return Json(option, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
-        public ActionResult Edit(FormCollection collection, Option a)
+        public ActionResult Form_Edit(FormCollection collection, String id)
         {
-            var OptionID = collection["OptionID"];
+            var u = data.Options.Where(t => t.OptionID == id).FirstOrDefault();
             var DisplayName = collection["DisplayName"];
             ViewBag.IDError = CheckID(collection["OptionID"]);
-            if (string.IsNullOrEmpty(OptionID) || string.IsNullOrEmpty(DisplayName))
+            if ( string.IsNullOrEmpty(DisplayName))
             {
                 ModelState.AddModelError(string.Empty, "X Vui lòng nhập đầy đủ thông tin!");
                 return RedirectToAction("Edit");
@@ -78,12 +78,11 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Controllers
             {
                 return RedirectToAction("Edit");
             }
-            a.OptionID = OptionID;
-            a.DisplayName = DisplayName;
-            a.UpdateAt = DateTime.Now;
-            a.UpdateBy = (Session["AdminAccount"] as Employee).DisplayName;
-            a.Status = true;
-            UpdateModel(a);
+            u.DisplayName = DisplayName;
+            u.UpdateAt = DateTime.Now;
+            u.UpdateBy = (Session["AdminAccount"] as Employee).DisplayName;
+            u.Status = true;
+            UpdateModel(u);
             data.SubmitChanges();
             return RedirectToAction("OptionManagement");
         }

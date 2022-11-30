@@ -17,11 +17,11 @@ namespace DoAnChuyenNganh_SQLServer.Service
         GearShopDataContext _context = new GearShopDataContext();
         public string[,] GetData()
         {
-            int user = _context.Customers.Count()+1;
-            int product = _context.Products.Count()+1;
+            int user = _context.Customers.Where(s=>s.Status !=false).Count()+1;
+            int product = _context.Products.Where(s => s.Status != false).Count()+1;
             var listCustomer = _context.Customers.Where(s=>s.Status != false).ToList();
             var listProduct = _context.Products.Where(s => s.Status != false).ToList();
-            var listRatting = _context.FeedBacks;
+            var listRatting = _context.FeedBacks.Include(s=>s.Customer).Where(s=>s.Customer.Status!=false);
             string[,] matrix = new string[product, user];
             for(int i=1; i < user; i++)
             {

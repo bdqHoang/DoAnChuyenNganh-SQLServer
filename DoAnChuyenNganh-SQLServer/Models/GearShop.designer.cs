@@ -45,9 +45,6 @@ namespace DoAnChuyenNganh_SQLServer.Models
     partial void InsertCustomer(Customer instance);
     partial void UpdateCustomer(Customer instance);
     partial void DeleteCustomer(Customer instance);
-    partial void InsertCustomerAddress(CustomerAddress instance);
-    partial void UpdateCustomerAddress(CustomerAddress instance);
-    partial void DeleteCustomerAddress(CustomerAddress instance);
     partial void InsertDiscount(Discount instance);
     partial void UpdateDiscount(Discount instance);
     partial void DeleteDiscount(Discount instance);
@@ -84,6 +81,9 @@ namespace DoAnChuyenNganh_SQLServer.Models
     partial void InsertSupplier(Supplier instance);
     partial void UpdateSupplier(Supplier instance);
     partial void DeleteSupplier(Supplier instance);
+    partial void InsertCustomerAddress(CustomerAddress instance);
+    partial void UpdateCustomerAddress(CustomerAddress instance);
+    partial void DeleteCustomerAddress(CustomerAddress instance);
     #endregion
 		
 		public GearShopDataContext() : 
@@ -153,14 +153,6 @@ namespace DoAnChuyenNganh_SQLServer.Models
 			get
 			{
 				return this.GetTable<Customer>();
-			}
-		}
-		
-		public System.Data.Linq.Table<CustomerAddress> CustomerAddresses
-		{
-			get
-			{
-				return this.GetTable<CustomerAddress>();
 			}
 		}
 		
@@ -257,6 +249,14 @@ namespace DoAnChuyenNganh_SQLServer.Models
 			get
 			{
 				return this.GetTable<Supplier>();
+			}
+		}
+		
+		public System.Data.Linq.Table<CustomerAddress> CustomerAddresses
+		{
+			get
+			{
+				return this.GetTable<CustomerAddress>();
 			}
 		}
 	}
@@ -1320,11 +1320,11 @@ namespace DoAnChuyenNganh_SQLServer.Models
 		
 		private EntitySet<Cart> _Carts;
 		
-		private EntitySet<CustomerAddress> _CustomerAddresses;
-		
 		private EntitySet<FeedBack> _FeedBacks;
 		
 		private EntitySet<Order> _Orders;
+		
+		private EntitySet<CustomerAddress> _CustomerAddresses;
 		
     #region Extensibility Method Definitions
     partial void OnLoaded();
@@ -1353,9 +1353,9 @@ namespace DoAnChuyenNganh_SQLServer.Models
 		public Customer()
 		{
 			this._Carts = new EntitySet<Cart>(new Action<Cart>(this.attach_Carts), new Action<Cart>(this.detach_Carts));
-			this._CustomerAddresses = new EntitySet<CustomerAddress>(new Action<CustomerAddress>(this.attach_CustomerAddresses), new Action<CustomerAddress>(this.detach_CustomerAddresses));
 			this._FeedBacks = new EntitySet<FeedBack>(new Action<FeedBack>(this.attach_FeedBacks), new Action<FeedBack>(this.detach_FeedBacks));
 			this._Orders = new EntitySet<Order>(new Action<Order>(this.attach_Orders), new Action<Order>(this.detach_Orders));
+			this._CustomerAddresses = new EntitySet<CustomerAddress>(new Action<CustomerAddress>(this.attach_CustomerAddresses), new Action<CustomerAddress>(this.detach_CustomerAddresses));
 			OnCreated();
 		}
 		
@@ -1552,19 +1552,6 @@ namespace DoAnChuyenNganh_SQLServer.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Customer_CustomerAddress", Storage="_CustomerAddresses", ThisKey="CustomerID", OtherKey="CustomerID")]
-		public EntitySet<CustomerAddress> CustomerAddresses
-		{
-			get
-			{
-				return this._CustomerAddresses;
-			}
-			set
-			{
-				this._CustomerAddresses.Assign(value);
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Customer_FeedBack", Storage="_FeedBacks", ThisKey="CustomerID", OtherKey="CustomerID")]
 		public EntitySet<FeedBack> FeedBacks
 		{
@@ -1588,6 +1575,19 @@ namespace DoAnChuyenNganh_SQLServer.Models
 			set
 			{
 				this._Orders.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Customer_CustomerAddress", Storage="_CustomerAddresses", ThisKey="CustomerID", OtherKey="CustomerID")]
+		public EntitySet<CustomerAddress> CustomerAddresses
+		{
+			get
+			{
+				return this._CustomerAddresses;
+			}
+			set
+			{
+				this._CustomerAddresses.Assign(value);
 			}
 		}
 		
@@ -1623,18 +1623,6 @@ namespace DoAnChuyenNganh_SQLServer.Models
 			entity.Customer = null;
 		}
 		
-		private void attach_CustomerAddresses(CustomerAddress entity)
-		{
-			this.SendPropertyChanging();
-			entity.Customer = this;
-		}
-		
-		private void detach_CustomerAddresses(CustomerAddress entity)
-		{
-			this.SendPropertyChanging();
-			entity.Customer = null;
-		}
-		
 		private void attach_FeedBacks(FeedBack entity)
 		{
 			this.SendPropertyChanging();
@@ -1658,156 +1646,17 @@ namespace DoAnChuyenNganh_SQLServer.Models
 			this.SendPropertyChanging();
 			entity.Customer = null;
 		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CustomerAddress")]
-	public partial class CustomerAddress : INotifyPropertyChanging, INotifyPropertyChanged
-	{
 		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private string _AddressID;
-		
-		private string _CustomerID;
-		
-		private System.Nullable<char> _AddressDetail;
-		
-		private EntityRef<Customer> _Customer;
-		
-    #region Extensibility Method Definitions
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnAddressIDChanging(string value);
-    partial void OnAddressIDChanged();
-    partial void OnCustomerIDChanging(string value);
-    partial void OnCustomerIDChanged();
-    partial void OnAddressDetailChanging(System.Nullable<char> value);
-    partial void OnAddressDetailChanged();
-    #endregion
-		
-		public CustomerAddress()
+		private void attach_CustomerAddresses(CustomerAddress entity)
 		{
-			this._Customer = default(EntityRef<Customer>);
-			OnCreated();
+			this.SendPropertyChanging();
+			entity.Customer = this;
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AddressID", DbType="VarChar(11) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string AddressID
+		private void detach_CustomerAddresses(CustomerAddress entity)
 		{
-			get
-			{
-				return this._AddressID;
-			}
-			set
-			{
-				if ((this._AddressID != value))
-				{
-					this.OnAddressIDChanging(value);
-					this.SendPropertyChanging();
-					this._AddressID = value;
-					this.SendPropertyChanged("AddressID");
-					this.OnAddressIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerID", DbType="VarChar(11) NOT NULL", CanBeNull=false)]
-		public string CustomerID
-		{
-			get
-			{
-				return this._CustomerID;
-			}
-			set
-			{
-				if ((this._CustomerID != value))
-				{
-					if (this._Customer.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnCustomerIDChanging(value);
-					this.SendPropertyChanging();
-					this._CustomerID = value;
-					this.SendPropertyChanged("CustomerID");
-					this.OnCustomerIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AddressDetail", DbType="Char(1)")]
-		public System.Nullable<char> AddressDetail
-		{
-			get
-			{
-				return this._AddressDetail;
-			}
-			set
-			{
-				if ((this._AddressDetail != value))
-				{
-					this.OnAddressDetailChanging(value);
-					this.SendPropertyChanging();
-					this._AddressDetail = value;
-					this.SendPropertyChanged("AddressDetail");
-					this.OnAddressDetailChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Customer_CustomerAddress", Storage="_Customer", ThisKey="CustomerID", OtherKey="CustomerID", IsForeignKey=true)]
-		public Customer Customer
-		{
-			get
-			{
-				return this._Customer.Entity;
-			}
-			set
-			{
-				Customer previousValue = this._Customer.Entity;
-				if (((previousValue != value) 
-							|| (this._Customer.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._Customer.Entity = null;
-						previousValue.CustomerAddresses.Remove(this);
-					}
-					this._Customer.Entity = value;
-					if ((value != null))
-					{
-						value.CustomerAddresses.Add(this);
-						this._CustomerID = value.CustomerID;
-					}
-					else
-					{
-						this._CustomerID = default(string);
-					}
-					this.SendPropertyChanged("Customer");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
+			this.SendPropertyChanging();
+			entity.Customer = null;
 		}
 	}
 	
@@ -5949,6 +5798,157 @@ namespace DoAnChuyenNganh_SQLServer.Models
 		{
 			this.SendPropertyChanging();
 			entity.Supplier = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.CustomerAddress")]
+	public partial class CustomerAddress : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _AddressID;
+		
+		private string _CustomerID;
+		
+		private string _AddressDetail;
+		
+		private EntityRef<Customer> _Customer;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnAddressIDChanging(string value);
+    partial void OnAddressIDChanged();
+    partial void OnCustomerIDChanging(string value);
+    partial void OnCustomerIDChanged();
+    partial void OnAddressDetailChanging(string value);
+    partial void OnAddressDetailChanged();
+    #endregion
+		
+		public CustomerAddress()
+		{
+			this._Customer = default(EntityRef<Customer>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AddressID", DbType="VarChar(11) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string AddressID
+		{
+			get
+			{
+				return this._AddressID;
+			}
+			set
+			{
+				if ((this._AddressID != value))
+				{
+					this.OnAddressIDChanging(value);
+					this.SendPropertyChanging();
+					this._AddressID = value;
+					this.SendPropertyChanged("AddressID");
+					this.OnAddressIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_CustomerID", DbType="VarChar(11) NOT NULL", CanBeNull=false)]
+		public string CustomerID
+		{
+			get
+			{
+				return this._CustomerID;
+			}
+			set
+			{
+				if ((this._CustomerID != value))
+				{
+					if (this._Customer.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnCustomerIDChanging(value);
+					this.SendPropertyChanging();
+					this._CustomerID = value;
+					this.SendPropertyChanged("CustomerID");
+					this.OnCustomerIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_AddressDetail", DbType="NVarChar(200)")]
+		public string AddressDetail
+		{
+			get
+			{
+				return this._AddressDetail;
+			}
+			set
+			{
+				if ((this._AddressDetail != value))
+				{
+					this.OnAddressDetailChanging(value);
+					this.SendPropertyChanging();
+					this._AddressDetail = value;
+					this.SendPropertyChanged("AddressDetail");
+					this.OnAddressDetailChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Customer_CustomerAddress", Storage="_Customer", ThisKey="CustomerID", OtherKey="CustomerID", IsForeignKey=true)]
+		public Customer Customer
+		{
+			get
+			{
+				return this._Customer.Entity;
+			}
+			set
+			{
+				Customer previousValue = this._Customer.Entity;
+				if (((previousValue != value) 
+							|| (this._Customer.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Customer.Entity = null;
+						previousValue.CustomerAddresses.Remove(this);
+					}
+					this._Customer.Entity = value;
+					if ((value != null))
+					{
+						value.CustomerAddresses.Add(this);
+						this._CustomerID = value.CustomerID;
+					}
+					else
+					{
+						this._CustomerID = default(string);
+					}
+					this.SendPropertyChanged("Customer");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }

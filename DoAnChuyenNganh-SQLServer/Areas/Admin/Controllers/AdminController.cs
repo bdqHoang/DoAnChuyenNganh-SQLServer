@@ -1,5 +1,4 @@
-﻿using DoAnChuyenNganh_SQLServer.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -7,6 +6,8 @@ using System.Web.Mvc;
 using DoAnChuyenNganh_SQLServer.Areas.Admin.Data;
 using System.Security.Cryptography;
 using System.Text;
+using System.Web.WebSockets;
+using Microsoft.EntityFrameworkCore;
 
 namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Controllers
 {
@@ -20,10 +21,46 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Controllers
             {
                 return RedirectToAction("Login", "Admin");
             }
-            /*ViewBag.TodayProfit = GetTodayProfit();*/
+            List<int> ThisMonthProfit = new List<int> {0,0,0,0,0,0,0,0,0,0,0,0};
+            List<int> dayProfit = new List<int> {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
             ViewBag.CountCustomer = data.Customers.Count();
             ViewBag.CountEmployee = data.Employees.Count();
+            ViewBag.TotalWareHouse = data.WareHouses.Sum(x => x.quantity);
+            ViewBag.TodayProfit = data.Invoices.Where(x => x.CreatedAt.Value.Day == DateTime.Now.Day && x.CreatedAt.Value.Month == DateTime.Now.Month && x.CreatedAt.Value.Year == DateTime.Now.Year && x.Status == true).Sum(x => x.TotalPayment);
+            // doanh thu theo thang
+            var listMonthRevenue = data.Invoices.Where(s => s.CreatedAt.Value.Year == DateTime.Now.Year && s.Status == true).GroupBy(s => s.CreatedAt.Value.Month)
+                .Select(s => new
+                {
+                    month = s.FirstOrDefault().CreatedAt.Value.Month,
+                    profit = s.Sum(v => v.TotalPayment)
+                });
+            foreach(var item in listMonthRevenue)
+            {
+                ThisMonthProfit[item.month - 1] =(int)item.profit;
+            } 
+            ViewBag.ThisMonthProfit = ThisMonthProfit;
+            ViewBag.ThisMonth = data.Invoices.Include(s => s.Order).ThenInclude(s => s.Customer)
+                .Select(s => new InvoiceInfo { 
+                    InvoiceId = s.InvoiceID,
+                    CustomerName= s.Order.Customer.DisplayName,
+                    TotalPayment = s.TotalPayment,
+                    CreatedBy = s.CreatedBy
+                    
+                }).ToList();
             
+            ViewBag.ThisYearProfit = data.Invoices.Where(x => x.CreatedAt.Value.Year == DateTime.Now.Year && x.Status == true).Sum(x => x.TotalPayment);
+            //doanh thu theo ngay
+            var listDaysRevenue = data.Invoices.Where(s => s.CreatedAt.Value.Year == DateTime.Now.Year && s.CreatedAt.Value.Month == DateTime.Now.Month && s.Status == true).GroupBy(s => s.CreatedAt.Value.Day)
+                .Select(s => new
+                {
+                    day = s.FirstOrDefault().CreatedAt.Value.Day,
+                    profit = s.Sum(v => v.TotalPayment)
+                });
+            foreach (var item in listDaysRevenue)
+            {
+                dayProfit[item.day - 1] = (int)item.profit;
+            }
+            ViewBag.DayProfit = dayProfit;
             return View();
         }
         [HttpGet]

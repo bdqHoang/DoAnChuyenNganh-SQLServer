@@ -18,17 +18,15 @@
                     <h4 class="text-right">Profile Settings</h4>
                 </div>
                 <div class="row mt-2">
-                    <div class="col-md-6"><label class="labels">Name</label><input type="text" class="form-control" placeholder="first name" value=""></div>
-                    <div class="col-md-6"><label class="labels">Surname</label><input type="text" class="form-control" value="" placeholder="surname"></div>
+                    <div class="col-md-12"><label class="labels">Name</label>
+                    <input id="customerName" class="form-control" placeholder="first name">
+                    </div>
                 </div>
                 <div class="row mt-3">
-                    <div class="col-md-12"><label class="labels">Mobile Number</label><input type="text" class="form-control" placeholder="enter phone number" value=""></div>
-                    <div class="col-md-12"><label class="labels">Email ID</label><input type="text" class="form-control" placeholder="enter email id" value=""></div>
-                    <div class="col-md-12"><label class="labels">Education</label><input type="text" class="form-control" placeholder="education" value=""></div>
-                </div>
-                <div class="row mt-3">
-                    <div class="col-md-6"><label class="labels">Country</label><input type="text" class="form-control" placeholder="country" value=""></div>
-                    <div class="col-md-6"><label class="labels">State/Region</label><input type="text" class="form-control" value="" placeholder="state"></div>
+                    <div class="col-md-12"><label class="labels">Mobile Number</label>
+                        <input id="phone" class="form-control" placeholder="enter phone number">
+                    </div>
+                    <div class="col-md-12"><label class="labels">Email ID</label><input id="email" class="form-control" placeholder="enter email id" /></div>
                 </div>
                 <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button">Save Profile</button></div>
             </div>
@@ -58,12 +56,12 @@
                     </h2>
                     <div id="collapseThree" class="accordion-collapse collapse border-0" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                         <div class="accordion-body">
-                            <div class="col-md-12"><label class="labels">Address Line 1</label><input type="text" class="form-control" placeholder="enter address line 1" value=""></div>
-                            <div class="col-md-12"><label class="labels">Address Line 2</label><input type="text" class="form-control" placeholder="enter address line 2" value=""></div>
-                            <div class="col-md-12"><label class="labels">Postcode</label><input type="text" class="form-control" placeholder="enter address line 2" value=""></div>
-                            <div class="col-md-12"><label class="labels">State</label><input type="text" class="form-control" placeholder="enter address line 2" value=""></div>
-                            <div class="col-md-12"><label class="labels">Area</label><input type="text" class="form-control" placeholder="enter address line 2" value=""></div>
-                        </div>
+                            <div class="input-group mb-3">
+                                <input type="text" class="form-control" placeholder="Recipient's username" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary profile-button" data-bs-toggle="modal" data-bs-target="#addAddress" type="button">Remove</button>
+                                </div>
+                            </div>                        </div>
                         <div class="mt-5 text-center"><button class="btn btn-primary profile-button" type="button">Add Adress</button></div>
                     </div>
                 </div>
@@ -72,8 +70,42 @@
     </div>
 </div>
 
-
+<div class="modal fade" id="addAddress" tabindex="-1" aria-labelledby="addAddress" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">New Address </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="col-md-12"><label class="labels">Old Password</label><input type="text" class="form-control" placeholder="Input new Address" value=""></div> <br>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section Footer{
-    <script src="~/Assets/css/bootstrap.css"></script>
+    <script>
+        //get information
+        $(document).ready(function () {
+            $.ajax({
+                url: "/user/information",
+                type: "get",
+                success: function (data) {
+                    if (data.url != null) {
+                        window.location.href = data.url;
+                    } else {
+                        $("#customerName").val(data.data.DisplayName);
+                        $("#phone").val(data.data.Phone);
+                        $("#email").val(data.data.Email);
+                    }
+                    
+                }
+            })
+        })
+    </script>
 }
