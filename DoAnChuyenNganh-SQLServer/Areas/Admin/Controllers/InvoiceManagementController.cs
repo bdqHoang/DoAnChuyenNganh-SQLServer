@@ -1,7 +1,10 @@
 ﻿using DoAnChuyenNganh_SQLServer.Areas.Admin.Data;
+using Microsoft.Ajax.Utilities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -31,11 +34,23 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Controllers
             data.SubmitChanges();
             return RedirectToAction("InvoiceManagement/InvoiceManagement");
         }
-
-        public ActionResult InvoiceDetail(string id)
+        [HttpGet]
+        public JsonResult InvoiceDetail(string id)
         {
-            var detailInvoice = data.Invoices.Where(x => x.InvoiceID == id);
-            return View(detailInvoice);
+            var invoiceDetail = data.Invoices.Include(i => i.Order).ThenInclude(i => i.Customer).Include(s => s.Order).ThenInclude(s => s.OrderDetails).ThenInclude(s => s.WareHouse).ThenInclude(s => s.Product).Select(s => new InvoiceInfo
+            {
+
+                InvoiceId = s.InvoiceID,
+                CustomerName = s.Order.Customer.DisplayName,
+                CreatedAt = s.CreatedAt,
+                CreatedBy = s.CreatedBy,
+                TotalPayment = s.TotalPayment,
+                OrderID = s.OrderID,
+                ProductName = s.Order.OrderDetails.First().WareHouse.Product.DisplayName,
+                Quantity = s.Order.OrderDetails.First().Quantity,
+                Price = s.Order.OrderDetails.First().WareHouse.Product.SellPrice
+            }).ToList();
+            return Json(invoiceDetail, JsonRequestBehavior.AllowGet);
         }
     }
 }

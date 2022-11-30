@@ -18,7 +18,8 @@
                                     <!--End-->
                                     <!--Two element on the same row-->
                                     <div class="row row-space">
-
+                                        <div class="col-2">
+                                        </div>
                                     </div>
                                     <!---->
                                     <div class="row row-space">
@@ -153,27 +154,27 @@
 <!--end-->
 <!--Ajax script-->
 <script>
-    function GetDetails(id) {
-        $.ajax({
-            url: "/CategorizeManagement/Edit",
-            typr: "GET",
-            contentType: "application/json;charset=UTF-8",
-            dataType: "json",
+        function GetDetails(id) {
+            $.ajax({
+                url: "/CategorizeManagement/Edit",
+                typr: "GET",
+                contentType: "application/json;charset=UTF-8",
+                dataType: "json",
             data: { id: id },
-            success: function (response) {
-                console.log(response);
-                $('#txtID').val(response.CategorizeID);
-                $('#txtDisplayName').val(response.DisplayName);
-                $('#EditModalID_Admin').modal('show');
+                success: function (response) {
+                    console.log(response);
+                    $('#txtID').val(response.CategorizeID);
+                    $('#txtDisplayName').val(response.DisplayName);
+                    $('#EditModalID_Admin').modal('show');
                 $('#Edit_form').attr('action', '/Admin/CategorizeManagement/Form_Edit/' + id)
-            },
-            error: function (response) {
-                alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
 
-            }
-        });
-        return false;
-    }
+                }
+            });
+            return false;
+        }
 </script>
 <!--End-->
 <!--Special character check-->

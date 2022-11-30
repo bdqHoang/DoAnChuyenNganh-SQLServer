@@ -113,7 +113,13 @@
                                     <div class="form-group text-center">
                                         <div class="form-control">
                                             <label class="control-label col-md-3">Chức vụ</label>
-                                            @Html.DropDownList("PositionID", ViewBag.Position as SelectList, new { @style = "width: 190px" })
+                                            @{ var listPos = ViewBag.Position as List<DoAnChuyenNganh_SQLServer.Areas.Admin.Data.Position>;}
+                                            <select >
+                                                @foreach (var item in listPos)
+                                                {
+                                                    <option value="@item.PositionID">@item.DisplayName</option>
+                                                }
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="row row-space">
@@ -184,12 +190,18 @@
                                         </div>
                                         <!--End-->
                                     </div>
-@*                                    <div class="form-group text-center">
+                                    <div class="form-group text-center">
                                         <div class="form-control">
                                             <label class="control-label col-md-3">Chức vụ</label>
-                                            @Html.DropDownList("PositionID", ViewBag.Position as SelectList, new { @style = "width: 190px", @id = "txtPositionID" })
+                                            @{ var listPos = ViewBag.Position as List<DoAnChuyenNganh_SQLServer.Areas.Admin.Data.Position>;}
+                                            <select id="cmbPosition">
+                                                @foreach(var item in listPos)
+                                                {
+                                                    <option value="@item.PositionID">@item.DisplayName</option>
+                                                }
+                                            </select>
                                         </div>
-                                    </div>*@
+                                    </div>
                                     <div class="row row-space">
                                         <!--Textbox-->
                                         <div class="col-2">
@@ -235,7 +247,8 @@
                 console.log(response);
                 $('#txtDisplayName').val(response.DisplayName);
                 $('#txtUsername').val(response.Username);
-/*                $('#txtPositionID').apend(response.PositionID);*/
+                console.log(response.PositionID);
+                $('#cmbPosition').val(response.PositionID);
                 $('#txtPassword').val(response.Password);
                 $('#txtEmail').val(response.Email);
                 $('#txtPhone').val(response.Phone);
@@ -245,10 +258,8 @@
             },
             error: function (response) {
                 alert(response.responseText);
-
             }
         });
-        return false;
     }
 </script>
 <script>

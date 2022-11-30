@@ -12,5 +12,9 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Data
         public DateTime? CreatedAt { get; set; }
         public String CreatedBy { get; set; }
         public Double? TotalPayment { get; set; }
+        public String OrderID { get; set; }
+        public String ProductName { get; set; }
+        public int? Quantity { get; set; }
+        public decimal? Price { get; set; }
     }
 }
