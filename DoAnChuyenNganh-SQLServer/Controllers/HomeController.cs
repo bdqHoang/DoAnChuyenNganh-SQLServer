@@ -95,6 +95,13 @@ namespace DoAnChuyenNganh.Controllers
             return Json(data, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpGet]
+        [Route("~/home/getinformation")]
+        public JsonResult GetInformation(string id) {
+            var data = _homeService.DetailProduct(id);
+            return Json(data, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult Shop()
         {
             return View();
