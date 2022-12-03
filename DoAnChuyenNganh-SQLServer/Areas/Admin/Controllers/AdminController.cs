@@ -22,7 +22,7 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Controllers
                 return RedirectToAction("Login", "Admin");
             }
             List<int> ThisMonthProfit = new List<int> {0,0,0,0,0,0,0,0,0,0,0,0};
-            List<int> dayProfit = new List<int> {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 };
+            List<int> dayProfit = new List<int> {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
             ViewBag.CountCustomer = data.Customers.Count();
             ViewBag.CountEmployee = data.Employees.Count();
             ViewBag.TotalWareHouse = data.WareHouses.Sum(x => x.quantity);

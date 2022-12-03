@@ -1,14 +1,14 @@
-﻿
+﻿@model IEnumerable<DoAnChuyenNganh_SQLServer.Areas.Admin.Data.Product>
 @{
     ViewBag.Title = "ProductManagement";
-    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    Layout = "~/Areas/Admin/Views/AjaxLayout/_LayoutAjaxCRUD.cshtml";
 }
 
 <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
     <div class="container-fluid py-1 px-3">
         <nav aria-label="breadcrumb">
             <h5 class="font-weight-bolder mb-0">Quản lý sản phẩm</h5>
-            <a class="btn btn-primary" href="@Url.Action("Create", "ProductManagement")">Thêm sản phẩm</a>
+            <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#CreateModalID_Admin">Thêm loại sản phẩm</a>
         </nav>
         <div class="col-md-2">
             <div class="input-group input-group-outline my-3">
@@ -23,6 +23,7 @@
         <th>STT</th>
         <th>Mã sản phẩm</th>
         <th>Mã loại</th>
+        <th>Mã khuyến mãi</th>
         <th>Mã nhà cung cấp</th>
         <th>Tên sản phẩm</th>
         <th>Giá nhập</th>
@@ -32,12 +33,357 @@
         <th>Đánh giá</th>
         <th>Trạng thái</th>
         <th></th>
+        <th>Chất liệu</th>
+        <th>Cân nặng</th>
+        <th>Bảo hành</th>
+        <th>Số phím</th>
+        <th>Kích thước</th>
+        <th>Mô tả</th>
+        <th>Kiểu kết nối</th>
         <th>Ngày tạo</th>
         <th>Tạo bởi</th>
         <th>Ngày chỉnh sửa</th>
         <th>Người chỉnh sửa</th>
     </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.ProductID</td>
+            <td>@item.CategorizeID</td>
+            <td>@item.ProductDiscountID</td>
+            <td>@item.SupplierID</td>
+            <td>@item.DisplayName</td>
+            <td>@String.Format("{0:0,0}", item.ImportPrice)</td>
+            <td>@String.Format("{0:0,0}", item.SellPrice)</td>
+            <td>@item.NumberOfLike</td>
+            <td>@item.NumberOfRating</td>
+            <td>@item.Rating</td>
+            <td>@item.Status</td>
+            <td style="width: 280px">
+                <i></i>
+                <a class="btn btn-warning" onclick="GetDetails('@item.ProductID')">Sửa</a>
+                <i></i>
+                @if (item.Status == true)
+                {
+                    @Html.ActionLink("Ngưng kinh doanh", "ActiveProduct", new { id = item.ProductID }, new { @class = "btn btn-danger" })
+                }
+                else
+                {
+                    @Html.ActionLink("Kinh doanh", "ActiveProduct", new { id = item.ProductID }, new { @class = "btn btn-info" })
+                }
+            </td>
+            <td>@item.Material</td>
+            <td>@item.Weight</td>
+            <td>@item.Warranty</td>
+            <td>@item.ProgrammableButton</td>
+            <td>@item.Size</td>
+            <td>@item.Description</td>
+            <td>@item.ConectionType</td>
+            <td>@item.CreatedAt</td>
+            <td>@item.CreatedBy</td>
+            <td>@item.UpdateAt</td>
+            <td>@item.UpdateBy</td>
+
+        </tr>
+    }
 </table>
+<!--Create modal start -->
+<div class="modal fade" id="CreateModalID_Admin" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        @using (Html.BeginForm("Create", "ProductManagement", FormMethod.Post))
+        {
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thêm sản phẩm</h5>
+                </div>
+
+                <div class="modal-body">
+                    <div class="font-robo">
+                        <div class="wrapper wrapper--w680">
+                            <div>
+                                <div>
+                                    <div class="row row-space">
+                                        <div class="input-group">
+                                            <input class="input--style-1" type="text" placeholder="Mã sản phẩm" name="ProductID">
+                                        </div>
+                                        <div class="form-group text-center">
+                                            <div class="form-control">
+                                                <label class="control-label col-md-3">Mã loại</label>
+                                                @{ var listCat = ViewBag.Categorize as List<DoAnChuyenNganh_SQLServer.Areas.Admin.Data.Categorize>;}
+                                                <select name="CategorizeID">
+                                                    @foreach (var item in listCat)
+                                                    {
+                                                        <option value="@item.CategorizeID">@item.DisplayName</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="form-control">
+                                                    <label class="control-label">Mã giảm giá</label>
+                                                    @{var listDis = ViewBag.ProductDiscount as List<DoAnChuyenNganh_SQLServer.Areas.Admin.Data.ProductDiscount>;}
+                                                    <select name="ProductDiscountID">
+                                                        @foreach (var item in listDis)
+                                                        {
+                                                            <option value="@item.ProductDiscountID">@item.DisplayName</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group text-center">
+                                                <div class="form-control">
+                                                    <label class="control-label">Mã nhà cung cấp</label>
+                                                    @{ var listSup = ViewBag.Supplier as List<DoAnChuyenNganh_SQLServer.Areas.Admin.Data.Supplier>;}
+                                                    <select name="SupplierID">
+                                                        @foreach (var item in listSup)
+                                                        {
+                                                            <option value="@item.SupplierID ">@item.DisplayName</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="input-group">
+                                        <input class="input--style-1" type="text" placeholder="Tên sản phẩm" name="DisplayName">
+                                    </div>
+                                    <div class="row row-space">
+                                        <div class="col-2">
+                                            <div class="input-group">
+                                                <input class="input--style-1" type="number" min="0" onkeypress="return isNumberKey(event)" placeholder="Giá nhập" name="ImportPrice">
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="input-group">
+                                                <input class="input--style-1" type="number" min="0" onkeypress="return isNumberKey(event)" placeholder="Giá bán" name="SellPrice">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row row-space">
+                                        <div class="col-2">
+                                            <div class="input-group">
+                                                <input class="input--style-1" type="text" placeholder="Chất liệu" name="Material">
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="input-group">
+                                                <input class="input--style-1" type="number" onkeypress="return isNumberKey(event)" placeholder="Cân nặng" name="Weight">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row row-space">
+                                        <div class="col-2">
+                                            <div class="input-group">
+                                                <input class="input--style-1" type="number" onkeypress="return isNumberKey(event)" placeholder="Bảo hành" name="Warranty">
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="input-group">
+                                                <input class="input--style-1" type="number" onkeypress="return isNumberKey(event)" placeholder="Số phím" name="ProgrammableButton">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row row-space">
+                                        <div class="col-2">
+                                            <div class="input-group">
+                                                <input class="input--style-1" type="number" onkeypress="return isNumberKey(event)" placeholder="Kích thước" name="Size">
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="input-group">
+                                                <input class="input--style-1" type="text" placeholder="Kiểu kết nối" name="ConectionType">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="input-group">
+                                        <input class="input--style-1" type="text" placeholder="Mô tả" name="Description">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary">Thêm</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<!--end-->
+<!--Edit modal start -->
+<div class="modal fade" id="EditModalID_Admin" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "Edit_form" }))
+            {
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Sửa loại sản phẩm</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="font-robo">
+                        <div class="wrapper wrapper--w680">
+                            <div>
+                                <div>
+                                    <div class="row row-space">
+                                        <div class="input-group">
+                                            <input class="input--style-1" id="txtID" type="text" placeholder="Mã sản phẩm" name="ProductID" readonly="readonly">
+                                        </div>
+                                        <div class="form-group text-center">
+                                            <div class="form-control">
+                                                <label class="control-label col-md-3">Mã loại</label>
+                                                @{ var listCat = ViewBag.Categorize as List<DoAnChuyenNganh_SQLServer.Areas.Admin.Data.Categorize>;}
+                                                <select id="cmbCategorize" name="CategorizeID">
+                                                    @foreach (var item in listCat)
+                                                    {
+                                                        <option value="@item.CategorizeID">@item.DisplayName</option>
+                                                    }
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <div class="form-control">
+                                                    <label class="control-label">Mã giảm giá</label>
+                                                    @{var listDis = ViewBag.ProductDiscount as List<DoAnChuyenNganh_SQLServer.Areas.Admin.Data.ProductDiscount>;}
+                                                    <select id="cmbProductDiscount" name="ProductDiscountID">
+                                                        @foreach (var item in listDis)
+                                                        {
+                                                            <option value="@item.ProductDiscountID">@item.DisplayName</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group text-center">
+                                                <div class="form-control">
+                                                    <label class="control-label">Mã nhà cung cấp</label>
+                                                    @{ var listSup = ViewBag.Supplier as List<DoAnChuyenNganh_SQLServer.Areas.Admin.Data.Supplier>;}
+                                                    <select id="cmbSupplier" name="SupplierID">
+                                                        @foreach (var item in listSup)
+                                                        {
+                                                            <option value="@item.SupplierID">@item.DisplayName</option>
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="input-group">
+                                        <input class="input--style-1" id="txtDisplayName" type="text" placeholder="Tên sản phẩm" name="DisplayName">
+                                    </div>
+                                    <div class="row row-space">
+                                        <div class="col-2">
+                                            <div class="input-group">
+                                                <input class="input--style-1" id="txtImportPrice" onkeypress="return isNumberKey(event)" min="0" type="number" placeholder="Giá nhập" name="ImportPrice">
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="input-group">
+                                                <input class="input--style-1" id="txtSellPrice" onkeypress="return isNumberKey(event)" min="0" type="number" placeholder="Giá bán" name="SellPrice">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row row-space">
+                                        <div class="col-2">
+                                            <div class="input-group">
+                                                <input class="input--style-1" id="txtMaterial"  type="text" placeholder="Chất liệu" name="Material">
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="input-group">
+                                                <input class="input--style-1" id="txtWeight" onkeypress="return isNumberKey(event)" min="0" type="number" placeholder="Cân nặng" name="Weight">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row row-space">
+                                        <div class="col-2">
+                                            <div class="input-group">
+                                                <input class="input--style-1" id="txtWarranty" min="0" type="number" onkeypress="return isNumberKey(event)" placeholder="Bảo hành" name="Warranty">
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="input-group">
+                                                <input class="input--style-1" id="txtProgrammableButton" type="number" onkeypress="return isNumberKey(event)" placeholder="Số phím" name="ProgrammableButton">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row row-space">
+                                        <div class="col-2">
+                                            <div class="input-group">
+                                                <input class="input--style-1" id="txtSize" type="number" onkeypress="return isNumberKey(event)" placeholder="Kích thước" name="Size">
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="input-group">
+                                                <input class="input--style-1" id="txtConnectionType" type="text" placeholder="Kiểu kết nối" name="ConectionType">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="input-group">
+                                        <input class="input--style-1" type="text" id="txtDescription" placeholder="Mô tả" name="Description">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<!--end-->
+<script>
+    function GetDetails(id) {
+        $.ajax({
+            url: "/ProductManagement/Edit",
+            typr: "GET",
+            contentType: "application/json;charset=UTF-8",
+            dataType: "json",
+            data: { id: id },
+            success: function (response) {
+                console.log(response);
+                $('#txtID').val(response.ProductID);
+                $('#cmbCategorize').val(response.CategorizeID);
+                $('#cmbProductDiscount').val(response.ProductDiscountID);
+                $('#cmbSupplier').val(response.SupplierID).change();
+                $('#txtDisplayName').val(response.DisplayName);
+                $('#txtImportPrice').val(response.ImportPrice);
+                $('#txtSellPrice').val(response.SellPrice);
+                $('#txtMaterial').val(response.Material);
+                $('#txtWarranty').val(response.Warranty);
+                $('#txtWeight').val(response.Weight);
+                $('#txtProgrammableButton').val(response.ProgrammableButton);
+                $('#txtSize').val(response.Size);
+                $('#txtDescription').val(response.Description);
+                $('#txtConnectionType').val(response.ConnectionType);
+                $('#EditModalID_Admin').modal('show');
+                $('#Edit_form').attr('action', '/Admin/ProductManagement/Form_Edit/' + id)
+            },
+            error: function (response) {
+                alert(response.responseText);
+
+            }
+        });
+        return false;
+    }
+</script>
 @section Footer{
     <script>
         var tables = document.getElementsByTagName('table');
@@ -47,6 +393,12 @@
             td = document.createElement('td');
             td.appendChild(document.createTextNode(i));
             rows[i].insertBefore(td, rows[i].firstChild);
+        }
+        function isNumberKey(evt) {
+            var charCode = (evt.which) ? evt.which : evt.keyCode
+            if (charCode > 31 && (charCode < 48 || charCode > 57))
+                return false;
+            return true;
         }
     </script>
     <script>

@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<DoAnChuyenNganh_SQLServer.Areas.Admin.Data.Image>
 @{
     ViewBag.Title = "ProductImage";
     Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
@@ -21,12 +21,12 @@
         <th>Hình ảnh</th>
         <th>Chỉnh sửa</th>
     </tr>
-@*    @foreach (var item in Model)
+    @foreach (var item in Model)
     {
         <tr>
             <td>@Html.DisplayFor(modelItem => item.ProductID)</td>
-            <td>@Html.DisplayFor(modelItem => item.DisplayName)</td>
-            <td><img src="data:image/jpeg;base64,@item.Image" alt="" style="width:150px; height:120px"></td>
+            <td>@Html.DisplayFor(modelItem => item.ProductID)</td>
+            <td><img src="data:image/jpeg;base64, @{ Convert.ToBase64String(item.Image1.toArray().toString());} " alt="" style="width:150px; height:120px"></td>
             <td style="width: 280px">
                 <i></i>
                 @Html.ActionLink("Sửa", "Edit", new { @id = item.ImageID }, new { @class = "btn btn-warning" })
@@ -35,7 +35,82 @@
             </td>
         </tr>
     }
-*@</table>
+
+</table>
+<!--Create modal start -->
+<div class="modal fade" id="CreateModalID_Admin" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        @using (Html.BeginForm("Create", "CategorizeManagement", FormMethod.Post))
+        {
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thêm loại sản phẩm</h5>
+                </div>
+
+                <div class="modal-body">
+                    <div class="font-robo">
+                        <div class="wrapper wrapper--w680">
+                            <div>
+                                <div>
+                                    <div class="input-group">
+                                        <input class="input--style-1" type="text" placeholder="Mã loại" name="CategorizeID">
+                                    </div>
+                                    <div class="input-group">
+                                        <input class="input--style-1" type="text" placeholder="Tên loại" name="DisplayName">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary">Thêm</button>
+                </div>
+
+            </div>
+        }
+    </div>
+</div>
+<!--end-->
+<!--Edit modal start -->
+<div class="modal fade" id="EditModalID_Admin" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "Edit_form" }))
+            {
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Sửa loại sản phẩm</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="font-robo">
+                        <div class="wrapper wrapper--w680">
+                            <div>
+                                <div>
+                                    <div>
+                                        <div class="input-group">
+                                            <input class="input--style-1" id="txtID" type="text" placeholder="Mã loại" name="CategorizeID" readonly="readonly">
+                                        </div>
+                                        <div class="input-group">
+                                            <input class="input--style-1" id="txtDisplayName" type="text" placeholder="Tên loại" name="DisplayName">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<!--end-->
 <script>
     var tables = document.getElementsByTagName('table');
     var table = tables[tables.length - 1];

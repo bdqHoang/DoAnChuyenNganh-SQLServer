@@ -36,17 +36,11 @@
     <!--Top right conner-->
     <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
         <div class="container-fluid py-1 px-3">
-            <nav aria-label="breadcrumb">
-                <h6 class="font-weight-bolder mb-0">Trang chủ</h6>
-            </nav>
             <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
 
                 <ul class="navbar-nav justify-content-end">
                     <li class="nav-item d-flex align-items-center">
-                        <a href="#" class="nav-link text-body font-weight-bold px-0">
-                            <i class="fa fa-user me-sm-1"></i>
-                            <span class="d-sm-inline d-none">Xin chào @((Session["AdminAccount"] as Employee).DisplayName)</span>
-                        </a>
+
                     </li>
                     <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
                         <a href="javascript:;" class="nav-link text-body p-0" id="iconNavbarSidenav">
@@ -76,10 +70,17 @@
                 <img src="/Assets/img/logo/storelogo.png" class="navbar-brand-img h-100" alt="main_logo">
                 <span class="ms-1 font-weight-bold text-white">3TL-Gear</span>
             </a>
+
+        </div>
+
+        <div>
+            <a class="nav-link text-body font-weight-bold px-0 text-lg-center">
+                <span style="color:white">Xin chào @((Session["AdminAccount"] as Employee).DisplayName)</span>
+            </a>
         </div>
         <hr class="horizontal light mt-0 mb-2">
         @*        @if ((Session["AdminAccount"] as Employee).PositionID == "1")
-            {*@
+        {*@
         <div class="content" id="sidenav-collapse-main">
             <ul class="navbar-nav">
                 <li class="nav-item">
@@ -210,232 +211,8 @@
             </ul>
         </div> @*}*@
         <!--else
-        {
-            if ((Session["AdminAccount"] as Employee).PositionID == "2")
-            {
-                <div class="collapse navbar-collapse  w-auto  max-height-vh-100" id="sidenav-collapse-main">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link text-white " href="@Url.Action("Index","Admin")">-->
-        <!---->
-        <!--<div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                    <i class="material-icons opacity-10">dashboard</i>
-                </div>
-                <span class="nav-link-text ms-1">Trang chủ</span>
-            </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link text-white " href="@Url.Action("Index","Admin")">-->
-        <!---->
-        <!--<div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="material-icons opacity-10">dashboard</i>
-                            </div>
-                            <span class="nav-link-text ms-1">Trang chủ</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white " href="@Url.Action("UserManagement","UserManagement")">
-                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="material-icons opacity-10">groups</i>
-                            </div>
-                            <span class="nav-link-text ms-1">Quản lý khách hàng</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white " href="@Url.Action("AddressManagement","AddressManagement")">
-                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="material-icons opacity-10">book</i>
-                            </div>
-                            <span class="nav-link-text ms-1">Quản lý địa chỉ KH</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white " href="@Url.Action("CategorizeManagement","CategorizeManagement")">
-                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="material-icons opacity-10">category</i>
-                            </div>
-                            <span class="nav-link-text ms-1">Quản lý danh mục SP</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white " href="@Url.Action("SupplierManagement","SupplierManagement")">
-                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="material-icons opacity-10">home_work</i>
-                            </div>
-                            <span class="nav-link-text ms-1">Quản lý nhà cung cấp</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white " href="@Url.Action("ProductManagement","ProductManagement")">
-                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="material-icons opacity-10">inventory_2</i>
-                            </div>
-                            <span class="nav-link-text ms-1">Quản lý sản phẩm</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white " href="@Url.Action("ImageProduct","ImageProduct")">
-                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="material-icons opacity-10">burst_mode</i>
-                            </div>
-                            <span class="nav-link-text ms-1">Quản lý hình ảnh</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white " href="@Url.Action("DiscountProductManagement","DiscountProductManagement")">
-                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="material-icons opacity-10">style</i>
-                            </div>
-                            <span class="nav-link-text ms-1">Quản lý giảm giá sản phẩm</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white " href="@Url.Action("DiscountManagement","DiscountManagement")">
-                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="material-icons opacity-10">local_offer</i>
-                            </div>
-                            <span class="nav-link-text ms-1">Quản lý khuyến mãi</span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link text-white " href="@Url.Action("ColorManagement","Color")">
-                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="material-icons opacity-10">palette</i>
-                            </div>
-                            <span class="nav-link-text ms-1">Quản lý màu sắc</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white " href="@Url.Action("SwitchManagement","SwitchManagement")">
-                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="material-icons opacity-10">keyboard</i>
-                            </div>
-                            <span class="nav-link-text ms-1">Quản lý Switch</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white " href="@Url.Action("WareHouseManagement","WareHouseManagement")">
-                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="material-icons opacity-10">maps_home_work</i>
-                            </div>
-                            <span class="nav-link-text ms-1">Quản lý kho</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white " href="@Url.Action("Index","InvoiceManagement")">
-                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="material-icons opacity-10">receipt</i>
-                            </div>
-                            <span class="nav-link-text ms-1">Quản lý hóa đơn</span>
-                        </a>
-                    </li>
-                    <li class="nav-item mt-3">
-                        <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Account pages</h6>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="@Url.Action("ChangePassword", "Employee")">
-                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="material-icons opacity-10">password</i>
-                            </div>
-                            <span class="nav-link-text ms-1">Đổi mật khẩu</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white " href="@Url.Action("Logout", "Admin")">
-                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="material-icons opacity-10">logout</i>
-                            </div>
-                            <span class="nav-link-text ms-1">Đăng xuất</span>
-                        </a>
-                    </li>
-                </ul>
-            </div> }
-        else
-        {
-            if ((Session["AdminAccount"] as Employee).PositionID == "3")
-            {
-                <div class="collapse navbar-collapse  w-auto  max-height-vh-100" id="sidenav-collapse-main">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link text-white " href="@Url.Action("Index","Admin")">-->
-        <!---->
-        <!--<div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="material-icons opacity-10">dashboard</i>
-                            </div>
-                            <span class="nav-link-text ms-1">Trang chủ</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white " href="@Url.Action("CategorizeManagement","CategorizeManagement")">
-                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="material-icons opacity-10">category</i>
-                            </div>
-                            <span class="nav-link-text ms-1">Quản lý danh mục SP</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white " href="@Url.Action("ProductManagement","ProductManagement")">
-                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="material-icons opacity-10">inventory_2</i>
-                            </div>
-                            <span class="nav-link-text ms-1">Quản lý sản phẩm</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white " href="@Url.Action("ImageProduct","ImageProduct")">
-                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="material-icons opacity-10">burst_mode</i>
-                            </div>
-                            <span class="nav-link-text ms-1">Quản lý hình ảnh</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white " href="@Url.Action("ColorManagement","Color")">
-                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="material-icons opacity-10">palette</i>
-                            </div>
-                            <span class="nav-link-text ms-1">Quản lý màu sắc</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white " href="@Url.Action("SwitchManagement","SwitchManagement")">
-                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="material-icons opacity-10">keyboard</i>
-                            </div>
-                            <span class="nav-link-text ms-1">Quản lý Switch</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white " href="@Url.Action("WareHouseManagement","WareHouseManagement")">
-                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="material-icons opacity-10">maps_home_work</i>
-                            </div>
-                            <span class="nav-link-text ms-1">Quản lý kho</span>
-                        </a>
-                    </li>
-                    <li class="nav-item mt-3">
-                        <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Account pages</h6>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" href="@Url.Action("ChangePassword", "Employee")">
-                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="material-icons opacity-10">password</i>
-                            </div>
-                            <span class="nav-link-text ms-1">Đổi mật khẩu</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white " href="@Url.Action("Logout", "Admin")">
-                            <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                                <i class="material-icons opacity-10">logout</i>
-                            </div>
-                            <span class="nav-link-text ms-1">Đăng xuất</span>
-                        </a>
-                    </li>
-                </ul>
-            </div> }
-        else
+    {
+        if ((Session["AdminAccount"] as Employee).PositionID == "2")
         {
             <div class="collapse navbar-collapse  w-auto  max-height-vh-100" id="sidenav-collapse-main">
                 <ul class="navbar-nav">
@@ -443,68 +220,292 @@
                         <a class="nav-link text-white " href="@Url.Action("Index","Admin")">-->
         <!---->
         <!--<div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                                        <i class="material-icons opacity-10">dashboard</i>
-                                    </div>
-                                    <span class="nav-link-text ms-1">Trang chủ</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white " href="@Url.Action("UserManagement","UserManagement")">
-                                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                                        <i class="material-icons opacity-10">groups</i>
-                                    </div>
-                                    <span class="nav-link-text ms-1">Quản lý khách hàng</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white " href="@Url.Action("AddressManagement","AddressManagement")">
-                                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                                        <i class="material-icons opacity-10">book</i>
-                                    </div>
-                                    <span class="nav-link-text ms-1">Quản lý địa chỉ KH</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white " href="@Url.Action("CategorizeManagement","CategorizeManagement")">
-                                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                                        <i class="material-icons opacity-10">category</i>
-                                    </div>
-                                    <span class="nav-link-text ms-1">Quản lý danh mục SP</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white " href="@Url.Action("Index","InvoiceManagement")">
-                                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                                        <i class="material-icons opacity-10">receipt</i>
-                                    </div>
-                                    <span class="nav-link-text ms-1">Quản lý hóa đơn</span>
-                                </a>
-                            </li>
-                            <li class="nav-item mt-3">
-                                <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Account pages</h6>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white" href="@Url.Action("ChangePassword", "Employee")">
-                                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                                        <i class="material-icons opacity-10">password</i>
-                                    </div>
-                                    <span class="nav-link-text ms-1">Đổi mật khẩu</span>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-white " href="@Url.Action("Logout", "Admin")">
-                                    <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
-                                        <i class="material-icons opacity-10">logout</i>
-                                    </div>
-                                    <span class="nav-link-text ms-1">Đăng xuất</span>
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                }
+                <i class="material-icons opacity-10">dashboard</i>
+            </div>
+            <span class="nav-link-text ms-1">Trang chủ</span>
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-white " href="@Url.Action("Index","Admin")">-->
+        <!---->
+        <!--<div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">dashboard</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Trang chủ</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white " href="@Url.Action("UserManagement","UserManagement")">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">groups</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Quản lý khách hàng</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white " href="@Url.Action("AddressManagement","AddressManagement")">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">book</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Quản lý địa chỉ KH</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white " href="@Url.Action("CategorizeManagement","CategorizeManagement")">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">category</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Quản lý danh mục SP</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white " href="@Url.Action("SupplierManagement","SupplierManagement")">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">home_work</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Quản lý nhà cung cấp</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white " href="@Url.Action("ProductManagement","ProductManagement")">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">inventory_2</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Quản lý sản phẩm</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white " href="@Url.Action("ImageProduct","ImageProduct")">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">burst_mode</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Quản lý hình ảnh</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white " href="@Url.Action("DiscountProductManagement","DiscountProductManagement")">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">style</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Quản lý giảm giá sản phẩm</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white " href="@Url.Action("DiscountManagement","DiscountManagement")">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">local_offer</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Quản lý khuyến mãi</span>
+                    </a>
+                </li>
 
+                <li class="nav-item">
+                    <a class="nav-link text-white " href="@Url.Action("ColorManagement","Color")">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">palette</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Quản lý màu sắc</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white " href="@Url.Action("SwitchManagement","SwitchManagement")">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">keyboard</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Quản lý Switch</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white " href="@Url.Action("WareHouseManagement","WareHouseManagement")">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">maps_home_work</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Quản lý kho</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white " href="@Url.Action("Index","InvoiceManagement")">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">receipt</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Quản lý hóa đơn</span>
+                    </a>
+                </li>
+                <li class="nav-item mt-3">
+                    <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Account pages</h6>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="@Url.Action("ChangePassword", "Employee")">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">password</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Đổi mật khẩu</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white " href="@Url.Action("Logout", "Admin")">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">logout</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Đăng xuất</span>
+                    </a>
+                </li>
+            </ul>
+        </div> }
+    else
+    {
+        if ((Session["AdminAccount"] as Employee).PositionID == "3")
+        {
+            <div class="collapse navbar-collapse  w-auto  max-height-vh-100" id="sidenav-collapse-main">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link text-white " href="@Url.Action("Index","Admin")">-->
+        <!---->
+        <!--<div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">dashboard</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Trang chủ</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white " href="@Url.Action("CategorizeManagement","CategorizeManagement")">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">category</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Quản lý danh mục SP</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white " href="@Url.Action("ProductManagement","ProductManagement")">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">inventory_2</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Quản lý sản phẩm</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white " href="@Url.Action("ImageProduct","ImageProduct")">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">burst_mode</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Quản lý hình ảnh</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white " href="@Url.Action("ColorManagement","Color")">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">palette</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Quản lý màu sắc</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white " href="@Url.Action("SwitchManagement","SwitchManagement")">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">keyboard</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Quản lý Switch</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white " href="@Url.Action("WareHouseManagement","WareHouseManagement")">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">maps_home_work</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Quản lý kho</span>
+                    </a>
+                </li>
+                <li class="nav-item mt-3">
+                    <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Account pages</h6>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="@Url.Action("ChangePassword", "Employee")">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">password</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Đổi mật khẩu</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white " href="@Url.Action("Logout", "Admin")">
+                        <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                            <i class="material-icons opacity-10">logout</i>
+                        </div>
+                        <span class="nav-link-text ms-1">Đăng xuất</span>
+                    </a>
+                </li>
+            </ul>
+        </div> }
+    else
+    {
+        <div class="collapse navbar-collapse  w-auto  max-height-vh-100" id="sidenav-collapse-main">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link text-white " href="@Url.Action("Index","Admin")">-->
+        <!---->
+        <!--<div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="material-icons opacity-10">dashboard</i>
+                                </div>
+                                <span class="nav-link-text ms-1">Trang chủ</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white " href="@Url.Action("UserManagement","UserManagement")">
+                                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="material-icons opacity-10">groups</i>
+                                </div>
+                                <span class="nav-link-text ms-1">Quản lý khách hàng</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white " href="@Url.Action("AddressManagement","AddressManagement")">
+                                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="material-icons opacity-10">book</i>
+                                </div>
+                                <span class="nav-link-text ms-1">Quản lý địa chỉ KH</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white " href="@Url.Action("CategorizeManagement","CategorizeManagement")">
+                                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="material-icons opacity-10">category</i>
+                                </div>
+                                <span class="nav-link-text ms-1">Quản lý danh mục SP</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white " href="@Url.Action("Index","InvoiceManagement")">
+                                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="material-icons opacity-10">receipt</i>
+                                </div>
+                                <span class="nav-link-text ms-1">Quản lý hóa đơn</span>
+                            </a>
+                        </li>
+                        <li class="nav-item mt-3">
+                            <h6 class="ps-4 ms-2 text-uppercase text-xs text-white font-weight-bolder opacity-8">Account pages</h6>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="@Url.Action("ChangePassword", "Employee")">
+                                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="material-icons opacity-10">password</i>
+                                </div>
+                                <span class="nav-link-text ms-1">Đổi mật khẩu</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white " href="@Url.Action("Logout", "Admin")">
+                                <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">
+                                    <i class="material-icons opacity-10">logout</i>
+                                </div>
+                                <span class="nav-link-text ms-1">Đăng xuất</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             }
-        }-->
+
+        }
+    }-->
 
     </aside>
     <!--End of rightside navbar-->

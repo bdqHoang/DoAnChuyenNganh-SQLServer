@@ -19,7 +19,7 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Controllers
             {
                 return RedirectToAction("Login", "Admin");
             }
-            ViewBag.Position = new SelectList(data.Positions, "PositionID", "DisplayName");
+            ViewBag.Position = data.Positions.Where(s => s.Status == true).ToList();
             var all_Emp = from tt in data.Employees select tt;
             return View(all_Emp);
         }
@@ -76,7 +76,8 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin.Controllers
                               Password = e.Password,
                               Email = e.Email,
                               Phone = e.Phone,
-                              Address = e.Address
+                              Address = e.Address,
+                              e.PositionID
                             }, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
