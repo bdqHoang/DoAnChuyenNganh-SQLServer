@@ -35,12 +35,7 @@
             <div class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4" id="navbar">
 
                 <ul class="navbar-nav justify-content-end" style="text-align:right">
-                    <li class="nav-item d-flex align-items-center">
-                        <a href="#" class="nav-link text-body font-weight-bold px-0">
-                            <i class="fa fa-user me-sm-1"></i>
-                            <span class="d-sm-inline d-none">Xin chào @((Session["AdminAccount"] as Employee).DisplayName)</span>
-                        </a>
-                    </li>
+
 
                 </ul>
             </div>
@@ -54,6 +49,11 @@
             <a class="navbar-brand m-0">
                 <img src="/Assets/img/logo/storelogo.png" class="navbar-brand-img h-100" alt="main_logo">
                 <span class="ms-1 font-weight-bold text-white">3TL-Gear</span>
+            </a>
+        </div>
+        <div>
+            <a class="nav-link text-body font-weight-bold px-0 text-lg-center">
+                <span style="color:white">Xin chào @((Session["AdminAccount"] as Employee).DisplayName)</span>
             </a>
         </div>
         <hr class="horizontal light mt-0 mb-2">
@@ -285,9 +285,9 @@
                             <span class="nav-link-text ms-1">Trang chủ</span>
                         </a>
                     </li>
-                    
-                    
-                    
+
+
+
                     <li class="nav-item">
                         <a class="nav-link text-white " href="@Url.Action("CategorizeManagement","CategorizeManagement")">
                             <div class="text-white text-center me-2 d-flex align-items-center justify-content-center">

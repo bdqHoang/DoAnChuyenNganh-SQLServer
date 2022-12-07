@@ -46,6 +46,7 @@ namespace DoAnChuyenNganh_SQLServer.Service
             invoice.OrderID = or.OrderID;
             invoice.EmployeeID = "ADMIN";
             invoice.InvoiceID = CreateOrderID(11);
+            invoice.Status = true;
             invoice.CreatedAt = DateTime.Now;
             //them vao hoa don
             _context.Orders.InsertOnSubmit(or);

@@ -875,14 +875,6 @@
     <Content Include="Areas\Admin\Views\_ViewStart.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\Admin\Login.cshtml" />
-    <Content Include="Areas\Admin\Data\GearShopAdmin.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>GearShopAdmin.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </Content>
-    <None Include="Areas\Admin\Data\GearShopAdmin.dbml.layout">
-      <DependentUpon>GearShopAdmin.dbml</DependentUpon>
-    </None>
     <Content Include="Areas\Admin\Views\OptionManagement\OptionManagement.cshtml" />
     <Content Include="Areas\Admin\Views\AddressManagement\AddressManagement.cshtml" />
     <Content Include="Areas\Admin\Views\Form\Create.cshtml" />
@@ -901,6 +893,14 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="Areas\Admin\Views\AjaxLayout\_LayoutAjaxCRUD.cshtml" />
+    <Content Include="Areas\Admin\Data\GearShopAdmin.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>GearShopAdmin.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Areas\Admin\Data\GearShopAdmin.dbml.layout">
+      <DependentUpon>GearShopAdmin.dbml</DependentUpon>
+    </None>
     <None Include="Models\GearShop.dbml.layout">
       <DependentUpon>GearShop.dbml</DependentUpon>
     </None>
