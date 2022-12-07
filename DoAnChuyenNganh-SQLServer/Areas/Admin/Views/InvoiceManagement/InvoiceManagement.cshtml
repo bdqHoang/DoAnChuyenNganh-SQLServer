@@ -1,7 +1,7 @@
-﻿
+﻿@model IEnumerable<DoAnChuyenNganh_SQLServer.Areas.Admin.Data.Invoice>
 @{
     ViewBag.Title = "InvoiceManagement";
-    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    Layout = "~/Areas/Admin/Views/AjaxLayout/_LayoutAjaxCRUD.cshtml";
 }
 
 <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
@@ -30,14 +30,14 @@
         <th></th>
         <th></th>
     </tr>
-@*    @foreach (var item in Model)
+    @foreach (var item in Model)
     {
         <tr>
             <td>@Html.DisplayFor(modelItem => item.InvoiceID)</td>
-            <td>@Html.DisplayFor(modelItem => item.CreateBy)</td>
+            <td>@Html.DisplayFor(modelItem => item.CreatedBy)</td>
             <td>@Html.DisplayFor(modelItem => item.CreatedAt)</td>
             <td>@Html.DisplayFor(modelItem => item.UpdateBy)</td>
-            <td>@Html.DisplayFor(modelItem => item.UpdatedAt)</td>
+            <td>@Html.DisplayFor(modelItem => item.UpdateAt)</td>
             <td>
                 @if (item.Status == true)
                 {<label class="btn btn-success">Đã xuất</label>}
@@ -59,12 +59,109 @@
             <td style="width: 280px">
                 @if (item.Status == true)
                 {
-                    @Html.ActionLink("Chi tiết hóa đơn", "DetailInvoice", new { id = item.InvoiceID }, new { @class = "btn btn-danger" })
+                    <a class="btn btn-warning" onclick="GetDetails('@item.InvoiceID')">Chi tiết hóa đơn</a>
                 }
             </td>
         </tr>
     }
-*@</table>
+
+</table>
+<!--Edit modal start -->
+<div class="modal fade" id="EditModalID_Admin" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "Edit_form" }))
+            {
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thêm loại sản phẩm</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="font-robo">
+                        <div class="wrapper wrapper--w680">
+                            <div>
+                                <div>
+                                    <div class="row row-space">
+                                        <div class="col-2">
+                                            <div class="input-group">
+                                                <input class="input--style-1" id="txtID" type="text" placeholder="Mã hóa đơn" name="name" readonly="readonly">
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="input-group">
+                                                <input class="input--style-1" id="txtOrderID" type="text" placeholder="Mã đơn đặt" name="name" readonly="readonly">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="input-group">
+                                        <input class="input--style-1" id="txtCustomerName" type="text" placeholder="Tên khách hàng" name="name" readonly="readonly">
+                                    </div>
+                                    <div class="row row-space">
+                                        <div class="col-2">
+                                            <div class="input-group">
+                                                <input class="input--style-1" id="CreatedAt" type="text" placeholder="Ngày tạo hóa đơn" name="name" readonly="readonly">
+                                            </div>
+                                        </div>
+                                        <div class="col-2">
+                                            <div class="input-group">
+                                                <input class="input--style-1" id="CreatedBy" type="text" placeholder="Người tạo" name="name" readonly="readonly">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <table class="table" style=" text-align: center">
+                                        <tr>
+                                            <th>STT</th>
+                                            <th>Tên sản phẩm</th>
+                                            <th>Số lượng</th>
+                                            <th>Giá bán</th>
+                                            <th>Tổng tiền</th>
+                                        </tr>
+
+                                        <tbody id="invoiceInfo">
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<!--end-->
+<!--Ajax script-->
+<script>
+    function GetDetails(id) {
+        $.ajax({
+            url: "/invoicemanagement/invoicedetail",
+            type: "GET",
+            contentType: "application/json;charset=UTF-8",
+            dataType: "json",
+            data: {id: id},
+            success: function (response) {
+                console.log(response);
+                $('#txtID').val(response.InvoiceId);
+                $('#txtOrderID').val(response.OrderID);
+                $('#txtCustomerName').val(response.CustomerName);
+                $('#txtCreatedAt').val(response.CreatedAt);
+                $('#txtCreatedBy').val(response.CreatedBy);
+                html = '';
+                for (let i = 0; i < response.length; i++) {
+                    html += '<tr><td>' + response[i].ProductName + '</td ><td' + response[i].Price + '</td><td>' + response[i].Quantity + '</td><td>' + response[i].TotalPayment + '</td></tr > ';
+                }
+                $('#invoiceInfo').html(html);
+                $('#EditModalID_Admin').modal('show');
+                $('#Edit_form').attr('action', '/Admin/InvoiceManagement/InvoiceDetail/' + id)
+            },
+            error: function (response) {
+                alert(response.responseText);
+
+            }
+        });
+        return false;
+    }
+</script>
 <script>
     var tables = document.getElementsByTagName('table');
     var table = tables[tables.length - 1];

@@ -7539,3 +7539,6 @@ p.checkout-coupon input[type=text]::placeholder {
 }
 
 /*# sourceMappingURL=style.css.map */
+.checked {
+    color: red!important;
+}

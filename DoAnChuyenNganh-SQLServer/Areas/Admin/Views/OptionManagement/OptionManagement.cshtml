@@ -1,0 +1,203 @@
+﻿@model IEnumerable<DoAnChuyenNganh_SQLServer.Areas.Admin.Data.Option>
+
+@{
+    ViewBag.Title = "OptionManagement";
+    Layout = "~/Areas/Admin/Views/AjaxLayout/_LayoutAjaxCRUD.cshtml";
+}
+<nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
+    <div class="container-fluid py-1 px-3">
+        <nav aria-label="breadcrumb">
+            <h5 class="font-weight-bolder mb-0">Quản lý option</h5>
+            <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#CreateModalID_Admin">Thêm loại option</a>
+        </nav>
+        <div class="col-md-2">
+            <div class="input-group input-group-outline my-3">
+                <input placeholder="Tên option" type="text" id="search" class="form-control" />
+            </div>
+        </div>
+    </div>
+</nav>
+<table class="table" style=" text-align: center">
+    <tr>
+        <th>STT</th>
+        <th>Mã option</th>
+        <th>Mô tả</th>
+        <th>Trạng thái</th>
+        <th></th>
+        <th>Người tạo</th>
+        <th>Ngày tạo</th>
+        <th>Người chỉnh sửa</th>
+        <th>Ngày chỉnh sửa</th>
+
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            @{var createAt = item.CreatedAt == null ? null : item.CreatedAt.Value.ToString("dd/MM/yyyy hh:mm:ss tt");}
+            @{var updateAt = item.UpdateAt == null ? null : item.UpdateAt.Value.ToString("dd/MM/yyyy hh:mm:ss tt");}
+            <td>@Html.DisplayFor(modelItem => item.OptionID)</td>
+            <td>@Html.DisplayFor(modelItem => item.DisplayName)</td>
+            @if (@item.Status == true)
+            {
+                <td><a class="btn btn-success">Đang hoạt động</a></td>
+            }
+            else
+            {
+                <td><a class="btn btn-dark">Ngưng hoạt động</a></td>
+            }
+
+            <td style="width: 280px">
+                <i></i>
+                <a class="btn btn-warning" onclick="GetDetails('@item.OptionID')">Sửa</a>
+                <i></i>
+            </td>
+            <td>@Html.DisplayFor(modelItem => item.CreatedBy)</td>
+            <td>@createAt</td>
+            <td>@Html.DisplayFor(modelItem => item.UpdateBy)</td>
+            <td>@updateAt</td>
+
+        </tr>
+    }
+</table>
+
+<!--Create modal start -->
+<div class="modal fade" id="CreateModalID_Admin" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        @using (Html.BeginForm("Create", "OptionManagement", FormMethod.Post))
+        {
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thêm Option</h5>
+                </div>
+
+                <div class="modal-body">
+                    <div class="font-robo">
+                        <div class="wrapper wrapper--w680">
+                            <div>
+                                <div>
+                                    <div class="input-group">
+                                        <input class="input--style-1" type="text" placeholder="Mã Option" name="OptionID">
+                                    </div>
+                                    <div class="input-group">
+                                        <input class="input--style-1" type="text" placeholder="Tên Option" name="DisplayName">
+                                    </div>
+                                    <label id="error-message"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary">Thêm</button>
+                </div>
+
+            </div>
+        }
+    </div>
+</div>
+<!--end-->
+<!--Edit modal start -->
+<div class="modal fade" id="EditModalID_Admin" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "Edit_form" }))
+            {
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Sửa Option</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="font-robo">
+                        <div class="wrapper wrapper--w680">
+                            <div>
+                                <div>
+                                    <div>
+                                        <div class="input-group">
+                                            <input class="input--style-1" id="txtID" type="text" placeholder="Mã Option" name="CategorizeID" readonly="readonly">
+                                        </div>
+                                        <div class="input-group">
+                                            <input class="input--style-1" id="txtDisplayName" type="text" placeholder="Tên Option" name="DisplayName">
+                                        </div>
+                                    </div>
+                                    <label id="error-message"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<!--end-->
+
+<script>
+    function GetDetails(id) {
+        $.ajax({
+            url: "/OptionManagement/Edit",
+            typr: "GET",
+            contentType: "application/json;charset=UTF-8",
+            dataType: "json",
+            data: { id: id },
+            success: function (response) {
+                console.log(response);
+                $('#txtID').val(response.OptionID);
+                $('#txtDisplayName').val(response.DisplayName);
+                $('#EditModalID_Admin').modal('show');
+                $('#Edit_form').attr('action', '/Admin/OptionManagement/Form_Edit/' + id)
+            },
+            error: function (response) {
+                alert(response.responseText);
+
+            }
+        });
+        return false;
+    }
+</script>
+<script>
+    $('input').on('keypress', function (event) {
+        var regex = new RegExp("^[a-zA-Z0-9]+$");
+        var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+        if (!regex.test(key)) {
+            event.preventDefault();
+            return false;
+        }
+    });
+</script>
+<script>
+    var tables = document.getElementsByTagName('table');
+    var table = tables[tables.length - 1];
+    var rows = table.rows;
+    for (var i = 1, td; i < rows.length; i++) {
+        td = document.createElement('td');
+        td.appendChild(document.createTextNode(i));
+        rows[i].insertBefore(td, rows[i].firstChild);
+}
+</script>
+<script>
+    $("#search").on("keyup", function () {
+        var value = $(this).val();
+
+        $("table tr").each(function (index) {
+            if (index !== 0) {
+
+                $row = $(this);
+
+                var id = $row.find("td").eq(2).text();
+
+                if (id.indexOf(value) === -1) {
+                    $row.hide();
+                }
+                else {
+                    $row.show();
+                }
+            }
+        });
+    });
+</script>

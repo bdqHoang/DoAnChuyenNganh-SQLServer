@@ -1,18 +1,24 @@
-﻿
+﻿@model IEnumerable<DoAnChuyenNganh_SQLServer.Areas.Admin.Data.Discount>
 @{
     ViewBag.Title = "DiscountManagement";
-    Layout = "~/Areas/Admin/Views/Shared/_LayoutAdmin.cshtml";
+    Layout = "~/Areas/Admin/Views/AjaxLayout/_LayoutAjaxCRUD.cshtml";
 }
-
+@section Header{
+    <link href="~/Areas/assets/form/css/main.css" rel="stylesheet" />
+    <link href="~/Areas/assets/form/vendor/datepicker/daterangepicker.css" rel="stylesheet" />
+    <link href="~/Areas/assets/form/vendor/font-awesome-4.7/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Areas/assets/form/vendor/select2/select2.min.css" rel="stylesheet" />
+    <link href="~/Areas/assets/form/vendor/mdi-font/css/material-design-iconic-font.css" rel="stylesheet" />
+}
 <nav class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl" id="navbarBlur" navbar-scroll="true">
     <div class="container-fluid py-1 px-3">
         <nav aria-label="breadcrumb">
-            <h5 class="font-weight-bolder mb-0">Quản lý giảm giá sản phẩm</h5>
-            <a class="btn btn-primary" href="@Url.Action("Create", "DiscountProductManagement")">Thêm giảm giá sản phẩm</a>
+            <h5 class="font-weight-bolder mb-0">Quản lý khuyến mãi</h5>
+            <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#CreateModalID_Admin">Thêm khuyến mãi</a>
         </nav>
         <div class="col-md-2">
             <div class="input-group input-group-outline my-3">
-                <label class="form-label">Mã sản phẩm</label>
+                <label class="form-label">Mã khuyến mãi</label>
                 <input type="text" id="search" class="form-control" />
             </div>
         </div>
@@ -23,30 +29,237 @@
     <tr>
         <th>STT</th>
         <th>Mã khuyến mãi</th>
-        <th>Số lượt dùng</th>
+        <th>Mô tả</th>
         <th>Phần trăm giảm</th>
+        <th>Số lượt dùng</th>
         <th>Ngày bắt đầu</th>
         <th>Ngày kết thúc</th>
         <th></th>
+        <th>Người tạo</th>
+        <th>Ngày tạo</th>
+        <th>Người chỉnh sửa</th>
+        <th>Ngày chỉnh sửa</th>
 
     </tr>
-@*    @foreach (var item in Model)
+    @foreach (var item in Model)
     {
         <tr>
+            @{var startDate = item.StartDate == null ? null : item.StartDate.Value.ToString("dd/MM/yyyy hh:mm:ss tt");}
+            @{var endDate = item.EndDate == null ? null : item.EndDate.Value.ToString("dd/MM/yyyy hh:mm:ss tt");}
+            @{var createAt = item.CreatedAt == null ? null : item.CreatedAt.Value.ToString("dd/MM/yyyy hh:mm:ss tt");}
+            @{var updateAt = item.UpdateAt== null ? null : item.UpdateAt.Value.ToString("dd/MM/yyyy hh:mm:ss tt");}
             <td>@Html.DisplayFor(modelItem => item.DiscountID)</td>
+            <td>@Html.DisplayFor(modelItem => item.DisplayName)</td>
+            <td>@Html.DisplayFor(modelItem => item.DiscountPersent)</td>
             <td>@Html.DisplayFor(modelItem => item.NumberOfUse)</td>
-            <td>@Html.DisplayFor(modelItem => item.DiscountPercent)</td>
-            <td>@item.StartDate.Value.ToString("dd/MM/yyyy hh:mm:ss tt")</td>
-            <td>@item.EndDate.Value.ToString("dd/MM/yyyy hh:mm:ss tt")</td>
-
+            <td>@startDate</td>
+            <td>@endDate</td>
             <td style="width: 280px">
                 <i></i>
-                @Html.ActionLink("Sửa", "Edit", new { id = item.DiscountID }, new { @class = "btn btn-warning" })
+                <a class="btn btn-warning" onclick="GetDetails('@item.DiscountID')">Sửa</a>
                 <i></i>
             </td>
+            <td>@Html.DisplayFor(modelItem => item.CreatedBy)</td>
+            <td>@createAt</td>
+            <td>@Html.DisplayFor(modelItem => item.UpdateBy)</td>
+            <td>@updateAt</td>
+
         </tr>
-    }*@
+    }
 </table>
+<!--Create modal start -->
+<div class="modal fade" id="CreateModalID_Admin" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        @using (Html.BeginForm("Create", "DiscountManagement", FormMethod.Post))
+        {
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thêm khuyến mãi</h5>
+                </div>
+
+                <div class="modal-body">
+                    <div class="font-robo">
+                        <div class="wrapper wrapper--w680">
+                            <div>
+                                <div>
+                                    <form method="POST">
+                                        <!--TextBox-->
+                                        <div class="input-group">
+                                            <input class="input--style-1" type="text" placeholder="Mã khuyến mãi" name="DiscountID">
+                                        </div>
+                                        <div class="input-group">
+                                            <input class="input--style-1" type="text" placeholder="Mô tả" name="DisplayName">
+                                        </div>
+                                        <div class="input-group">
+                                            <input class="input--style-1" type="text" placeholder="Phần trăm giảm" name="DiscountPersent">
+                                        </div>
+                                        <div class="input-group">
+                                            <input class="input--style-1" type="text" placeholder="Số lần sử dụng" name="NumberOfUse">
+                                        </div>
+                                        <!--End-->
+                                        <div class="row row-space">
+                                            <!--Datetime picker-->
+                                            <div class="col-2">
+                                                <div class="input-group">
+                                                    <input class="input--style-1 js-datepicker" type="text" placeholder="Ngày bắt đầu" name="StartDate">
+                                                    <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+                                                </div>
+                                            </div>
+                                            <!--End-->
+                                            <!--Datetime picker-->
+                                            <div class="col-2">
+                                                <div class="input-group">
+                                                    <input class="input--style-1 js-datepicker" type="text" placeholder="Ngày kết thúc" name="EndDate">
+                                                    <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+                                                </div>
+                                            </div>
+                                            <!--End-->
+                                        </div>
+                                    </form>
+                                    <label id="error-message"></label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Đóng</button>
+                    <button type="submit" class="btn btn-primary">Thêm</button>
+                </div>
+
+            </div>
+        }
+    </div>
+</div>
+<!--end-->
+<!--Edit modal start -->
+<div class="modal fade" id="EditModalID_Admin" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "Edit_form" }))
+            {
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Sửa khuyến mãi</h5>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="font-robo">
+                            <div class="wrapper wrapper--w680">
+                                <div>
+                                    <div>
+                                        <form method="POST">
+                                            <!--TextBox-->
+                                            <div class="input-group">
+                                                <input class="input--style-1" id="txtDiscountID" type="text" placeholder="Mã khuyến mãi" name="DiscountID" readonly="readonly">
+                                            </div>
+                                            <div class="input-group">
+                                                <input class="input--style-1" id="txtDisplayName" type="text" placeholder="Mô tả" name="DisplayName">
+                                            </div>
+                                            <div class="input-group">
+                                                <input class="input--style-1" id="txtDiscountPersent" type="text" placeholder="Phần trăm giảm" name="DiscountPersent">
+                                            </div>
+                                            <div class="input-group">
+                                                <input class="input--style-1" id="txtNumberOfUse" type="text" placeholder="Số lần sử dụng" name="NumberOfUse">
+                                            </div>
+                                            <!--End-->
+                                            <div class="row row-space">
+                                                <!--Datetime picker-->
+                                                <div class="col-2">
+                                                    <div class="input-group">
+                                                        <input class="input--style-1 js-datepicker" id="txtStartDate" type="text" placeholder="Ngày bắt đầu" name="StartDate">
+                                                        <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+                                                    </div>
+                                                </div>
+                                                <!--End-->
+                                                <!--Datetime picker-->
+                                                <div class="col-2">
+                                                    <div class="input-group">
+                                                        <input class="input--style-1 js-datepicker" id="txtEndDate" type="text" placeholder="Ngày kết thúc" name="EndDate">
+                                                        <i class="zmdi zmdi-calendar-note input-icon js-btn-calendar"></i>
+                                                    </div>
+                                                </div>
+                                                <!--End-->
+                                            </div>
+                                        </form>
+                                        <label id="error-message"></label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Đóng</button>
+                        <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                    </div>
+
+                </div>
+            }
+        </div>
+    </div>
+</div>
+<!--end-->
+<script>
+    function GetDetails(id) {
+        $.ajax({
+            url: "/DiscountManagement/Edit",
+            type: "GET",
+            contentType: "application/json;charset=UTF-8",
+            dataType: "json",
+            data: { id: id },
+            success: function (response) {
+                $('#txtDiscountID').val(response.edit_Dis.DiscountID);
+                $('#txtDisplayName').val(response.edit_Dis.DisplayName);
+                $('#txtDiscountPersent').val(response.edit_Dis.DiscountPersent);
+                $('#txtNumberOfUse').val(response.edit_Dis.NumberOfUse);
+                $('#txtStartDate').val(response.StartDate);
+                $('#txtEndDate').val(response.EndDate);
+                $('#EditModalID_Admin').modal('show');
+                $('#Edit_form').submit(function (e) {
+                    e.preventDefault();
+                    var data = {
+                        DiscountID: $('#txtDiscountID').val(),
+                        DisplayName: $('#txtDisplayName').val(),
+                        DiscountPersent: $('#txtDiscountPersent').val(),
+                        NumberOfUse: $('#txtNumberOfUse').val(),
+                        StartDate: $('#txtStartDate').val(),
+                        EndDate: $('#txtEndDate').val(),
+                    };
+                    $.ajax({
+                        url: "/Admin/DiscountManagement/Edit_Form",
+                        type: "Post",
+                        data: { a: data },
+                        success: function (result) {
+                            if (result.Message != null) {
+                                $("#error-message").text(result.Message);
+                            } else {
+                                window.location.href = result.url;
+                            }
+                        }
+                    });
+                });
+                /*$('#Edit_form').attr('action', '/Admin/DiscountManagement/Edit_Form/' + id)*/
+            },
+            error: function (response) {
+                alert(response.responseText);
+
+            }
+        });
+        return false;
+    }
+</script>
+<script>
+    $('input').on('keypress', function (event) {
+        var regex = new RegExp("^[a-zA-Z0-9]+$");
+        var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+        if (!regex.test(key)) {
+            event.preventDefault();
+            return false;
+        }
+    });
+</script>
 <script>
     var tables = document.getElementsByTagName('table');
     var table = tables[tables.length - 1];

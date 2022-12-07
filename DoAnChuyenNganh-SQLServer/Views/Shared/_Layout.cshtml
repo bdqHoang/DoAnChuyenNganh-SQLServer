@@ -3,11 +3,11 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Blackwood - Clean Minimal eCommerce HTML5 Template</title>
+    <title>3TL-Gear At your service</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Place favicon.ico in the root directory -->
-    <link rel="shortcut icon" type="image/x-icon" href="~/Assets/img/favicon.png">
+    <link rel="shortcut icon" type="image/x-icon" href="~/Assets/img/logo/storelogo.png">
     <!-- CSS here -->
     <link rel="stylesheet" href="~/Assets/css/preloader.css">
     <link rel="stylesheet" href="~/Assets/css/bootstrap.css">
@@ -23,6 +23,13 @@
     <link rel="stylesheet" href="~/Assets/css/default.css">
     <link rel="stylesheet" href="~/Assets/css/style.css">
     @RenderSection("Header", false)
+
+    @{var url = Session["Customer"] == null ? "/login" : "/user";
+        var name = Session["Customer"] != null ? (Session["Customer"] as DoAnChuyenNganh_SQLServer.Models.Customer).DisplayName : null;
+        if (name != null) {
+            name = "Hello " + name + "!";
+        }
+    }
 </head>
 <body>
     <!--[if lte IE 9]>
@@ -52,46 +59,130 @@
             <div class="header__bottom">
                 <div class="container">
                     <div class="row align-items-center">
-                        <div class="col-xxl-2 col-xl-2 col-lg-3 col-6">
+                        <div class="col-lg-1">
                             <div class="logo">
-                                <a href="~/home">
-                                    <img src="~/Assets/img/logo/logo.png" alt="">
+                                <a href="/Home">
+                                    <img src="/Assets/img/logo/storelogo.png">
                                 </a>
                             </div>
                         </div>
-                        <div class="col-xxl-6 col-xl-6 col-lg-8 d-none d-lg-block">
-                            <div class="category__menu d-flex align-items-center">
-                                <div class="category__btn mr-20">
-                                    <button class="cat-btn" type="button"><i class="far fa-bars"></i>All Categories</button>
-                                    <div class="side-submenu transition-3">
-                                        <nav>
-                                            <ul id="menu-categorize">
-                                            </ul>
-                                        </nav>
+                        <div class="col-lg-7">
+                            <div class="row">
+                                <div class="category__menu d-flex align-items-center col-9">
+                                    <div class="category__btn mr-20">
+                                        <button class="cat-btn" type="button"><i class="far fa-bars"></i>All Categories</button>
+                                        <div class="side-submenu transition-3">
+                                            <nav>
+                                                <ul id="menu-categorize">
+                                                    <li class="has-dropdown" id="Ca0001">
+                                                        <a href="/home/shop">
+                                                            <i class="fal fa-headphones"></i>
+                                                            Ban Phim
+                                                        </a>
+                                                        <ul class="mega-menu">
+                                                            <li>
+                                                                <a href="shop.html">Trademark</a>
+                                                                <ul class="mega-item">
+                                                                    <li><a href="/home/shop">Razer</a></li>
+                                                                </ul>
+                                                            </li>
+                                                            <li>
+                                                                <a href="shop.html">Sell Price</a>
+                                                                <ul class="mega-item">
+                                                                    <li><a href="product-details.html">Less than 20 million</a></li>
+                                                                    <li><a href="product-details.html">From 20 to 25 million VND</a></li>
+                                                                    <li><a href="product-details.html">From 25 to 30 million VND</a></li>
+                                                                    <li><a href="product-details.html">Over 30 million</a></li>
+                                                                </ul>
+                                                            </li>
+                                                            <li>
+                                                                <a href="shop.html">Sort Product</a>
+                                                                <ul class="mega-item">
+                                                                    <li><a href="product-details.html">Top selling</a></li>
+                                                                    <li><a href="product-details.html">High to low price</a></li>
+                                                                    <li><a href="product-details.html">Low to high price</a></li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="has-dropdown" id="Ca0002">
+                                                        <a href="/home/shop">
+                                                            <i class="fal fa-headphones"></i>
+                                                            Chuot
+                                                        </a>
+                                                        <ul class="mega-menu">
+                                                            <li>
+                                                                <a href="shop.html">Trademark</a>
+                                                                <ul class="mega-item">
+                                                                    <li><a href="/home/shop">Razer</a></li>
+                                                                </ul>
+                                                            </li>
+                                                            <li>
+                                                                <a href="shop.html">Sell Price</a>
+                                                                <ul class="mega-item">
+                                                                    <li><a href="product-details.html">Less than 20 million</a></li>
+                                                                    <li><a href="product-details.html">From 20 to 25 million VND</a></li>
+                                                                    <li><a href="product-details.html">From 25 to 30 million VND</a></li>
+                                                                    <li><a href="product-details.html">Over 30 million</a></li>
+                                                                </ul>
+                                                            </li>
+                                                            <li>
+                                                                <a href="shop.html">Sort Product</a>
+                                                                <ul class="mega-item">
+                                                                    <li><a href="product-details.html">Top selling</a></li>
+                                                                    <li><a href="product-details.html">High to low price</a></li>
+                                                                    <li><a href="product-details.html">Low to high price</a></li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                    <li class="has-dropdown" id="Ca0003">
+                                                        <a href="/home/shop">
+                                                            <i class="fal fa-headphones"></i>
+                                                            Ghe
+                                                        </a>
+                                                        <ul class="mega-menu">
+                                                            <li>
+                                                                <a href="shop.html">Trademark</a>
+                                                                <ul class="mega-item">
+                                                                </ul>
+                                                            </li>
+                                                            <li>
+                                                                <a href="shop.html">Sell Price</a>
+                                                                <ul class="mega-item">
+                                                                    <li><a href="product-details.html">Less than 20 million</a></li>
+                                                                    <li><a href="product-details.html">From 20 to 25 million VND</a></li>
+                                                                    <li><a href="product-details.html">From 25 to 30 million VND</a></li>
+                                                                    <li><a href="product-details.html">Over 30 million</a></li>
+                                                                </ul>
+                                                            </li>
+                                                            <li>
+                                                                <a href="shop.html">Sort Product</a>
+                                                                <ul class="mega-item">
+                                                                    <li><a href="product-details.html">Top selling</a></li>
+                                                                    <li><a href="product-details.html">High to low price</a></li>
+                                                                    <li><a href="product-details.html">Low to high price</a></li>
+                                                                </ul>
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                        </div>
+                                    </div>
+                                    <nav>
+                                        <ul id="getSupplier"><li><a href="/home/shop">Razer</a></li><li><a href="/home/shop">Logitech</a></li></ul>
+                                    </nav>
+                                </div>
+                                <div class="col-3">
+                                    <div class="category__btn mr-20">
+                                        <label>@name</label>
                                     </div>
                                 </div>
-                                <nav>
-                                    <ul>
-                                        <li>
-                                            <a href="product-details.html">Wooden</a>
-                                        </li>
-                                        <li>
-                                            <a href="product-details.html">Chair</a>
-                                        </li>
-                                        <li>
-                                            <a href="product-details.html">Tables</a>
-                                        </li>
-                                        <li>
-                                            <a href="product-details.html">Kitchen</a>
-                                        </li>
-                                        <li>
-                                            <a href="product-details.html">Others</a>
-                                        </li>
-                                    </ul>
-                                </nav>
                             </div>
+
                         </div>
-                        <div class="col-xxl-4 col-xl-4 col-lg-1 col-6">
+                        <div class="col-lg-4">
                             <div class="header__bottom-right-wrapper d-flex justify-content-end align-items-center">
                                 <div class="header__bottom-right d-none d-xl-flex align-items-center justify-content-end">
                                     <div class="header__search">
@@ -102,26 +193,39 @@
                                             </div>
                                         </form>
                                     </div>
-                                    <div class="header__action ml-30">
-                                        <ul>
+                                    <div class="header__action ml-30 main-menu">
+                                        <ul id="user_menu">
                                             <li>
-                                                <a href="~/user"><i class="fal fa-user-circle"></i></a>
+                                                <a href="@url"><i class="fal fa-user-circle"></i></a>
+                                                @if (name != null)
+                                                {
+                                                <ul class="submenu">
+                                                    <li>
+                                                        <a href="@url" >Your information</a>
+                                                    </li>
+                                                    <li>
+                                                        <a onclick="Lockout()">Log out</a>
+                                                    </li>
+                                                </ul>
+                                                }
                                             </li>
-                                            <li>
-                                                <a href="#" data-bs-toggle="modal" data-bs-target="#cartMiniModal">
-                                                    <i class="fal fa-shopping-basket"></i>
-                                                    <span class="cart-count">3</span>
-                                                </a>
-                                            </li>
+                                            @if (Session["Customer"] != null)
+                                            {
+                                                <li>
+                                                    <a href="/Home/WishList">
+                                                        <i class="fal fa-heart"></i>
+                                                        <span class="cart-count">2</span>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="#" data-bs-toggle="modal" data-bs-target="#cartMiniModal">
+                                                        <i class="fal fa-shopping-basket"></i>
+                                                        <span class="cart-count" id="countItemCart">0</span>
+                                                    </a>
+                                                </li>
+                                            }
                                         </ul>
                                     </div>
-                                </div>
-                                <div class="header-bar ml-20 d-xl-none">
-                                    <button type="button" class="header-bar-btn" data-bs-toggle="modal" data-bs-target="#offCanvasModal">
-                                        <span></span>
-                                        <span></span>
-                                        <span></span>
-                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -144,66 +248,13 @@
                             </div>
                         </div>
                         <div class="cartmini__list">
-                            <ul>
-                                <li class="cartmini__item p-relative d-flex align-items-start">
-                                    <div class="cartmini__thumb mr-15">
-                                        <a href="product-details.html">
-                                            <img src="~/Assets/img/products/product-1.jpg" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="cartmini__content">
-                                        <h3 class="cartmini__title">
-                                            <a href="product-details.html">Form Armchair Walnut Base</a>
-                                        </h3>
-                                        <span class="cartmini__price">
-                                            <span class="price">1 × $70.00</span>
-                                        </span>
-                                    </div>
-                                    <a href="#" class="cartmini__remove">
-                                        <i class="fal fa-times"></i>
-                                    </a>
-                                </li>
-                                <li class="cartmini__item p-relative d-flex align-items-start">
-                                    <div class="cartmini__thumb mr-15">
-                                        <a href="product-details.html">
-                                            <img src="~/Assets/img/products/product-2.jpg" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="cartmini__content">
-                                        <h3 class="cartmini__title">
-                                            <a href="product-details.html">Form Armchair Simon Legald</a>
-                                        </h3>
-                                        <span class="cartmini__price">
-                                            <span class="price">1 × $95.99</span>
-                                        </span>
-                                    </div>
-                                    <a href="#" class="cartmini__remove">
-                                        <i class="fal fa-times"></i>
-                                    </a>
-                                </li>
-                                <li class="cartmini__item p-relative d-flex align-items-start">
-                                    <div class="cartmini__thumb mr-15">
-                                        <a href="product-details.html">
-                                            <img src="~/Assets/img/products/product-3.jpg" alt="">
-                                        </a>
-                                    </div>
-                                    <div class="cartmini__content">
-                                        <h3 class="cartmini__title">
-                                            <a href="product-details.html">Antique Chinese Armchairs</a>
-                                        </h3>
-                                        <span class="cartmini__price">
-                                            <span class="price">1 × $120.00</span>
-                                        </span>
-                                    </div>
-                                    <a href="#" class="cartmini__remove">
-                                        <i class="fal fa-times"></i>
-                                    </a>
-                                </li>
+                            <ul id="getItemCart">
+                                
                             </ul>
                         </div>
                         <div class="cartmini__total d-flex align-items-center justify-content-between">
                             <h5>Total</h5>
-                            <span>$180.00</span>
+                            <span id="totalmodal">$180.00</span>
                         </div>
                         <div class="cartmini__bottom">
                             <a href="~/cart" class="b-btn w-100 mb-20">view cart</a>
@@ -244,71 +295,6 @@
                                 <input type="text" placeholder="What are you searching for?">
                                 <button type="submit"><i class="far fa-search"></i></button>
                             </form>
-                        </div>
-                        <div class="offcanvas__content p-relative z-index-1">
-                            <div class="canvas__menu">
-                                <div class="mobile-menu fix"></div>
-                            </div>
-                            <div class="offcanvas__action mt-40 mb-15">
-                                <a href="contact.html">Login</a>
-                                <a href="wishlist.html" class="has-tag">
-                                    <svg viewBox="0 0 22 22">
-                                        <path d="M20.26,11.3c2.31-2.36,2.31-6.18-0.02-8.53Cs19.11,1.63,17.6,1,16,1c0,0,0,0,0,0c-1.57,0-3.05,0.61-4.18,1.71c0,0,0,0,0,0
-                                            L11,3.41l-0.81-0.69c0,0,0,0,0,0C9.06,1.61,7.58,1,6,1C4.4,1,2.89,1.63,1.75,2.77c-2.33,2.35-2.33,6.17-0.02,8.53
-                                            c0,0,0,0.01,0.01,0.01l0.01,0.01c0,0,0,0,0,0c0,0,0,0,0,0L11,20.94l9.25-9.62c0,0,0,0,0,0c0,0,0,0,0,0L20.26,11.3
-                                            C20.26,11.31,20.26,11.3,20.26,11.3z M3.19,9.92C3.18,9.92,3.18,9.92,3.19,9.92C3.18,9.92,3.18,9.91,3.18,9.91
-                                            c-1.57-1.58-1.57-4.15,0-5.73C3.93,3.42,4.93,3,6,3c1.07,0,2.07,0.42,2.83,1.18C8.84,4.19,8.85,4.2,8.86,4.21
-                                            c0.01,0.01,0.01,0.02,0.03,0.03l1.46,1.25c0.07,0.06,0.14,0.09,0.22,0.13c0.01,0,0.01,0.01,0.02,0.01c0.13,0.06,0.27,0.1,0.41,0.1
-                                            c0.08,0,0.16-0.03,0.25-0.05c0.03-0.01,0.07-0.01,0.1-0.02c0.07-0.03,0.13-0.07,0.2-0.11c0.03-0.02,0.07-0.03,0.1-0.06l1.46-1.24
-                                            c0.01-0.01,0.02-0.02,0.03-0.03c0.01-0.01,0.03-0.01,0.04-0.02C13.93,3.42,14.93,3,16,3c0,0,0,0,0,0c1.07,0,2.07,0.42,2.83,1.18
-                                            c1.56,1.58,1.56,4.15,0,5.73c0,0,0,0.01-0.01,0.01c0,0,0,0,0,0L11,18.06L3.19,9.92z" />
-                                    </svg>
-                                    <span class="tag">2</span>
-                                </a>
-                                <a href="~/home/shop" class="has-tag">
-                                    <i class="far fa-shopping-bag"></i>
-                                    <span class="tag">3</span>
-                                </a>
-                                <div class="header__select header__select-d d-flex align-items-center mt-10">
-                                    <div class="header__lang header__select-item mr-15">
-                                        <select>
-                                            <option>EN</option>
-                                            <option>BN</option>
-                                            <option>IN</option>
-                                            <option>CH</option>
-                                            <option>AM</option>
-                                        </select><div class="nice-select" tabindex="0"><span class="current">EN</span><ul class="list list-2"><li data-value="EN" class="option selected focus">EN</li><li data-value="BN" class="option">BN</li><li data-value="IN" class="option">IN</li><li data-value="CH" class="option">CH</li><li data-value="AM" class="option">AM</li></ul></div>
-                                    </div>
-                                    <div class="header__currency header__select-item">
-                                        <select>
-                                            <option>USD</option>
-                                            <option>Euro</option>
-                                            <option>Yen</option>
-                                            <option>Rupee</option>
-                                            <option>Sterlin</option>
-                                        </select><div class="nice-select" tabindex="0"><span class="current">USD</span><ul class="list list-2"><li data-value="USD" class="option selected focus">USD</li><li data-value="Euro" class="option">Euro</li><li data-value="Yen" class="option">Yen</li><li data-value="Rupee" class="option">Rupee</li><li data-value="Sterlin" class="option">Sterlin</li></ul></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="offcanvas__social mt-15">
-                                <ul>
-                                    <li>
-                                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><i class="fab fa-twitter"></i></a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><i class="fab fa-instagram"></i></a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><i class="fab fa-google-plus-g"></i></a>
-                                    </li>
-                                    <li>
-                                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -530,31 +516,58 @@
     <script src="~/Assets/js/vendor/jquery.js"></script>
     <script src="~/Assets/js/vendor/waypoints.js"></script>
     <script src="~/Assets/js/bootstrap-bundle.js"></script>
-    <script src="~/Assets/js/meanmenu.js"></script>
     <script src="~/Assets/js/swiper-bundle.js"></script>
+    <script src="~/Assets/js/countdown.js"></script>
+    <script src="~/Assets/js/meanmenu.js"></script>
     <script src="~/Assets/js/owl-carousel.js"></script>
     <script src="~/Assets/js/magnific-popup.js"></script>
     <script src="~/Assets/js/parallax.js"></script>
     <script src="~/Assets/js/backtotop.js"></script>
     <script src="~/Assets/js/nice-select.js"></script>
     <script src="~/Assets/js/counterup.js"></script>
-    <script src="~/Assets/js/countdown.js"></script>
     <script src="~/Assets/js/wow.js"></script>
     <script src="~/Assets/js/isotope-pkgd.js"></script>
     <script src="~/Assets/js/imagesloaded-pkgd.js"></script>
     <script src="~/Assets/js/ajax-form.js"></script>
     <script src="~/Assets/js/main.js"></script>
     @RenderSection("Footer", required: false)
-    <script>
+<script>
         $(document).ready(function () {
-            console.log(123);
             $.ajax({
                 type: "Get",
                 url: "/home/showcategorize",
+                dataType: "json",
                 contentType: "application/json",
                 success: function (data) {
-                    console.log(data);
                     var str = "";
+                    for (var i = 0; i < data.data.length; i++) {
+                        str += `<li class="has-dropdown" id="${data.data[i].CategorizeID}">
+                                        <a href="/home/shop">
+                                            <i class="fal fa-headphones"></i>
+                                                ${data.data[i].DisplayName}
+                                        </a>
+                                        <ul class="mega-menu">
+                                            <li><a href="shop.html">Trademark</a>
+                                                <ul class="mega-item">
+                                                    ${GetSupplier(data.data[i].CategorizeID)}
+                                                </ul>
+                                            </li>
+                                            <li><a href="shop.html">Sell Price</a>
+                                                <ul class="mega-item">
+                                                    <li><a href="product-details.html">Less than 20 million</a></li>
+                                                    <li><a href="product-details.html">From 20 to 25 million VND</a></li>
+                                                    <li><a href="product-details.html">From 25 to 30 million VND</a></li>
+                                                    <li><a href="product-details.html">Over 30 million</a></li>
+                                                </ul>
+                                            </li>
+                                            <li><a href="shop.html">Sort Product</a>
+                                                <ul class="mega-item">
+                                                    <li><a href="product-details.html">Top selling</a></li>
+                                                    <li><a href="product-details.html">High to low price</a></li>
+                                                    <li><a href="product-details.html">Low to high price</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
                     for (var i = 0; i < data.length; i++) {
                         str += `<li class="has-dropdown" id="Keyboard">
                                         <a href="~/home/shop">
@@ -564,9 +577,117 @@
                                     </li>`;
                     }
                     $("#menu-categorize").html(str);
+                    str = ``;
+                    for (var i = 0; i < data.suplier.length; i++) {
+                        str += `<li><a href="/home/shop">${data.suplier[i].DisplayName}</a></li>`
+                    }
+                    $("#getSupplier").html(str);
+                }
+            });
+            GetCart();
+        })
+        function GetSupplier(id) {
+            var str = '';
+            $.ajax({
+                async: false,
+                type: "Get",
+                url: "/home/getsupplier",
+                dataType: "json",
+                contentType: "application/json",
+                data: { id: id },
+                success: function (data) {
+                    if (data.length != 0) {
+                        for (var i = 0; i < data.length; i++) {
+                            var name = data[i].DisplayName;
+                            str += `<li><a href="/home/shop">${name}</a></li>`;
+                        }
+                    }
                 },
             });
+            return str;
+    }
+
+    function Lockout() {
+        $.ajax({
+            url: "/login/logout",
+            type: "Delete",
+            success: function (data) {
+                window.location.href = data.url;
+            }
         })
-    </script>
+    }
+    //show cart modal
+    function GetCart() {
+        $.ajax({
+            url: "/cart/getyourcart",
+            type: "Get",
+            success: function (data) {
+                $("#countItemCart").text(data.total);
+                var total = 0;
+                if (data.total != 0) {
+                    var str = ``;
+                    for (var i = 0; i < data.data.length; i++) {
+                        var sellprice = data.data[i].SalePrice == null ? data.data[i].sellprice : data.data[i].SalePrice;
+                        str+=`<li class="cartmini__item p-relative d-flex align-items-start">
+                                    <div class="cartmini__thumb mr-15">
+                                        <a href="product-details.html">
+                                            ${ShowImg(data.data[i])}
+                                        </a>
+                                    </div>
+                                    <div class="cartmini__content">
+                                        <h3 class="cartmini__title">
+                                            <a href="product-details.html">${data.data[i].DisplayName}</a>
+                                        </h3>
+                                        <span class="cartmini__price">
+                                            <span class="price">${data.data[i].Quantity} × ${sellprice}VND</span>
+                                        </span>
+                                    </div>
+                                    <a onclick="DeleteItemCart('${data.data[i].ProductID}','${data.data[i].ColorID}','${data.data[i].OptionID}')" class="cartmini__remove">
+                                        <i class="fal fa-times"></i>
+                                    </a>
+                                </li>`
+                        total += sellprice * data.data[i].Quantity;
+                    }
+                    $("#getItemCart").html(str);
+                }
+                $("#totalmodal").text(total + "VND");
+                $("#testtotal").text(total + "VND");
+                $("#totalPayment").text(total + "VND")
+            }
+        })
+    }
+
+    // delete item in cart
+    function DeleteItemCart(productID,colorID,OptionID) {
+        $.ajax({
+            url: "/cart/deletecart",
+            type: "Delete",
+            data: {
+                OptionID: OptionID,
+                ColorID: colorID,
+                ProductID: productID
+            },
+            success: function (data) {
+                alert(data.message);
+                $("#getItemCart").empty();
+                $("#tableItemCart").empty();
+                GetCart();
+                TableCart();
+            }
+        })
+    }
+
+
+    // show img
+    function ShowImg(data, style) {
+        var img = ``;
+        img = `<img src="data:image/gif;base64,${data.image}" ${style} alt="">`;
+        if (data.image == null) {
+            img = `<img src="/Assets/img/EmptyBox/Empty.png" ${style} alt="">`;
+        }
+        return img;
+    }
+
+</script>
 </body>
 </html>

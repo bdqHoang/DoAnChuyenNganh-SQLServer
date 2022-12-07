@@ -19,6 +19,7 @@ namespace DoAnChuyenNganh_SQLServer.Areas.Admin
                 "Admin/{controller}/{action}/{id}",
                 new { action = "Index", id = UrlParameter.Optional }
             );
+
         }
     }
 }
